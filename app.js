@@ -10,6 +10,6 @@ app.listen((process.env.PORT || 3000), (req, res) => {
     console.log("Run in port 3000");
 });
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
     res.render("index.ejs");
 })
