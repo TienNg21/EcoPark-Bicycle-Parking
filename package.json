@@ -1,0 +1,28 @@
+{
+  "name": "ecopark-bicycle-parking",
+  "version": "1.0.0",
+  "description": "manage bicycle parking app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TienNg21/EcoPark-Bicycle-Parking.git"
+  },
+  "keywords": [
+    "parking"
+  ],
+  "author": "group 12",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TienNg21/EcoPark-Bicycle-Parking/issues"
+  },
+  "homepage": "https://github.com/TienNg21/EcoPark-Bicycle-Parking#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "env": "0.0.2",
+    "express": "^4.17.1"
+  }
+}
