@@ -1,0 +1,30 @@
+<h1>Đăng ký</h1>
+
+<div>
+    <% if (typeof errors != 'undefined') { %>
+     <% errors.forEach(element => { %>
+        <p><%= element.message %> </p>
+     <% }) %>
+    <% } %>
+</div>
+
+<form action="/register" method="post">
+    <div>
+        <label for="name">Họ và tên</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="password2">Xác nhận mật khẩu</label>
+        <input type="password" id="password2" name="password2" required>
+    </div>
+    <button type="submit">Đăng ký</button>
+</form>
+<a href="/login">Đăng nhập</a>

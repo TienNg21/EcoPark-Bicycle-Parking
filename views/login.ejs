@@ -1,0 +1,22 @@
+<h1>Đăng nhập</h1>
+
+<% if (messages.success_msg) { %>
+ <div><%= messages.success_msg %> </div>
+<% } %>
+
+<% if (messages.error) { %>
+    <div><%= messages.error %> </div>
+<% } %>
+
+<form action="/login" method="post">
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Đăng nhập</button>
+</form>
+<a href="/register">Đăng ký</a>
