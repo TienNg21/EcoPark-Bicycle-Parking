@@ -28,7 +28,11 @@ app.listen((process.env.PORT || 3000), (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.render("dashboard.ejs", {user: req.user.name});
+    if(req.user == null){
+        res.render("dashboard.ejs", {user: "Friends"});
+    }else{
+        res.render("dashboard.ejs", {user: req.user.name});
+    }
 })
 
 //register
