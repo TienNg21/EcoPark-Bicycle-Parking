@@ -27,13 +27,16 @@ app.listen((process.env.PORT || 3000), (req, res) => {
     console.log("Run in port 3000");
 });
 
-app.get("/", (req, res) => {
-    res.render("dashboard.ejs", {user: req.user.name});
+app.get("/", (req, res) => { // localhost:3000/
+    res.render("index.ejs");
 })
 
+app.get('/:id',(req,res)=>{
+    res.render('lanxe.ejs', {id: req.params.id});
+})
 //register
 app.get("/register", function(req, res){
-    res.render("register.ejs");
+    res.render("register.ejs",);
 })
 
 app.post("/register", async (req, res) => {
@@ -70,9 +73,7 @@ app.post("/register", async (req, res) => {
 
         pool.query(
             "SELECT * FROM users WHERE email = $1", [email], (err, results) => {
-                if(err){
-                    throw err;
-                }
+               
                 console.log(results);
 
                 if(results.rows.length > 0){
