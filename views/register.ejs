@@ -1,30 +1,93 @@
-<h1>Đăng ký</h1>
+<%- include('header') %> 
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
 
-<div>
-    <% if (typeof errors != 'undefined') { %>
-     <% errors.forEach(element => { %>
-        <p><%= element.message %> </p>
-     <% }) %>
-    <% } %>
-</div>
+    #name {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 
-<form action="/register" method="post">
-    <div>
-        <label for="name">Họ và tên</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <label for="password2">Xác nhận mật khẩu</label>
-        <input type="password" id="password2" name="password2" required>
-    </div>
-    <button type="submit">Đăng ký</button>
-</form>
-<a href="/login">Đăng nhập</a>
+    #password,
+    #email {
+        margin-bottom: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    #password2 {
+        margin-bottom: 20px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    
+    button,
+    a {
+        margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  
+</head>
+
+<body class="text-center"> 
+    
+    <main class="form-signin">
+      <form action="/register" method="post">
+
+        <div>
+            <% if (typeof errors != 'undefined') { %>
+             <% errors.forEach(element => { %>
+                <div  class="alert alert-danger" role="alert"><%= element.message %> </div>
+             <% }) %>
+            <% } %>
+        </div>
+
+        <img class="mb-4" src="img/logo.png" alt="" width="70" height="70">
+
+        <h1 class="h3 mb-3 fw-normal">EcoPark Bicycle Parking</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="name" name="name" required>
+            <label for="name">Họ và tên</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="email">Email</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" name="password" required>
+            <label for="password">Mật khẩu</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password2" name="password2" required>
+            <label for="password2">Xác nhận mật khẩu</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng ký</button>
+        
+      </form>
+      <div>
+        <a id="create" style="text-decoration: none" href="/login">Đăng nhập</a>
+      </div>
+      
+    </main>
+
+  </body>
+<%- include('footer') %> 
