@@ -24,8 +24,13 @@ app.use(passport.session());
 const user = require('./routes/user');
 const map = require('./routes/map');
 
+//user
 app.use('/', user);
-app.use('/', map);
+app.use('/map', map);
+// app.use('/infor', infor); //Thông tin tài khoản
+// app.use('/history', history);
+
+//admin
 
 app.listen((process.env.PORT || 3000), (req, res) => {
     console.log("Run in port 3000");

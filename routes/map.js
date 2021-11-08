@@ -2,11 +2,11 @@ const express = require('express');
 const mapRouter = express.Router();
 
 
-mapRouter.get("/map", (req, res) => { 
+mapRouter.get("/", (req, res) => { 
     res.render("map.ejs");
 })
 
-mapRouter.get('/map/:id',(req,res)=>{
+mapRouter.get('/:id',(req,res)=>{
     res.render('lanxe.ejs', {id: req.params.id});
 })
 
