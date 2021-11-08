@@ -35,9 +35,16 @@ app.get("/", (req, res) => {
     }
 })
 
+app.get("/map", (req, res) => { // localhost:3000/
+    res.render("map.ejs");
+})
+
+app.get('/map/:id',(req,res)=>{
+    res.render('lanxe.ejs', {id: req.params.id});
+})
 //register
 app.get("/register", function(req, res){
-    res.render("register.ejs");
+    res.render("register.ejs",);
 })
 
 app.post("/register", async (req, res) => {
@@ -74,9 +81,7 @@ app.post("/register", async (req, res) => {
 
         pool.query(
             "SELECT * FROM users WHERE email = $1", [email], (err, results) => {
-                if(err){
-                    throw err;
-                }
+               
                 console.log(results);
 
                 if(results.rows.length > 0){
