@@ -11,7 +11,7 @@ userRouter.get("/", (req, res) => {
     if(req.user == null){
         res.render("login.ejs");
     }else{
-        res.render("dashboard.ejs", {user: req.user.ten});
+        res.render("dashboard.ejs");
     }
 })
 
@@ -68,6 +68,7 @@ userRouter.post("/register", async (req, res) => {
                     errors.push({message: "Email này đã đăng ký với tài khoản khác."});
                     res.render("register", {errors: errors});
                 }else{
+                    
                     pool.query(
                         `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
@@ -76,13 +77,14 @@ userRouter.post("/register", async (req, res) => {
                             if(err){
                                 throw err;
                             }
-                            console.log(results.rows);
+                            // console.log(results.rows);
 
                             req.flash('success_msg', "Đăng ký thành công. Vui lòng đăng nhập.");
                             res.redirect('login');
                         }
                     )
                 }
+
             }
         );
     }
