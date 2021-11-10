@@ -11,7 +11,7 @@ userRouter.get("/", (req, res) => {
     if(req.user == null){
         res.render("login.ejs");
     }else{
-        res.render("dashboard.ejs", {user: req.user.name});
+        res.render("dashboard.ejs", {user: req.user.ten});
     }
 })
 
