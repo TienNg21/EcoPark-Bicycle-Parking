@@ -1,4 +1,5 @@
 <%- include('header') %> 
+
 <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -28,7 +29,7 @@
         border-top-left-radius: 0;
         border-top-right-radius: 0;
     }
-    
+   
     button,
     a {
         margin-bottom: 20px;
@@ -57,9 +58,9 @@
             <% } %>
         </div>
 
-        <img class="mb-4" src="img/logo.png" alt="" width="70" height="70">
+        <img class="mb-4" style="margin-top: -1cm;" src="img/logo.png" alt="" width="70" height="70">
 
-        <h1 class="h3 mb-3 fw-normal">EcoPark Bicycle Parking</h1>
+        <h1 class="h3 mb-3 fw-normal" style="margin-top: -0.5cm">EcoPark Bicycle Parking</h1>
 
         <div class="form-floating">
             <input type="text" class="form-control" id="name" name="name" required>
@@ -71,40 +72,49 @@
             <label for="email">Email</label>
         </div>
 
-        <div>
-          <input type="text" id="addr" name="addr" required>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="addr" name="addr" required>
           <label for="addr">Địa chỉ</label>
         </div>
 
-        <div>
-          <input type="text" id="phone" name="phone" required>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="phone" name="phone" required>
           <label for="phone">Số điện thoại</label>
         </div>
-
-        <div>
-          <label for="lacudan">Bạn có phải cư dân EcoPark không?</label>
-          <input name="lacudan" type="radio" value=true />Có
-          <input name="lacudan" type="radio" value=false />Không
+        <div class="form-floating">
+          <input type="text" class="form-control" id="CMND" name="CMND" required>
+          <label for="CMND">Số CMND/CCCD</label>
         </div>
-
-        <div>
-          <input type="text" id="macudan" name="macudan">
+        
+        <div class="col-md">
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+              
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              
+            </select>
+            <label for="floatingSelectGrid">Chọn giới tính</label>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+              
+              <option value="true">Có</option>
+              <option value="false">Không</option>
+              
+            </select>
+            <label for="floatingSelectGrid">Bạn có phải cư dân EcoPark không?</label>
+          </div>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="macudan" name="macudan">
           <label for="macudan">Mã cư dân</label>
         </div>
 
-        <div>
-          <input type="text" id="CMND" name="CMND" required>
-          <label for="CMND">Số CMND/CCCD</label>
-        </div>
-
-        <div>
-          <label for="gender">Giới tính</label>
-          <input name="gender" type="radio" value="Nam" />Nam
-          <input name="gender" type="radio" value="Nữ" />Nữ
-        </div>
-
         <div class="form-floating">
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password"style="padding: ;" class="form-control" id="password" name="password" required>
             <label for="password">Mật khẩu</label>
         </div>
 
@@ -112,7 +122,13 @@
             <input type="password" class="form-control" id="password2" name="password2" required>
             <label for="password2">Xác nhận mật khẩu</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng ký</button>
+        
+
+        
+
+        
+
+        <button class="w-100 btn btn-lg btn-primary" style="border-radius: 10px ;" type="submit">Đăng ký</button>
         
       </form>
       <div>
@@ -120,6 +136,6 @@
       </div>
       
     </main>
-
+    
   </body>
 <%- include('footer') %> 
