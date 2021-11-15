@@ -1,5 +1,12 @@
 <%- include('header') %> 
 <style>
+  body {
+    display: flex;
+  }
+  .brand-name {
+    color: #478640;
+  }
+
   .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -23,6 +30,7 @@
   button,
   a {
     margin-bottom: 20px;
+    color: #478640;
   }
 
   @media (min-width: 768px) {
@@ -47,9 +55,9 @@
             <div class="alert alert-danger" role="alert"><%= messages.error %> </div>
         <% } %>
 
-        <img class="mb-4" src="img/logo.png" alt="" width="70" height="70">
+        <img class="mb-4" src="img/logo.png" alt="" width="30%">
 
-        <h1 class="h3 mb-3 fw-normal">EcoPark Bicycle Parking</h1>
+        <img src="img/ecopark.png" width="80%" alt="logo">
 
         <div class="form-floating">
           <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
@@ -61,14 +69,9 @@
           <label for="password">Password</label>
         </div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng nhập</button>
+        <button class="login w-100 btn btn-lg btn btn btn-success" type="submit">Đăng nhập</button>
 
       </form>
-      
-      <div>
-        <a id="forget" style="text-decoration: none" href="#">Quên mật khẩu</a>
-      </div>
-      
       <div>
         <a id="create" style="text-decoration: none" href="/register">Đăng ký tài khoản</a>
       </div>
