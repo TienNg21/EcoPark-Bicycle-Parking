@@ -1,0 +1,26 @@
+<%- include('header') %>
+</head> 
+<body>
+    <div>Trang thông tin tài khoản</div>
+    <form action="/infor" method="post">
+        <input type="hidden" name="email" id="email" value="<%= email %>">
+        <label for="ten">Họ và tên</label>
+        <input type="text" name="ten" id="ten" value="<%= ten %>">
+        <label for="sdt">Số điện thoại</label>
+        <input type="text" name="sdt" id="sdt" value="<%= sdt %>">
+        <label for="diachi">Địa chỉ</label>
+        <input type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
+        <label for="cmnd">Số chứng minh nhân dân/ Số căn cước công dân</label>
+        <input type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
+        <label for="gioitinh">Giới tính</label>
+        <input type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
+        <% if (lacudan == true) { %>
+            <label for="ma_cu_dan">Mã cư dân</label>
+            <input type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
+        <% }else { %>
+            <input type="hidden" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
+        <% } %> 
+        <button type="submit">Lưu</button>
+    </form>
+</body>
+<%- include('footer') %> 
