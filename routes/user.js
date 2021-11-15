@@ -43,6 +43,15 @@ userRouter.post("/register", async (req, res) => {
         errors.push({message: "Vui lòng điền tất cả các thông tin."});
     }
 
+    var phone_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if(phone.length != 10 || phone_regex.test(phone) == false){
+        errors.push({message: "Số điện thoại không hợp lệ"});
+    }
+
+    var cmnd_regex =   /^[0-9_-]{9,12}$/;
+    if((CMND.length != 9 && CMND != 12) || cmnd_regex.test(CMND) == false){
+        errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số"});
+    }
     if(password.length < 6){
         errors.push({message: "Mật khẩu cần có ít nhất 6 ký tự."});
     }
