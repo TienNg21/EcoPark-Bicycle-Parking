@@ -1,6 +1,14 @@
 <%- include('header') %> 
 
 <style>
+  body {
+    display: flex;
+  }
+
+  .brand-name {
+    color: #478640;
+  }
+
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -16,7 +24,13 @@
     }
 
     #password,
-    #email {
+    #email,
+    #addr,
+    #phone,
+    #CMND,
+    #gender,
+    #ecopark,
+    #macudan {
         margin-bottom: -1px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -30,10 +44,11 @@
         border-top-right-radius: 0;
     }
    
-    button,
-    a {
-        margin-bottom: 20px;
-    }
+  button,
+  a {
+    margin-bottom: 20px;
+    color: #478640;
+  }
 
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
@@ -58,9 +73,10 @@
             <% } %>
         </div>
 
-        <img class="mb-4" style="margin-top: -1cm;" src="img/logo.png" alt="" width="70" height="70">
+        <img class="mb-4" style="margin-top: -1cm;" src="img/logo.png" alt="" width="30%">
 
-        <h1 class="h3 mb-3 fw-normal" style="margin-top: -0.5cm">EcoPark Bicycle Parking</h1>
+        <img src="img/ecopark.png" width="80%" alt="logo">
+
 
         <div class="form-floating">
             <input type="text" class="form-control" id="name" name="name" required>
@@ -86,27 +102,25 @@
           <label for="CMND">Số CMND/CCCD</label>
         </div>
         
-        <div class="col-md">
+        <div class="col-md ">
           <div class="form-floating">
-            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+            <select class="form-select " id="gender" name="gender" aria-label="Floating label select example">
               
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
               
             </select>
-            <label for="floatingSelectGrid">Chọn giới tính</label>
+            <label for="gender">Chọn giới tính</label>
           </div>
         </div>
-        <div class="col-md">
-          <div class="form-floating">
-            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-              
-              <option value="true">Có</option>
-              <option value="false">Không</option>
-              
-            </select>
-            <label for="floatingSelectGrid">Bạn có phải cư dân EcoPark không?</label>
-          </div>
+        <div class="form-floating">
+          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example">
+            
+            <option value="true">Có</option>
+            <option value="false">Không</option>
+            
+          </select>
+          <label for="ecopark">Bạn có phải cư dân EcoPark không?</label>
         </div>
         <div class="form-floating">
           <input type="text" class="form-control" id="macudan" name="macudan">
@@ -121,14 +135,9 @@
         <div class="form-floating">
             <input type="password" class="form-control" id="password2" name="password2" required>
             <label for="password2">Xác nhận mật khẩu</label>
-        </div>
-        
+        </div>     
 
-        
-
-        
-
-        <button class="w-100 btn btn-lg btn-primary" style="border-radius: 10px ;" type="submit">Đăng ký</button>
+        <button class="w-100 btn btn-lg btn btn-success" style="border-radius: 10px ;" type="submit">Đăng ký</button>
         
       </form>
       <div>
@@ -136,6 +145,8 @@
       </div>
       
     </main>
-    
+    <script>
+
+    </script>
   </body>
 <%- include('footer') %> 

@@ -1,10 +1,56 @@
 <%- include('header') %> 
+    <style>
+        .body {
+            display: block;
+        }
+        .brand-name {
+            margin: 5%;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .btn {
+            margin-bottom: 5%;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+        }
+    </style>
 </head>
+<body class="text-center">
+    <img class="mb-4" src="img/logo.png" alt="" width="30%">
+    <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
 
-<h1>Chào </h1>
-<a href="/map">Bản đồ</a>
-<a href="/infor">Thông tin tài khoản</a>
-<a href="/logout">Đăng xuất</a>
+    <ul>
+        <li>
+            <div class="infor btn">
+                <a href="/infor"><img src="img/taikhoan.png" alt="" width="80%"></a>
+            </div>
+        </li>
+        <li>
+            <div class="map btn">
+                <a href="/map">Bản đồ</a>
+            </div>
+        </li>
+        <li>
+            <div class="rent btn">
+                <a href="/rent">Thuê xe</a>
+            </div>
+        </li>
+        <li>
+            <div class="logout btn">
+                <a href="/logout">Đăng xuất</a>
+            </div> 
+        </li>
+    </ul>
+    
+    
+    
+       
+</body>
 
 
 <%- include('footer') %> 
