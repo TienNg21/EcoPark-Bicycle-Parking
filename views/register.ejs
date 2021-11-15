@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="form-floating">
-          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example">
+          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example" onchange="showmacudan()">
             
             <option value="true">Có</option>
             <option value="false">Không</option>
@@ -145,8 +145,15 @@
       </div>
       
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-
-    </script>
+      function showmacudan() {
+        var x = document.getElementById("ecopark").value;
+        if (x=="false") {
+          $("#macudan").hide();
+        }
+        else $("#macudan").show();
+      }
+      </script>
   </body>
 <%- include('footer') %> 
