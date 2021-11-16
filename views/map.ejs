@@ -4,17 +4,52 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
     <style>
+        .body {
+            display: block;
+        }
+        .brand-name {
+            margin: 5%;
+        }
+        .navi-img {
+            width: 80%;
+        }
+        .btn {
+            margin-bottom: 5%;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+        }
+        img {
+            max-width: 200px;
+        }
         #map { 
-            height: 500px; 
-            width: 800px;    
+            height: 60%;
+            width: 80%;
+            margin: auto;
         }
     </style>
 </head>
-<body>
-    <h1>Hello friends.</h1>
+<body class="text-center">
+    <div class="container">
+        <div class="row  align-items-start">
 
+            <div class="col col-12">
+                <img class="mb-4" src="img/logo.png" alt="" width="30%">
+            </div>
+            <div class="col col-12">
+                <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 infor btn">
+                <img class="mb-4" src="img/picbando.jpg" alt="" width="80%">
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 infor btn">
+                <img class="brand-name" src="img/bandotext.png" width="80%" alt="logo">
+            </div>
+        </div>
+    </div>
     <div id="map"></div>
-
     <!-- SCRIPT  -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script> -->
