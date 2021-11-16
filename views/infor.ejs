@@ -1,26 +1,68 @@
 <%- include('header') %>
 </head> 
 <body>
+    <div class="box-nav d-flex justify-between">
+        <div class="filter">
+            <a href="/"><i class="fas fa-angle-double-left"></i> Trang chủ</a>
+        </div>
+     </div>
     <div>Trang thông tin tài khoản</div>
     <form action="/infor" method="post">
         <input type="hidden" name="email" id="email" value="<%= email %>">
-        <label for="ten">Họ và tên</label>
-        <input type="text" name="ten" id="ten" value="<%= ten %>">
-        <label for="sdt">Số điện thoại</label>
-        <input type="text" name="sdt" id="sdt" value="<%= sdt %>">
-        <label for="diachi">Địa chỉ</label>
-        <input type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
-        <label for="cmnd">Số chứng minh nhân dân/ Số căn cước công dân</label>
-        <input type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
-        <label for="gioitinh">Giới tính</label>
-        <input type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
+        <!--<div class="form-group input-group">
+            <label for="ten">Họ và tên</label>
+            <input type="text" name="ten" id="ten" value="<%= ten %>">
+        </div>-->
+        <div class="input-group">
+            <span style="width:3cm"class="input-group-text span span-primary">Họ và tên</span>
+            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <input class="form-control border border-primary" type="text" name="ten" id="ten" value="<%= ten %>">
+          </div>
+        
+        <div class="input-group">
+            <span style="width:3cm" class="input-group-text">Số điện thoại</span>
+            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <input class="form-control" type="text" name="sdt" id="sdt" value="<%= sdt %>">
+          </div>
+        
+        <!--<div class="form-group">
+            <label for="diachi">Địa chỉ</label>
+            <input type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
+        </div>-->
+        <div class="input-group">
+            <span style="width:3cm" class="input-group-text">Địa chỉ</span>
+            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
+          </div>
+        <!--<div class="form-group">
+            <label for="cmnd">Số chứng minh nhân dân/ Số căn cước công dân</label>
+            <input type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
+        </div>-->
+        <div class="input-group">
+            <span style="width:3cm"class="input-group-text">CMND/CCCD</span>
+            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <input class="form-control" type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
+          </div>
+        <!--<div class="form-group">
+            <label for="gioitinh">Giới tính</label>
+            <input type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
+        </div>-->
+        <div class="input-group">
+            <span style="width:3cm" class="input-group-text">Giới tính</span>
+            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %> ">
+          </div>
         <% if (lacudan == true) { %>
-            <label for="ma_cu_dan">Mã cư dân</label>
-            <input type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
+            <!--<label for="ma_cu_dan">Mã cư dân</label>
+            <input type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">-->
+            <div class="input-group">
+                <span style="width:3cm" class="input-group-text ">Mã cư dân</span>
+                <input class="form-control" type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>" ">
+              </div>
         <% }else { %>
             <input type="hidden" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
         <% } %> 
-        <button type="submit">Lưu</button>
+        <button type="submit" class="btn cltext-dark update btn btn-primary" style="margin-left: 50%;">Lưu</button>
     </form>
 </body>
 <%- include('footer') %> 
