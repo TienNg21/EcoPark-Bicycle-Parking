@@ -9,8 +9,12 @@ initializePassport(passport);
 
 userRouter.get("/", (req, res) => {
     if(req.user == null){
-        res.render("login.ejs");
+        console.log("view dashboard page, but not logged in => login page");
+
+        res.redirect("/login");
     }else{
+        console.log("view dashboard page");
+        
         res.render("dashboard.ejs");
     }
 })
@@ -18,6 +22,8 @@ userRouter.get("/", (req, res) => {
 
 //register
 userRouter.get("/register", (req, res) => {
+    console.log("view register page");
+
     res.render("register.ejs",);
 })
 
@@ -38,10 +44,6 @@ userRouter.post("/register", async (req, res) => {
     });
 
     let errors = [];
-    
-    if(!name || !email || !password || !password2){
-        errors.push({message: "Vui lòng điền tất cả các thông tin."});
-    }
 
     var phone_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if(phone.length != 10 || phone_regex.test(phone) == false){
@@ -100,12 +102,16 @@ userRouter.post("/register", async (req, res) => {
 });
 
 userRouter.get("/logout", (req, res) => {
+    console.log("log out");
+
     req.logOut();
     req.flash('success_msg', "Bạn vừa đăng xuất.");
     res.redirect('/login');
 });
 
 userRouter.get("/login", (req, res) => {
+    console.log("view login page");
+
     res.render("login.ejs");
 })
 
