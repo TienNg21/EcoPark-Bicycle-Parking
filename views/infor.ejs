@@ -4,6 +4,10 @@
     {
         background-color: rgb(187, 211, 235);
     }
+#img1
+    {
+        width: 100px;
+    }
 
 </style>
 <body>
@@ -24,41 +28,41 @@
             
             <div class="container">
                 <div class="text-center">
-                    <img class="mb-4 rounded rounded-circle" src="img/user.png" alt="" width="100px">
+                    <img id="img1" class="mb-4 rounded rounded-circle" src="img/user.png" alt="" >
                 </div> 
                 <div class="row">
                     <form action="/infor" method="post" >
-                        <input type="hidden" name="email" id="email" value="nghuutien@gmail.com">
+                        <input type="hidden" name="email" id="email" value="<%= email %>">
                         
                         <div class="input-group">
                             <span style="width:3cm"class="input-group-text span span-primary">Họ và tên</span>
-                            <input class="form-control border " type="text" name="ten" id="ten" value="abcd">
+                            <input class="form-control border " type="text" name="ten" id="ten" value="<%= ten %>">
                           </div>
                         
                         <div class="input-group">
                             <span style="width:3cm" class="input-group-text">Số điện thoại</span>
-                            <input class="form-control" type="text" name="sdt" id="sdt" value="0923456789">
+                            <input class="form-control" type="text" name="sdt" id="sdt" value="<%= sdt %>">
                           </div>
                         
                         <div class="input-group">
                             <span style="width:3cm" class="input-group-text">Địa chỉ</span>
-                            <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="hanoi123">
+                            <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
                           </div>
                         
                         <div class="input-group">
                             <span style="width:3cm"class="input-group-text">CMND/CCCD</span>
                             <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
-                            <input class="form-control" type="text" name="cmnd" id="cmnd" value="123456789">
+                            <input class="form-control" type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
                           </div>
                         
                         <div class="input-group">
                             <span style="width:3cm" class="input-group-text">Giới tính</span>
-                            <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="Nam   ">
+                            <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
                           </div>
                         
                             <div class="input-group" style="margin-bottom: 0.5cm;">
                                 <span style="width:3cm" class="input-group-text ">Mã cư dân</span>
-                                <input class="form-control" type="text" name="ma_cu_dan" id="ma_cu_dan" value="14531" ">
+                                <input class="form-control" type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
                             </div>
                         <button type="submit" class="d-grid gap-2 col-2 mx-auto btn btn-primary">Lưu</button>
                     </form>
