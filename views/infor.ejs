@@ -8,6 +8,10 @@
     {
         width: 100px;
     }
+#span1,#span2, #span3
+{
+    width: 4.5cm;
+}
 
 </style>
 <body>
@@ -76,17 +80,17 @@
             
             <div class="container col-lg-6 col-sm-12" style="display:none"  id="pass">
                 <div class="row">
-                    <form action = "/infor/password" style="margin-top: 0.5cm;" method="post">
+                    <form  action = "/infor/password" style="margin-top: 0.5cm;" method="post">
                         <div class="input-group">
-                            <span style="width:4cm" class="input-group-text">Nhập mật khẩu cũ</span>
-                            <input type="text" class="form-control border " name="password" id="password">
+                            <span id="span1" class="input-group-text">Nhập mật khẩu cũ</span>
+                            <input type="text" class="form-control border " name="password" id="password" >
                         </div>
                         <div class="input-group">
-                            <span style="width:4cm" class="input-group-text">Nhập mật khẩu mới</span>
-                            <input type="text" class="form-control border " name="password1" id="password1">
+                            <span id="span2" class="input-group-text">Nhập mật khẩu mới</span>
+                            <input type="text" class="form-control border " name="password1" id="password1" >
                         </div>
                         <div class="input-group" style="margin-bottom: 0.5cm;">
-                            <span style="width:4cm" class="input-group-text">Lưu mật khẩu mới</span>
+                            <span id="span3" class="input-group-text">Lưu mật khẩu mới</span>
                             <input type="text" class="form-control border " name="password2" id="password2">
                         </div>
                         <button type="submit" class=" d-grid gap-2 col-2 mx-auto btn btn-primary " onclick="hideDiv('pass')" >Lưu</button>
