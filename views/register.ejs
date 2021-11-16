@@ -1,30 +1,159 @@
-<h1>Đăng ký</h1>
+<%- include('header') %> 
 
-<div>
-    <% if (typeof errors != 'undefined') { %>
-     <% errors.forEach(element => { %>
-        <p><%= element.message %> </p>
-     <% }) %>
-    <% } %>
-</div>
+<style>
+  body {
+    display: flex;
+  }
 
-<form action="/register" method="post">
-    <div>
-        <label for="name">Họ và tên</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <label for="password2">Xác nhận mật khẩu</label>
-        <input type="password" id="password2" name="password2" required>
-    </div>
-    <button type="submit">Đăng ký</button>
-</form>
-<a href="/login">Đăng nhập</a>
+  .brand-name {
+    color: #478640;
+  }
+
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    #name {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    #password,
+    #email,
+    #addr,
+    #phone,
+    #CMND,
+    #gender,
+    #ecopark,
+    #macudan {
+        margin-bottom: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    #password2 {
+        margin-bottom: 20px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+   
+  button,
+  a {
+    margin-bottom: 20px;
+    color: #478640;
+  }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  
+</head>
+
+<body class="text-center"> 
+    
+    <main class="form-signin">
+      <form action="/register" method="post">
+
+        <div>
+            <% if (typeof errors != 'undefined') { %>
+             <% errors.forEach(element => { %>
+                <div  class="alert alert-danger" role="alert"><%= element.message %> </div>
+             <% }) %>
+            <% } %>
+        </div>
+
+        <img class="mb-4" style="margin-top: -1cm;" src="img/logo.png" alt="" width="30%">
+
+        <img class="mb-4" src="img/ecopark.png" width="80%" alt="logo">
+
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" required>
+            <label for="name">Họ và tên</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
+            <label for="email">Email</label>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="addr" name="addr" placeholder="addr" required>
+          <label for="addr">Địa chỉ</label>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" required>
+          <label for="phone">Số điện thoại</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="CMND" name="CMND" placeholder="cmnd" required>
+          <label for="CMND">Số CMND/CCCD</label>
+        </div>
+        
+        <div class="col-md ">
+          <div class="form-floating">
+            <select class="form-select " id="gender" name="gender" aria-label="Floating label select example">
+              
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              
+            </select>
+            <label for="gender">Chọn giới tính</label>
+          </div>
+        </div>
+        <div class="form-floating">
+          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example" onchange="showmacudan()">
+            
+            <option value="true">Có</option>
+            <option value="false">Không</option>
+            
+          </select>
+          <label for="ecopark">Bạn có phải cư dân EcoPark không?</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="macudan" name="macudan" placeholder="macudan">
+          <label for="macudan">Mã cư dân</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password"style="padding: ;" class="form-control" id="password" name="password" placeholder="pass" required>
+            <label for="password">Mật khẩu</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password2" name="password2" placeholder="pass2" required>
+            <label for="password2">Xác nhận mật khẩu</label>
+        </div>     
+
+        <button class="w-100 btn btn-lg btn btn-success" style="border-radius: 10px ;" type="submit">Đăng ký</button>
+        
+      </form>
+      <div>
+        <a id="create" style="text-decoration: none" href="/login">Đăng nhập</a>
+      </div>
+      
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      function showmacudan() {
+        var x = document.getElementById("ecopark").value;
+        if (x=="false") {
+          $("#macudan").hide();
+        }
+        else $("#macudan").show();
+      }
+      </script>
+  </body>
+<%- include('footer') %> 

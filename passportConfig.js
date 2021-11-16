@@ -8,14 +8,14 @@ function initialize(passport){
 
     const authenticateUser = (email, password, done) => {
         pool.query(
-            `SELECT * FROM users WHERE email = $1`,
+            `SELECT * FROM khach_hang WHERE email = $1`,
             [email],
             (err, results) => {
                 if(err){
                     throw err;
                 }
 
-                console.log(results.rows);
+                // console.log(results.rows);
 
                 if(results.rows.length > 0){
                     const user = results.rows[0];
@@ -47,11 +47,11 @@ function initialize(passport){
         )
     );
 
-    passport.serializeUser((user, done) => done(null, user.id));
+    passport.serializeUser((user, done) => done(null, user.id_user));
 
     passport.deserializeUser((id, done) => {
         pool.query(
-            `SELECT * FROM users WHERE id = $1`,
+            `SELECT * FROM khach_hang WHERE id_user = $1`,
             [id],
             (err, results) => {
                 if(err){
