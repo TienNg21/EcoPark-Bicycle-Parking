@@ -1,26 +1,108 @@
-<%- include('header') %>
-</head> 
+<%- include('header') %> 
+<style>
+   
+#img1
+    {
+        width: 100px;
+    }
+#span1,#span2, #span3
+{
+    width: 4.5cm;
+}
+
+</style>
 <body>
-    <div>Trang thông tin tài khoản</div>
-    <form action="/infor" method="post">
-        <input type="hidden" name="email" id="email" value="<%= email %>">
-        <label for="ten">Họ và tên</label>
-        <input type="text" name="ten" id="ten" value="<%= ten %>">
-        <label for="sdt">Số điện thoại</label>
-        <input type="text" name="sdt" id="sdt" value="<%= sdt %>">
-        <label for="diachi">Địa chỉ</label>
-        <input type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
-        <label for="cmnd">Số chứng minh nhân dân/ Số căn cước công dân</label>
-        <input type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
-        <label for="gioitinh">Giới tính</label>
-        <input type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
-        <% if (lacudan == true) { %>
-            <label for="ma_cu_dan">Mã cư dân</label>
-            <input type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
-        <% }else { %>
-            <input type="hidden" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
-        <% } %> 
-        <button type="submit">Lưu</button>
-    </form>
+
+    <div class="box-nav d-flex justify-between" ">
+        <div class="filter">
+            <a href="/"><i class="fas fa-angle-double-left"></i> Trang chủ</a>
+        </div>
+     </div>
+    <div class="text-center fs-2">Thông tin tài khoản</div>
+    <div>
+        <% if (typeof errors != 'undefined'){
+            %> <% errors.forEach(element =>
+            {%> <div class="alert alert-danger" role="alert"><% element.message%></div>
+        <% }) %>
+        <% } %>
+    </div>
+            
+            <div class="container">
+                <div class="text-center">
+                    <img id="img1" class="mb-4 rounded rounded-circle" src="img/user.png" alt="" >
+                </div> 
+                <div class="row">
+                    <form action="/infor" method="post" >
+                        <input type="hidden" name="email" id="email" value="<%= email %>">
+                        
+                        <div class="input-group">
+                            <span style="width:3cm"class="input-group-text span span-primary">Họ và tên</span>
+                            <input class="form-control border " type="text" name="ten" id="ten" value="<%= ten %>">
+                          </div>
+                        
+                        <div class="input-group">
+                            <span style="width:3cm" class="input-group-text">Số điện thoại</span>
+                            <input class="form-control" type="text" name="sdt" id="sdt" value="<%= sdt %>">
+                          </div>
+                        
+                        <div class="input-group">
+                            <span style="width:3cm" class="input-group-text">Địa chỉ</span>
+                            <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
+                          </div>
+                        
+                        <div class="input-group">
+                            <span style="width:3cm"class="input-group-text">CMND/CCCD</span>
+                            <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
+                            <input class="form-control" type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
+                          </div>
+                        
+                        <div class="input-group">
+                            <span style="width:3cm" class="input-group-text">Giới tính</span>
+                            <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
+                          </div>
+                        
+                            <div class="input-group" style="margin-bottom: 0.5cm;">
+                                <span style="width:3cm" class="input-group-text ">Mã cư dân</span>
+                                <input class="form-control" type="text" name="ma_cu_dan" id="ma_cu_dan" value="<%= macudan %>">
+                            </div>
+                        <button type="submit" class="d-grid gap-2 col-2 mx-auto btn btn-primary">Lưu</button>
+                    </form>
+                    
+                </div>
+            </div>  
+           
+            <hr>
+            <button type="submit" class=" d-grid gap-2 col-lg-4 mx-auto btn btn-danger " style="margin-left: 10%;" onclick="showDiv('pass')">Thay đổi mật khẩu</button>
+           
+            
+            <div class="container col-lg-6 col-sm-12" style="display:none"  id="pass">
+                <div class="row">
+                    <form  action = "/infor/password" style="margin-top: 0.5cm;" method="post">
+                        <div class="input-group">
+                            <span id="span1" class="input-group-text">Nhập mật khẩu cũ</span>
+                            <input type="text" class="form-control border " name="password" id="password" >
+                        </div>
+                        <div class="input-group">
+                            <span id="span2" class="input-group-text">Nhập mật khẩu mới</span>
+                            <input type="text" class="form-control border " name="password1" id="password1" >
+                        </div>
+                        <div class="input-group" style="margin-bottom: 0.5cm;">
+                            <span id="span3" class="input-group-text">Lưu mật khẩu mới</span>
+                            <input type="text" class="form-control border " name="password2" id="password2">
+                        </div>
+                        <button type="submit" class=" d-grid gap-2 col-2 mx-auto btn btn-primary " onclick="hideDiv('pass')" >Lưu</button>
+                    </form> 
+                    
+                </div>
+            </div>
+       
 </body>
+<script type="text/javascript">
+        function showDiv(toggle){
+            document.getElementById(toggle).style.display = 'block';}
+        function hideDiv(toggle){
+            document.getElementById(toggle).style.display = 'none';
+        }
+</script>
 <%- include('footer') %> 
+ 
