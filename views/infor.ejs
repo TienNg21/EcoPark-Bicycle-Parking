@@ -1,6 +1,7 @@
 <%- include('header') %>
 </head> 
 <body>
+    <%- include('navbar', {page: "Tài khoản"}) %> 
     <div>Trang thông tin tài khoản</div>
     <form action="/infor" method="post">
         <input type="hidden" name="email" id="email" value="<%= email %>">
