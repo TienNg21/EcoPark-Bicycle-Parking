@@ -1,6 +1,7 @@
 const express = require('express');
 const inforRouter = express.Router();
 const { pool } = require("../dbConfig");
+const bcrypt = require("bcrypt");
 
 let errors = [];
 
@@ -11,7 +12,7 @@ inforRouter.get('/', (req, res) => {
     console.log("view infor page");
     
     var userInfor = req.user;
-    // console.log(userInfor);
+    console.log(userInfor);
     res.render('infor.ejs', {
         ten: userInfor.ten,
         email: userInfor.email,
@@ -36,13 +37,14 @@ inforRouter.post('/', async (req, res) => {
     }
 
     var cmnd_regex =   /^[0-9_-]{9,12}$/;
-    if((CMND.length != 9 && CMND != 12) || cmnd_regex.test(CMND) == false){
+    if((CMND.length != 9 && CMND.length != 12) || cmnd_regex.test(CMND) == false){
         errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số"});
     }
     if(errors.length > 0){
         // console.log(errors);
         res.redirect("/infor");
     }else
+        // errors = []
         pool.query(
             `UPDATE khach_hang
             SET ten = $1, dia_chi = $2, sdt = $3, ma_cu_dan = $4, cmnd = $5, gioi_tinh = $6
@@ -58,5 +60,11 @@ inforRouter.post('/', async (req, res) => {
         )
 })
 
+inforRouter.post('/password', (req, res)=>{
+    let {password, password1, password2} = req.body
+    let user = req.user
+    if(!password || !password1 || !password2) errors.push({message: 'Vui lòng điền đầy đủ mật khẩu'})
+
+})
 
 module.exports = inforRouter;
