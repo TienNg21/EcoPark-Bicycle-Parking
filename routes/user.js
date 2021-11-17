@@ -51,7 +51,7 @@ userRouter.post("/register", async (req, res) => {
     }
 
     var cmnd_regex =   /^[0-9_-]{9,12}$/;
-    if((CMND.length != 9 && CMND != 12) || cmnd_regex.test(CMND) == false){
+    if((CMND.length != 9 && CMND.length != 12) || cmnd_regex.test(CMND) == false){
         errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số"});
     }
     if(password.length < 6){

@@ -25,7 +25,7 @@
     <div>
         <% if (typeof errors != 'undefined'){
             %> <% errors.forEach(element =>
-            {%> <div class="alert alert-danger" role="alert"><% element.message%></div>
+            {%> <div class="alert alert-danger" role="alert"><%= element.message%></div>
         <% }) %>
         <% } %>
     </div>
@@ -98,6 +98,7 @@
             
         </div>
     </div>
+    <br>
 </body>
 <script type="text/javascript">
         function showDiv(toggle){
