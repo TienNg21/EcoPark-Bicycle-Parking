@@ -79,26 +79,26 @@
 
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="name" name="name" placeholder="name" required>
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" required value='<%= user.name%>'>
             <label for="name">Họ và tên</label>
         </div>
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email" required value='<%= user.email%>'>
             <label for="email">Email</label>
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="addr" name="addr" placeholder="addr" required>
+          <input type="text" class="form-control" id="addr" name="addr" placeholder="addr" required value='<%= user.addr%>'>
           <label for="addr">Địa chỉ</label>
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" required>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" required value='<%= user.phone%>'>
           <label for="phone">Số điện thoại</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="CMND" name="CMND" placeholder="cmnd" required>
+          <input type="text" class="form-control" id="CMND" name="CMND" placeholder="cmnd" required value='<%= user.CMND%>'>
           <label for="CMND">Số CMND/CCCD</label>
         </div>
         
@@ -106,8 +106,8 @@
           <div class="form-floating">
             <select class="form-select " id="gender" name="gender" aria-label="Floating label select example">
               
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
+              <option value="Nam" <%= user.gender == 'Nam' ? 'selected' : ''%> >Nam</option>
+              <option value="Nữ" <%= user.gender == 'Nữ' ? 'selected' : ''%> >Nữ</option>
               
             </select>
             <label for="gender">Chọn giới tính</label>

@@ -7,6 +7,19 @@ const initializePassport = require("../passportConfig");
 
 initializePassport(passport);
 
+var user = {
+    name: '',
+    email: '',
+    addr: '', 
+    phone: '', 
+    lacudan: '', 
+    macudan: '', 
+    CMND: '', 
+    gender: '', 
+    password: '', 
+    password2: ''
+}
+
 userRouter.get("/", (req, res) => {
     if(req.user == null){
         console.log("view dashboard page, but not logged in => login page");
@@ -24,35 +37,27 @@ userRouter.get("/", (req, res) => {
 userRouter.get("/register", (req, res) => {
     console.log("view register page");
 
-    res.render("register.ejs",);
+    res.render("register.ejs", {user: user});
 })
 
 userRouter.post("/register", async (req, res) => {
     let { name, email, addr, phone, lacudan, macudan, CMND, gender, password, password2} = req.body;
+    user = req.body
 
-    console.log({
-        name,
-        email,
-        addr,
-        phone,
-        lacudan,
-        macudan,
-        CMND,
-        gender,
-        password,
-        password2
-    });
+    console.log(user);
 
     let errors = [];
 
     var phone_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if(phone.length != 10 || phone_regex.test(phone) == false){
-        errors.push({message: "Số điện thoại không hợp lệ"});
+        user.phone = ''
+        errors.push({message: "Số điện thoại không hợp lệ."});
     }
 
     var cmnd_regex =   /^[0-9_-]{9,12}$/;
     if((CMND.length != 9 && CMND.length != 12) || cmnd_regex.test(CMND) == false){
-        errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số"});
+        user.CMND = ''
+        errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số."});
     }
     if(password.length < 6){
         errors.push({message: "Mật khẩu cần có ít nhất 6 ký tự."});
@@ -63,7 +68,7 @@ userRouter.post("/register", async (req, res) => {
     }
 
     if(errors.length > 0){
-        res.render("register", {errors: errors});
+        res.render("register", {errors: errors, user: user});
     }else{
         // form validation has pass
 
@@ -76,28 +81,67 @@ userRouter.post("/register", async (req, res) => {
                 // console.log(results.rows.length);
 
                 if(results.rows.length > 0){
+                    user.email = ''
                     errors.push({message: "Email này đã đăng ký với tài khoản khác."});
-                    res.render("register", {errors: errors});
-                }else{
-                    
+                }
+                
                     pool.query(
-                        `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-                        [name, email, addr, phone, lacudan, macudan, CMND, gender, hashedPassword],
-                        (err, results) => {
-                            if(err){
-                                throw err;
+                        'SELECT * FROM khach_hang WHERE cmnd = $1', [CMND], (err, results)=>{
+                            if(results.rows.length > 0){
+                                user.CMND = ''
+                                errors.push({message: "Số CMND/CCCD đã được đăng ký với tài khoản khác."})
                             }
-                            // console.log(results.rows);
 
-                            req.flash('success_msg', "Đăng ký thành công. Vui lòng đăng nhập.");
-                            res.redirect('login');
+                                if(lacudan == 'true'){
+                                    pool.query(
+                                        'SELECT * FROM khach_hang WHERE ma_cu_dan = $1', [macudan], (err, resultss)=>{
+                                            if(resultss.rows.length > 0){
+                                                errors.push({message: "Mã cư dân đã được đăng ký với tài khoản khác."})
+
+                                            }
+                                        
+                                                if(errors.length > 0) res.render('register', {errors: errors, user: user})
+                                                else
+                                                    pool.query(
+                                                        `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
+                                                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+                                                        [name, email, addr, phone, lacudan, macudan, CMND, gender, hashedPassword],
+                                                        (err, results) => {
+                                                            if(err){
+                                                                throw err;
+                                                            }
+                                                            
+                                                            req.flash('success_msg', "Đăng ký thành công. Vui lòng đăng nhập.");
+                                                            res.redirect('login');
+                                                        }
+                                                    )
+                                          
+                                        }
+                                    )
+                                }
+                                else{
+                                    if(errors.length > 0) res.render('register', {errors: errors, user: user})
+                                    else
+                                        pool.query(
+                                            `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
+                                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+                                            [name, email, addr, phone, lacudan, macudan, CMND, gender, hashedPassword],
+                                            (err, results) => {
+                                                if(err){
+                                                    throw err;
+                                                }
+                                                
+                    
+                                                req.flash('success_msg', "Đăng ký thành công. Vui lòng đăng nhập.");
+                                                res.redirect('login');
+                                            }
+                                        )
+                                }
+                            
                         }
                     )
-                }
-
             }
-        );
+        )
     }
 });
 
