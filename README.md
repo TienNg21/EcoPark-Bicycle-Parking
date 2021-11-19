@@ -1,5 +1,5 @@
 # Nhập môn Công nghệ Phần mềm 20211
-![logo](https://mondaycareer.com/wp-content/uploads/2020/08/eco-park.png)
+
 ## [EcoPark Bicycle Parking ](https://ecopark-bicycle-parking.herokuapp.com)
 
 
