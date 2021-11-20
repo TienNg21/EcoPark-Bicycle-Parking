@@ -40,6 +40,10 @@ inforRouter.post('/', async (req, res) => {
     if((CMND.length != 9 && CMND.length != 12) || cmnd_regex.test(CMND) == false){
         errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số"});
     }
+
+    if(newUser.gioi_tinh != "Nam" && newUser.gioi_tinh != "Nữ"){
+        errors.push({message: "Giới tính phải là Nam hoặc Nữ"});
+    }
     if(errors.length > 0){
         // console.log(errors);
         res.redirect("/infor");
