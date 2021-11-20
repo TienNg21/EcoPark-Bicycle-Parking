@@ -25,7 +25,7 @@
             max-width: 200px;
         }
         #map { 
-            height: 60%;
+            height: 80%;
             width: 80%;
             margin: auto;
         }
@@ -54,6 +54,7 @@
         </div>
     </div>
     <div id="map"></div>
+   <br>
     <!-- SCRIPT  -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script> -->
@@ -73,7 +74,7 @@
         }).addTo(mymap);
 
 
-        var lan1 = L.marker([20.964863158156387, 105.93196210349998]).addTo(mymap);
+        var lan1 = L.marker([20.96375241407842, 105.92322986991286]).addTo(mymap);
         // lan1.bindPopup("<h3>Lán 1</h3>", {autoClose: false, permanent: true}).openPopup();
         lan1.bindTooltip("<h3>Bãi 1</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
         lan1.on('click', (e)=>{
@@ -87,6 +88,13 @@
         lan2.bindTooltip("<h3>Bãi 2</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})  
         lan2.on('click', (e)=>{
             window.location.href += "/2";
+        })
+
+        var lan2 = L.marker([20.957482446398, 105.93568661614833]).addTo(mymap);
+        // lan2.bindPopup("<h3>Lán 2</h3>", {autoClose: false}).openPopup();
+        lan2.bindTooltip("<h3>Bãi 3</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})  
+        lan2.on('click', (e)=>{
+            window.location.href += "/3";
         })
 
         var polygon1 = L.polygon([

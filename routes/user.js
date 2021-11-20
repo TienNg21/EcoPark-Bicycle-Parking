@@ -7,7 +7,7 @@ const initializePassport = require("../passportConfig");
 
 initializePassport(passport);
 
-var user = {
+const user = {
     name: '',
     email: '',
     addr: '', 
@@ -42,21 +42,23 @@ userRouter.get("/register", (req, res) => {
 
 userRouter.post("/register", async (req, res) => {
     let { name, email, addr, phone, lacudan, macudan, CMND, gender, password, password2} = req.body;
-    user = req.body
+    // user = req.body
 
-    console.log(user);
+    console.log(req.body);
 
     let errors = [];
 
     var phone_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if(phone.length != 10 || phone_regex.test(phone) == false){
-        user.phone = ''
+        // user.phone = ''
+        req.body.phone = ''
         errors.push({message: "Số điện thoại không hợp lệ."});
     }
 
     var cmnd_regex =   /^[0-9_-]{9,12}$/;
     if((CMND.length != 9 && CMND.length != 12) || cmnd_regex.test(CMND) == false){
-        user.CMND = ''
+        // user.CMND = ''
+        req.body.CMND = ''
         errors.push({message: "Số CMND/CCCD phải gồm 9 hoặc 12 số."});
     }
     if(password.length < 6){
@@ -68,7 +70,7 @@ userRouter.post("/register", async (req, res) => {
     }
 
     if(errors.length > 0){
-        res.render("register", {errors: errors, user: user});
+        res.render("register", {errors: errors, user: req.body});
     }else{
         // form validation has pass
 
@@ -81,14 +83,16 @@ userRouter.post("/register", async (req, res) => {
                 // console.log(results.rows.length);
 
                 if(results.rows.length > 0){
-                    user.email = ''
+                    // user.email = ''
+                    req.body.email = ''
                     errors.push({message: "Email này đã đăng ký với tài khoản khác."});
                 }
                 
                     pool.query(
                         'SELECT * FROM khach_hang WHERE cmnd = $1', [CMND], (err, results)=>{
                             if(results.rows.length > 0){
-                                user.CMND = ''
+                                // user.CMND = ''
+                                req.body.CMND = ''
                                 errors.push({message: "Số CMND/CCCD đã được đăng ký với tài khoản khác."})
                             }
 
@@ -100,7 +104,7 @@ userRouter.post("/register", async (req, res) => {
 
                                             }
                                         
-                                                if(errors.length > 0) res.render('register', {errors: errors, user: user})
+                                                if(errors.length > 0) res.render('register', {errors: errors, user: req.body})
                                                 else
                                                     pool.query(
                                                         `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
@@ -120,7 +124,7 @@ userRouter.post("/register", async (req, res) => {
                                     )
                                 }
                                 else{
-                                    if(errors.length > 0) res.render('register', {errors: errors, user: user})
+                                    if(errors.length > 0) res.render('register', {errors: errors, user: req.body})
                                     else
                                         pool.query(
                                             `INSERT INTO khach_hang (ten, email, dia_chi, sdt, la_cu_dan, ma_cu_dan, CMND, gioi_tinh, password)
