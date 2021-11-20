@@ -25,10 +25,21 @@
     <div>
         <% if (typeof errors != 'undefined'){
             %> <% errors.forEach(element =>
-            {%> <div class="alert alert-danger" role="alert"><%= element.message%></div>
+            {%> <div class="alert alert-danger alert-dismissible fade show" role="alert"><%= element.message%></div>
         <% }) %>
         <% } %>
     </div>
+
+    <div>
+        <% if (typeof success != 'undefined'){
+            %> <% success.forEach(element =>
+            {%> <div class="alert alert-success alert-dismissible fade show" role="alert"><%= element.message%></div>
+        <% }) %>
+        <% } %>
+    </div>
+    
+    </div>
+    
             
     <div class="container">
         <div class="text-center">
@@ -36,32 +47,32 @@
         </div> 
         <div class="row">
             <form action="/infor" method="post" >
-                <input type="hidden" name="email" id="email" value="<%= email %>">
+                <input type="hidden" name="email" id="email" value="<%= email %>" required>
                 
                 <div class="input-group">
                     <span style="width:3cm"class="input-group-text span span-primary">Họ và tên</span>
-                    <input class="form-control border " type="text" name="ten" id="ten" value="<%= ten %>">
+                    <input class="form-control border " type="text" name="ten" id="ten" value="<%= ten %>" required>
                     </div>
                 
                 <div class="input-group">
                     <span style="width:3cm" class="input-group-text">Số điện thoại</span>
-                    <input class="form-control" type="text" name="sdt" id="sdt" value="<%= sdt %>">
+                    <input class="form-control" type="text" name="sdt" id="sdt" value="<%= sdt %>" required>
                     </div>
                 
                 <div class="input-group">
                     <span style="width:3cm" class="input-group-text">Địa chỉ</span>
-                    <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>">
+                    <input class="form-control" type="text" name="dia_chi" id="dia_chi" value="<%= diachi %>" required>
                     </div>
                 
                 <div class="input-group">
                     <span style="width:3cm"class="input-group-text">CMND/CCCD</span>
                     <!--<textarea class="form-control" aria-label="With textarea"></textarea>-->
-                    <input class="form-control" type="text" name="cmnd" id="cmnd" value="<%= cmnd %>">
+                    <input class="form-control" type="text" name="cmnd" id="cmnd" value="<%= cmnd %>" required>
                     </div>
                 
                 <div class="input-group">
                     <span style="width:3cm" class="input-group-text">Giới tính</span>
-                    <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>">
+                    <input class="form-control" type="text" name="gioi_tinh" id="gioi_tinh" value="<%= gioitinh %>" required>
                     </div>
                 
                     <div class="input-group" style="margin-bottom: 0.5cm;">
@@ -83,15 +94,15 @@
             <form  action = "/infor/password" style="margin-top: 0.5cm;" method="post">
                 <div class="input-group">
                     <span id="span1" class="input-group-text">Nhập mật khẩu cũ</span>
-                    <input type="text" class="form-control border " name="password" id="password" >
+                    <input type="password" class="form-control border " name="password" id="password" required>
                 </div>
                 <div class="input-group">
                     <span id="span2" class="input-group-text">Nhập mật khẩu mới</span>
-                    <input type="text" class="form-control border " name="password1" id="password1" >
+                    <input type="password" class="form-control border " name="password1" id="password1" required>
                 </div>
                 <div class="input-group" style="margin-bottom: 0.5cm;">
                     <span id="span3" class="input-group-text">Lưu mật khẩu mới</span>
-                    <input type="text" class="form-control border " name="password2" id="password2">
+                    <input type="password" class="form-control border " name="password2" id="password2" required>
                 </div>
                 <button type="submit" class=" d-grid gap-2 col-2 mx-auto btn btn-primary " onclick="hideDiv('pass')" >Lưu</button>
             </form> 
