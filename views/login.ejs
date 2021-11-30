@@ -38,6 +38,7 @@
       font-size: 3.5rem;
     }
   }
+
 </style>
 
 
@@ -48,20 +49,24 @@
       <form action="/login" method="post">
 
         <% if (messages.success_msg) { %>
-          <div class="alert alert-success" role="alert"><%= messages.success_msg %> </div>
+          <div class="alert alert-success alert-dismissible fade show" role="alert"><%= messages.success_msg %> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         <% } %>
         
         <% if (messages.error) { %>
-            <div class="alert alert-danger" role="alert"><%= messages.error %> </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert"><%= messages.error %> 
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         <% } %>
 
         <img class="mb-4" src="img/logo.png" alt="" width="30%">
 
-        <img src="img/ecopark.png" width="80%" alt="logo">
+        <img class="mb-4" src="img/ecopark.png" width="80%"  alt="logo">
 
         <div class="form-floating">
           <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
-          <label for="floatingInput">Email</label>
+          <label for="email">Email</label>
         </div>
 
         <div class="form-floating">

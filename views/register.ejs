@@ -68,37 +68,39 @@
         <div>
             <% if (typeof errors != 'undefined') { %>
              <% errors.forEach(element => { %>
-                <div  class="alert alert-danger" role="alert"><%= element.message %> </div>
+                <div  class="alert alert-danger alert-dismissible fade show" role="alert"><%= element.message %> 
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
              <% }) %>
             <% } %>
         </div>
 
         <img class="mb-4" style="margin-top: -1cm;" src="img/logo.png" alt="" width="30%">
 
-        <img src="img/ecopark.png" width="80%" alt="logo">
+        <img class="mb-4" src="img/ecopark.png" width="80%" alt="logo">
 
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" required value='<%= user.name%>'>
             <label for="name">Họ và tên</label>
         </div>
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email" required value='<%= user.email%>'>
             <label for="email">Email</label>
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="addr" name="addr" required>
+          <input type="text" class="form-control" id="addr" name="addr" placeholder="addr" required value='<%= user.addr%>'>
           <label for="addr">Địa chỉ</label>
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="phone" name="phone" required>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" required value='<%= user.phone%>'>
           <label for="phone">Số điện thoại</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="CMND" name="CMND" required>
+          <input type="text" class="form-control" id="CMND" name="CMND" placeholder="cmnd" required value='<%= user.CMND%>'>
           <label for="CMND">Số CMND/CCCD</label>
         </div>
         
@@ -106,15 +108,15 @@
           <div class="form-floating">
             <select class="form-select " id="gender" name="gender" aria-label="Floating label select example">
               
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
+              <option value="Nam" <%= user.gender == 'Nam' ? 'selected' : ''%> >Nam</option>
+              <option value="Nữ" <%= user.gender == 'Nữ' ? 'selected' : ''%> >Nữ</option>
               
             </select>
             <label for="gender">Chọn giới tính</label>
           </div>
         </div>
         <div class="form-floating">
-          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example">
+          <select class="form-select" id="ecopark" name="lacudan" aria-label="Floating label select example" onchange="showmacudan()">
             
             <option value="true">Có</option>
             <option value="false">Không</option>
@@ -123,17 +125,17 @@
           <label for="ecopark">Bạn có phải cư dân EcoPark không?</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="macudan" name="macudan">
+          <input type="text" class="form-control" id="macudan" name="macudan" placeholder="macudan">
           <label for="macudan">Mã cư dân</label>
         </div>
 
         <div class="form-floating">
-            <input type="password"style="padding: ;" class="form-control" id="password" name="password" required>
+            <input type="password"style="padding: ;" class="form-control" id="password" name="password" placeholder="pass" required>
             <label for="password">Mật khẩu</label>
         </div>
 
         <div class="form-floating">
-            <input type="password" class="form-control" id="password2" name="password2" required>
+            <input type="password" class="form-control" id="password2" name="password2" placeholder="pass2" required>
             <label for="password2">Xác nhận mật khẩu</label>
         </div>     
 
@@ -145,8 +147,15 @@
       </div>
       
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-
-    </script>
+      function showmacudan() {
+        var x = document.getElementById("ecopark").value;
+        if (x=="false") {
+          $("#macudan").hide();
+        }
+        else $("#macudan").show();
+      }
+      </script>
   </body>
 <%- include('footer') %> 

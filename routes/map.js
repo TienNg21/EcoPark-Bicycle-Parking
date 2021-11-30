@@ -6,6 +6,8 @@ mapRouter.get("/", (req, res) => {
     if(req.user == null){
         res.redirect('../login');
     }
+    console.log("view map page");
+
     res.render("map.ejs");
 })
 
