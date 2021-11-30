@@ -25,10 +25,15 @@ userRouter.get("/", (req, res) => {
         console.log("view dashboard page, but not logged in => login page");
 
         res.redirect("/login");
-    }else{
-        console.log("view dashboard page");
-        
-        res.render("dashboard.ejs");
+    }else { 
+        console.log(req.user.email);
+        if (req.user.email == process.env.EMAIL_ADMIN) {
+            console.log("view admin page");
+            res.redirect("/admin");
+        } else {
+            console.log("view dashboard page");
+            res.render("dashboard.ejs");
+        }
     }
 })
 
