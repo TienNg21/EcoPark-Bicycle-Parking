@@ -25,6 +25,9 @@ const user = require('./routes/user');
 const map = require('./routes/map');
 const infor = require('./routes/infor');
 
+const admin = require('./routes/admin');
+
+
 //user
 app.use('/', user);
 app.use('/map', map);
@@ -32,6 +35,7 @@ app.use('/infor', infor); //Thông tin tài khoản
 // app.use('/history', history);
 
 //admin
+app.use('/admin',admin);
 
 app.listen((process.env.PORT || 3000), (req, res) => {
     console.log("Run in port 3000");
