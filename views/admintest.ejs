@@ -1,0 +1,101 @@
+<%- include('header.ejs') %> 
+    <style>
+        body {
+            display: block;
+        }
+    </style>
+</header>
+<body>
+    <h1>test admin page</h1>
+    <div class="xe">
+        <h2>Xe</h2>
+        <% if (xe.length === 0) { %>
+            <p>Không có xe nào</p>
+        <% } %>
+        <% for( let index = 0; index < xe.length; index++ ) { %>
+            <div>
+                <form action="/admin/xe" method="post">
+                    <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
+                    <input type="text" id="id_user" value="<%= xe[index].id_user %>">
+                    <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
+                    <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
+                    <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
+                    <button type="submit" name="update-button">Cập nhật</button>
+                    <button type="submit" name="delete-button">Xóa</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="baixe">
+        <h2>Bai xe</h2>
+        <% if (baixe.length === 0) { %>
+            <p>Không có bãi xe nào</p>
+        <% } %>
+        <% for( let index = 0; index < baixe.length; index++ ) { %>
+            <div>
+                <form action="/admin/baixe" method="post">
+                    <input type="hidden" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>">
+                    <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
+                    <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
+                    <button type="submit" name="update-button">Cập nhật</button>
+                    <button type="submit" name="delete-button">Xóa</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+    
+    <div class="khach_hang">
+        <h2>Danh sách người dùng</h2>
+
+        <% if (khachhang.length === 0) { %>
+            <p>Không có người dùng nào</p>
+        <% } %>
+
+        <form action="">
+            <input type="text" id="email" value="Email" readonly>
+            <input type="text" id="ten" value="Họ và tên" readonly>
+            <input type="text" id="cmnd" value="CMND/CCCD" readonly>
+        </form>
+
+        <% for( let index = 0; index < khachhang.length; index++ ) { %>
+            <div>
+                <form action="/admin/khachhang" method="post">
+                    <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
+                    <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
+                    <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
+
+                    <button type="submit" name="update-button">Cập nhật</button>
+                    <button type="submit" name="delete-button">Xóa</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+    <div class="price">
+        <h2>Giá thuê xe</h2>
+        <div>
+            <form action="/admin/price" method="post">
+                <label for="one">Giá 1 giờ</label>
+                <input type="text" id="one" name="one" value="<%= price.one %>">
+                <button type="submit" name="action" value="one">Cập nhật</button>
+            </form>
+            <form action="/admin/price" method="post">
+                <label for="two">Giá 2 giờ</label>
+                <input type="text" id="two" name="three" value="<%= price.two %>">
+                <button type="submit" name="action" value="two">Cập nhật</button>
+            </form>
+            <form action="/admin/price" method="post">
+                <label for="three">Giá 3 giờ</label>
+                <input type="text" id="three" name="three" value="<%= price.three %>">
+                <button type="submit" name="action" value="three">Cập nhật</button>
+            </form>
+            <form action="/admin/price" method="post">
+                <label for="late30">Giá muộn 30 phút</label>
+                <input type="text" id="three" name="late30" value="<%= price.late30 %>">
+                <button type="submit" name="action" value="late30">Cập nhật</button>
+            </form>
+        </div>
+    </div>
+    
+    <a href="/admin/logout">dang xuat</a>
+</body>

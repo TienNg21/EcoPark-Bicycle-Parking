@@ -26,7 +26,7 @@ userRouter.get("/", (req, res) => {
 
         res.redirect("/login");
     }else { 
-        console.log(req.user.email);
+        // console.log(req.user.email);
         if (req.user.email == process.env.EMAIL_ADMIN) {
             console.log("view admin page");
             res.redirect("/admin");
