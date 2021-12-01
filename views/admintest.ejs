@@ -15,6 +15,7 @@
         <% for( let index = 0; index < xe.length; index++ ) { %>
             <div>
                 <form action="/admin/xe" method="post">
+                    <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
                     <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
                     <input type="text" id="id_user" value="<%= xe[index].id_user %>">
                     <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
@@ -25,6 +26,18 @@
                 </form>
             </div>
         <% } %>
+
+        <h2>Them xe</h2>
+        <form action="/admin/themxe" method="post">
+            <input type="text" name="id_xe_them" id="id_xe_them">
+            <select name="id_bai_xe_them" id="id_bai_xe_them">
+                <% for( let index = 0; index < baixe.length; index++ ) { %>
+                    <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
+                <% } %>
+            </select>
+            <input type="text" name="loai_xe_them">
+            <button type="submit">Thêm xe</button>
+        </form>
     </div>
 
     <div class="baixe">
