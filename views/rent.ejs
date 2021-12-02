@@ -1,6 +1,99 @@
 <%- include('header') %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
+    <style>
+        .body {
+            display: block;
+        }
+        .logo {
+            max-width: 200px;
+        }
+        .brand-name {
+            margin: 5%;
+            max-width: 200px;
+        }
+        .navi-img {
+            width: 80%;
+        }
+        .btn {
+            margin-bottom: 5%;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .rent-img {
+            margin-bottom: 30px;
+            max-width: 80%;
+        }
+    </style>
+
 </head>
-<body>
+
+<body class="text-center">
     <%- include('navbar', {page: "Thuê xe"}) %> 
+    <div class="container">
+        <div class="row">
+            <div class="col col-12">
+                <img class="mb-4 logo" src="img/logo.png" alt="" width="30%">
+            </div>
+            <div class="col col-12">
+                <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
+            </div>
+            <div class="col col-12">
+                <a href="/map"><img src="img/chonbaixe.png" alt="" class="rent-img"></a>
+            </div>
+            <div class="col col-12">
+                <a href=""><img src="img/chonxe.png" alt="" class="rent-img"></a>
+            </div>
+            <div class="col-col-12">
+                <a href=""><img src="img/thoigianthue.png" alt="" class="rent-img"></a>
+                
+            </div>
+
+            <div class="col col-12">
+                <h1>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h1>
+
+                <table class="table table-info table table-borderless ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Thời gian thuê (giờ)</th>
+                        <th scope="col">Số tiền phải trả (nghìn đồng)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>50000</td>
+                    
+                    </tr>
+                    <tr>
+                        
+                        <td>2</td>
+                        <td>70000</td>
+                    
+                    </tr>
+                    <tr>
+                        
+                        <td >3</td>
+                        <td>100000</td>
+                    </tr>
+                    </tbody>
+                </table> 
+            </div>
+
+
+        </div>
+    </div>
+
+
 </body> 
 <%- include('footer') %> 
