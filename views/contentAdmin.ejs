@@ -1,3 +1,14 @@
+<style>
+input{
+    
+    border-radius: 5px;
+    height: 1.1cm;
+    margin-top: 0.2cm;
+    margin-bottom: 0.2cm;
+    
+}
+
+</style>
 <div>
     <h2>Danh số thuê xe</h2>
     <div id="doanhso" class="doanhso admin-content">
@@ -24,8 +35,8 @@
                             <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
                             <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
                             <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
-                            <button type="submit" name="update-button">Cập nhật</button>
-                            <button type="submit" name="delete-button">Xóa</button>
+                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
@@ -55,8 +66,8 @@
                             <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
                             <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
                             <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
-                            <button type="submit" name="update-button">Cập nhật</button>
-                            <button type="submit" name="delete-button">Xóa</button>
+                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="delete-button"class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
@@ -90,8 +101,8 @@
                             <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
                             <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
 
-                            <button type="submit" name="update-button">Cập nhật</button>
-                            <button type="submit" name="delete-button">Xóa</button>
+                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
@@ -105,22 +116,22 @@
             <form action="/admin/price" method="post">
                 <label for="one">Giá 1 giờ</label>
                 <input type="text" id="one" name="pricechange" value="<%= price.one_h %>">
-                <button type="submit" name="action" value="one_h">Cập nhật</button>
+                <button type="submit" name="action" value="one_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="two">Giá 2 giờ</label>
                 <input type="text" id="two" name="pricechange" value="<%= price.two_h %>">
-                <button type="submit" name="action" value="two_h">Cập nhật</button>
+                <button type="submit" name="action" value="two_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="three">Giá 3 giờ</label>
                 <input type="text" id="three" name="pricechange" value="<%= price.three_h %>">
-                <button type="submit" name="action" value="three_h">Cập nhật</button>
+                <button type="submit" name="action" value="three_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="late30">Giá muộn 30 phút</label>
                 <input type="text" id="three" name="pricechange" value="<%= price.delay_h %>">
-                <button type="submit" name="action" value="delay_h">Cập nhật</button>
+                <button type="submit" name="action" value="delay_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
             </form>
         </div>
     </div>
