@@ -1,21 +1,34 @@
 <div>
-    <div class="xe">
-        <h2>Xe</h2>
+    <h2>Danh số thuê xe</h2>
+    <div id="doanhso" class="doanhso admin-content">
+        -sprint sau
+    </div>
+
+    <h2>Lịch sử thuê xe</h2>
+    <div id="lsu" class="lsu admincontent">
+        -sprint sau
+    </div>
+
+    <h2>Xe</h2>
+    <div id="xe" class="xe admin-content">
         <% if (xe.length === 0) { %>
             <p>Không có xe nào</p>
-        <% } %>
-        <% for( let index = 0; index < xe.length; index++ ) { %>
-            <div>
-                <form action="/admin/xe" method="post">
-                    <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
-                    <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
-                    <input type="text" id="id_user" value="<%= xe[index].id_user %>">
-                    <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
-                    <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
-                    <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
-                    <button type="submit" name="update-button">Cập nhật</button>
-                    <button type="submit" name="delete-button">Xóa</button>
-                </form>
+        <% }else{ %>
+            <div class="admin-subcontent">
+                <% for( let index = 0; index < xe.length; index++ ) { %>
+                    <div>
+                        <form action="/admin/xe" method="post">
+                            <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
+                            <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
+                            <input type="text" id="id_user" value="<%= xe[index].id_user %>">
+                            <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
+                            <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
+                            <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
+                            <button type="submit" name="update-button">Cập nhật</button>
+                            <button type="submit" name="delete-button">Xóa</button>
+                        </form>
+                    </div>
+                <% } %>
             </div>
         <% } %>
 
@@ -30,21 +43,23 @@
             <button type="submit">Thêm xe</button>
         </form>
     </div>
-
-    <div class="baixe">
-        <h2>Bai xe</h2>
+    <h2>Bai xe</h2>
+    <div id="baixe" class="baixe admin-content">
         <% if (baixe.length === 0) { %>
             <p>Không có bãi xe nào</p>
-        <% } %>
-        <% for( let index = 0; index < baixe.length; index++ ) { %>
-            <div>
-                <form action="/admin/baixe" method="post">
-                    <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
-                    <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
-                    <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
-                    <button type="submit" name="update-button">Cập nhật</button>
-                    <button type="submit" name="delete-button">Xóa</button>
-                </form>
+        <% } else { %>
+            <div class="admin-subcontent">
+                <% for( let index = 0; index < baixe.length; index++ ) { %>
+                    <div>
+                        <form action="/admin/baixe" method="post">
+                            <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
+                            <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
+                            <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
+                            <button type="submit" name="update-button">Cập nhật</button>
+                            <button type="submit" name="delete-button">Xóa</button>
+                        </form>
+                    </div>
+                <% } %>
             </div>
         <% } %>
 
@@ -60,35 +75,32 @@
 
         </div>
     </div>
-    
-    <div class="khach_hang">
-        <h2>Danh sách người dùng</h2>
+
+    <h2>Danh sách người dùng</h2>
+    <div id="khachhang" class="khachhang admin-content">
 
         <% if (khachhang.length === 0) { %>
             <p>Không có người dùng nào</p>
-        <% } %>
+        <% } else { %>
+            <div class="admin-subcontent">
+                <% for( let index = 0; index < khachhang.length; index++ ) { %>
+                    <div>
+                        <form action="/admin/khachhang" method="post">
+                            <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
+                            <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
+                            <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
 
-        <form action="">
-            <input type="text" id="email" value="Email" readonly>
-            <input type="text" id="ten" value="Họ và tên" readonly>
-            <input type="text" id="cmnd" value="CMND/CCCD" readonly>
-        </form>
-
-        <% for( let index = 0; index < khachhang.length; index++ ) { %>
-            <div>
-                <form action="/admin/khachhang" method="post">
-                    <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
-                    <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
-                    <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
-
-                    <button type="submit" name="update-button">Cập nhật</button>
-                    <button type="submit" name="delete-button">Xóa</button>
-                </form>
+                            <button type="submit" name="update-button">Cập nhật</button>
+                            <button type="submit" name="delete-button">Xóa</button>
+                        </form>
+                    </div>
+                <% } %>
             </div>
-        <% } %>
+        <% } %>        
     </div>
-    <div class="price">
-        <h2>Giá thuê xe</h2>
+
+    <h2>Giá thuê xe</h2>
+    <div id="price" class="price admin-content">
         <div>
             <form action="/admin/price" method="post">
                 <label for="one">Giá 1 giờ</label>
@@ -112,8 +124,7 @@
             </form>
         </div>
     </div>
-    
-    <a href="/admin/logout">dang xuat</a>
+
     <!-- SCRIPT  -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script> -->

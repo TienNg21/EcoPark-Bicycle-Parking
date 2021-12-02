@@ -6,6 +6,17 @@
         body {
             display: block;
         }
+
+        .admin-content {
+            margin-top: 40px;
+        }
+
+        .admin-subcontent {
+            height:500px;
+            overflow-x:hidden;
+            overflow-y:auto;
+        }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -29,7 +40,7 @@
         </button>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="/admin/logout">Sign out</a>
+                <a class="nav-link px-3" href="/admin/logout">Đăng xuất</a>
             </div>
         </div>
     </header>
@@ -40,44 +51,44 @@
                 <div class="position-fixed pt-3">
                     <ul class="nav flex-column">
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                          <span data-feather="home"></span>
+                        <a class="nav-link active" aria-current="page" href="/admin">
                           Trang chủ
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span data-feather="file"></span>
-                          Thông tin xe
+                        <a class="nav-link" href="#danhso">
+                          Doanh số
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span data-feather="shopping-cart"></span>
-                          Thông tin bãi xe
+                        <a class="nav-link" href="#price">
+                          Lịch sử thuê xe
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span data-feather="users"></span>
-                          Thông tin giá thuê
+                        <a class="nav-link" href="#xe">
+                          Xe đạp
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span data-feather="bar-chart-2"></span>
-                          Thông tin
+                        <a class="nav-link" href="#baixe">
+                          Bãi xe
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span data-feather="layers"></span>
-                          Integrations
+                        <a class="nav-link" href="#khachhang">
+                          Người dùng
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#price">
+                          Giá thuê
                         </a>
                       </li>
                     </ul>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <h1>Hệ thống quản lý thuê xe ECOPARK BICYCLE PARKING</h1>
                 <%- include('contentAdmin') %> 
             </main>
         </div>
