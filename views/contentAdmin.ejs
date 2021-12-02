@@ -155,8 +155,10 @@ input{
             accessToken: mapboxapi
         }).addTo(mymap);
         var pos;
+        let addmarker;
         mymap.on("contextmenu", function (event) {
-            L.marker(event.latlng).addTo(mymap);
+            if(addmarker) mymap.removeLayer(addmarker)
+            addmarker = L.marker(event.latlng).addTo(mymap);
             navigator.clipboard.writeText(event.latlng.toString());
             pos = event.latlng;
             document.getElementById('pos_x').value = pos.lat;

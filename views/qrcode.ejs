@@ -1,0 +1,82 @@
+<h1>qrcode page</h1>
+<h2>Trang qr code cua bai <%= id_bai%></h2>
+<div id='qrthue'>
+  <canvas id="canvas_thue"></canvas>
+  <!-- <div id="show_thue"></div> -->
+  <div id="noti_thue"></div>
+
+</div>
+
+<div id="qrtra">
+  <canvas id="canvas_tra"></canvas>
+  <!-- <div id="show_tra"></div> -->
+  <div id="noti_tra"></div>
+</div>
+
+<style>
+
+</style>
+
+<script type='text/javascript' src="/javascripts/qrcode/build/qrcode.js"></script>
+<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+
+<script>
+    
+    var pusher = new Pusher('21a133a5939937831c0f', {
+      cluster: 'ap1',
+      encrypted: true
+    });
+    let firstQR_thue = "<%= dataa['qr_thue_xe'] %>"
+    var canvas_thue = document.getElementById('canvas_thue');
+    var noti_thue = document.querySelector('#noti_thue')
+    // var show_thue = document.querySelector('#show_thue')
+    // show_thue.textContent = firstQR_thue
+
+    QRCode.toCanvas(canvas_thue, firstQR_thue, function (error) {
+    if (error) console.error(error)
+    else noti_thue.textContent = 'day la ma qr thue'
+    // console.log('success!');
+    })
+
+    let firstQR_tra = "<%= dataa['qr_tra_xe'] %>"
+    var canvas_trae = document.getElementById('canvas_tra');
+    var noti_tra = document.querySelector('#noti_tra')
+    // var show_tra = document.querySelector('#show_tra')
+    // show_tra.textContent = firstQR_tra
+
+    QRCode.toCanvas(canvas_tra, firstQR_tra, function (error) {
+    if (error) console.error(error)
+    else noti_tra.textContent = 'day la ma qr tra'
+    // console.log('success!');
+    })
+
+    var channel = pusher.subscribe('watch_realtime_bai_xe');
+    channel.bind('update-qr', function(data) {
+        // var show_thue = document.querySelector('#show_thue')
+        // show_thue.textContent = JSON.stringify(data['qr_thue_xe'])
+        // alert(JSON.stringify(data));
+        var canvas_thue = document.getElementById('canvas_thue');
+        var noti_thue = document.querySelector('#noti_thue')
+        var qrcontent_thue = data['qr_thue_xe']
+        console.log(qrcontent_thue)
+        
+        QRCode.toCanvas(canvas_thue, qrcontent_thue, function (error) {
+        if (error) console.error(error)
+        else noti_thue.textContent = 'day la ma qr thue'})
+        // console.log('success!');
+
+        // var show_tra = document.querySelector('#show_tra')
+        // show_tra.textContent = JSON.stringify(data['qr_tra_xe'])
+        // alert(JSON.stringify(data));
+        var canvas_tra = document.getElementById('canvas_tra');
+        var noti_tra = document.querySelector('#noti_tra')
+        var qrcontent_tra = data['qr_tra_xe']
+        console.log(qrcontent_tra)
+        
+        QRCode.toCanvas(canvas_tra, qrcontent_tra, function (error) {
+        if (error) console.error(error)
+        else noti_tra.textContent = 'day la ma qr tra'
+        })
+      }
+    )
+</script>
