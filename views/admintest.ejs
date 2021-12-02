@@ -61,8 +61,10 @@
 
         <h2>Them bai xe</h2>
         <form action="/admin/thembaixe" method="post">
-            <input type="text" id="id_bai_xe_them">
-            <input type="text" id="ten_bai_xe_them">
+            <input type="text" id="id_bai_xe_them" required>
+            <input type="text" id="ten_bai_xe_them" required>
+            <input type="text" id="pos_x" required>
+            <input type="text" id="pos_y" required>
             <button type="submit">Them bai xe</button>
         </form>
         <div id="map" style="height: 500px; width: 100%;">
@@ -141,11 +143,14 @@
             zoomOffset: -1,
             accessToken: mapboxapi
         }).addTo(mymap);
-
+        var pos;
         mymap.on("contextmenu", function (event) {
             L.marker(event.latlng).addTo(mymap);
             navigator.clipboard.writeText(event.latlng.toString());
-            alert("user right-clicked on map coordinates: " + event.latlng.toString());
+            pos = event.latlng;
+            document.getElementById('pos_x').value = pos.lat;
+            document.getElementById('pos_y').value = pos.lng;
+            // alert("user right-clicked on map coordinates: " + event.latlng.toString());
         });
 
         var polygon1 = L.polygon([
@@ -178,9 +183,6 @@
         for (let index = 0; index < baixe.length; index++) {
             baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
-            baitemp.on('click', (err) => {
-                window.location.href += "/" + baixe[index].id_bai_xe;
-            })
         }
 
        
