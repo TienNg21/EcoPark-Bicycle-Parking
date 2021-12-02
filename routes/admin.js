@@ -1,7 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
 const { pool } = require('../dbConfig');
-const Pusher = require('pusher');
 var xe;
 var baixe;
 var khachhang;
@@ -118,31 +117,12 @@ adminRouter.post('/price', (req, res) => {
         )
     }    
 })
-const pusher = new Pusher({
-    appId: process.env.pusher_app_id,
-    key: process.env.pusher_key,
-    secret: process.env.pusher_secret,
-    cluster: process.env.pusher_cluster,
-    encrypted: true
-  });
-let pgClient;
-
-pool.connect((err, client) => {
-  if(err) {
-    console.log(err);
-  }
-  pgClient = client;
-  client.on('notification', function(msg) {
-    pusher.trigger('watch_realtime_table', 'update-qr', JSON.parse(msg.payload));
-  });
-  const query = client.query('LISTEN watch_realtime_table');
-});
 
 adminRouter.get('/qrpage/:id', async (req, res)=>{
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
         res.redirect('/login');
     }else{
-        const data = await pgClient.query('SELECT qr_thue_xe, qr_tra_xe FROM bai_xe where id_bai_xe = $1', [req.params.id]);
+        const data = await pool.query('SELECT qr_thue_xe, qr_tra_xe FROM bai_xe where id_bai_xe = $1', [req.params.id]);
         console.log(data.rows);
         return res.render('qrcode.ejs', {dataa: data.rows[0], id_bai: req.params.id});
     }
