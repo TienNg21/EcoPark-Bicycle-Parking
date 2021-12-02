@@ -1,6 +1,8 @@
 const express = require('express');
 const mapRouter = express.Router();
+const { pool } = require('../dbConfig');
 
+var baixe;
 
 mapRouter.get("/", (req, res) => { 
     if(req.user == null){
@@ -8,7 +10,16 @@ mapRouter.get("/", (req, res) => {
     }
     console.log("view map page");
 
-    res.render("map.ejs");
+    pool.query(
+        'SELECT * FROM bai_xe',
+        (err, result) => {
+            baixe = result.rows;
+            res.render("map.ejs", {
+                baixe: baixe
+            });            
+        }
+    )
+
 })
 
 mapRouter.get('/:id',(req,res)=>{

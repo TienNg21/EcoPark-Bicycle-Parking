@@ -1,0 +1,97 @@
+<%- include('header.ejs') %> 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
+    <style>
+        body {
+            display: block;
+        }
+
+        .admin-content {
+            margin-top: 40px;
+        }
+
+        .admin-subcontent {
+            height:500px;
+            overflow-x:hidden;
+            overflow-y:auto;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</header>
+<body>
+    <header class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">EcoPark Bicycle Parking</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/admin/logout">Đăng xuất</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu " class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+                <div class="position-fixed pt-3 ">
+                    <ul class="nav flex-column ">
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/admin">
+                          <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span> Trang chủ
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#danhso">
+                          Doanh số
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#price">
+                          Lịch sử thuê xe
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#xe">
+                          Xe đạp
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#baixe">
+                          Bãi xe
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#khachhang">
+                          Người dùng
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#price">
+                          Giá thuê
+                        </a>
+                      </li>
+                    </ul>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <h1>Hệ thống quản lý thuê xe ECOPARK BICYCLE PARKING</h1>
+                <%- include('contentAdmin') %> 
+            </main>
+        </div>
+    </div>
+    
+</body>
