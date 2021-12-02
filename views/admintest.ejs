@@ -103,23 +103,23 @@
         <div>
             <form action="/admin/price" method="post">
                 <label for="one">Giá 1 giờ</label>
-                <input type="text" id="one" name="one" value="<%= price.one %>">
-                <button type="submit" name="action" value="one">Cập nhật</button>
+                <input type="text" id="one" name="pricechange" value="<%= price.one_h %>">
+                <button type="submit" name="action" value="one_h">Cập nhật</button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="two">Giá 2 giờ</label>
-                <input type="text" id="two" name="three" value="<%= price.two %>">
-                <button type="submit" name="action" value="two">Cập nhật</button>
+                <input type="text" id="two" name="pricechange" value="<%= price.two_h %>">
+                <button type="submit" name="action" value="two_h">Cập nhật</button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="three">Giá 3 giờ</label>
-                <input type="text" id="three" name="three" value="<%= price.three %>">
-                <button type="submit" name="action" value="three">Cập nhật</button>
+                <input type="text" id="three" name="pricechange" value="<%= price.three_h %>">
+                <button type="submit" name="action" value="three_h">Cập nhật</button>
             </form>
             <form action="/admin/price" method="post">
                 <label for="late30">Giá muộn 30 phút</label>
-                <input type="text" id="three" name="late30" value="<%= price.late30 %>">
-                <button type="submit" name="action" value="late30">Cập nhật</button>
+                <input type="text" id="three" name="pricechange" value="<%= price.delay_h %>">
+                <button type="submit" name="action" value="delay_h">Cập nhật</button>
             </form>
         </div>
     </div>

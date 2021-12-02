@@ -6,12 +6,7 @@ var xe;
 var baixe;
 var khachhang;
 var lsu;
-var price = {
-    one: 50000,
-    two: 70000,
-    three: 10000,
-    late30: 30000
-}
+var price;
 
 adminRouter.get('/', async (req,res) => {
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
@@ -21,7 +16,6 @@ adminRouter.get('/', async (req,res) => {
             'SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe',
             (err, results) => {
                 xe = results.rows;
-                console.log(xe);
                 pool.query(
                     'SELECT * FROM bai_xe;',
                     (err, results) => {
@@ -34,13 +28,19 @@ adminRouter.get('/', async (req,res) => {
                                     'SELECT * FROM lich_su_thue_xe',
                                     (err, results) => {
                                         lsu = results.rows;
-                                        res.render('admintest.ejs', {
-                                            xe: xe,
-                                            baixe: baixe,
-                                            khachhang: khachhang,
-                                            lsu: lsu,
-                                            price: price
-                                        });
+                                        pool.query(
+                                            'SELECT * FROM gia_thue_xe',
+                                            (err, results) => {
+                                                price = results.rows[0];
+                                                res.render('admintest.ejs', {
+                                                    xe: xe,
+                                                    baixe: baixe,
+                                                    khachhang: khachhang,
+                                                    lsu: lsu,
+                                                    price: price
+                                                });
+                                            }
+                                        )
                                     }
                                 );
                             }
@@ -80,17 +80,43 @@ adminRouter.post('/thembaixe', (req, res) => {
 })
 
 adminRouter.post('/price', (req, res) => {
-    console.log(req.body);
-    if(req.body.action == "one"){
-        price.one = req.body.one;
-    }else if(req.body.action == "two"){
-        price.two = req.body.two;
-    }else if(req.body.action == "three"){
-        price.three = req.body.three;
+    if(req.body.action == 'one_h'){
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET one_h = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                res.redirect('/admin');
+            }
+        )
+    }else if(req.body.action == 'two_h'){
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET two_h = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                res.redirect('/admin');
+            }
+        )
+    }else if(req.body.action == 'three_h'){
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET three_h = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                res.redirect('/admin');
+            }
+        )
     }else{
-        price.late30 = req.body.late30;
-    }
-    res.redirect('/admin');
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET delay_h = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                res.redirect('/admin');
+            }
+        )
+    }    
 })
 
 
