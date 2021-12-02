@@ -29,7 +29,6 @@
 
         <h2>Them xe</h2>
         <form action="/admin/themxe" method="post">
-            <input type="text" name="id_xe_them" id="id_xe_them">
             <select name="id_bai_xe_them" id="id_bai_xe_them">
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
@@ -48,7 +47,7 @@
         <% for( let index = 0; index < baixe.length; index++ ) { %>
             <div>
                 <form action="/admin/baixe" method="post">
-                    <input type="hidden" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>">
+                    <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
                     <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
                     <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
                     <button type="submit" name="update-button">Cập nhật</button>
@@ -56,6 +55,13 @@
                 </form>
             </div>
         <% } %>
+
+        <h2>Them bai xe</h2>
+        <form action="/admin/thembaixe" method="post">
+            <input type="text" id="id_bai_xe_them">
+            <input type="text" id="ten_bai_xe_them">
+            <button type="submit">Them bai xe</button>
+        </form>
     </div>
     
     <div class="khach_hang">

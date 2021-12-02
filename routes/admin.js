@@ -65,24 +65,12 @@ adminRouter.post('/xe', (req, res) => {
 adminRouter.post('/themxe', (req, res) => {
     // console.log(req.body);
     var xethem = req.body;
-
     pool.query(
-        `SELECT * FROM xe
-        WHERE id_xe = $1`,
-        [xethem.id_xe_them],
+        `INSERT INTO xe (id_bai_xe, id_user, loai_xe, trang_thai)
+        VALUES ($1, $2, $3, $4)`,
+        [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
         (err, results) => {
-            if(results.rows.length == 0){
-                pool.query(
-                    `INSERT INTO xe (id_bai_xe, id_user, id_xe, loai_xe, trang_thai)
-                    VALUES ($1, $2, $3, $4, $5)`,
-                    [xethem.id_bai_xe_them, null, xethem.id_xe_them, xethem.loai_xe_them, 'avaiable'],
-                    (err, results) => {
-                        console.log("da them");
-                    }
-                )
-            }else{
-                console.log("daco");
-            }
+            console.log("da them");
         }
     )
     res.redirect('/admin');
@@ -90,6 +78,10 @@ adminRouter.post('/themxe', (req, res) => {
 
 adminRouter.post('/baixe', (req,res) => {
 
+})
+
+adminRouter.post('/thembaixe', (req, res) => {
+    
 })
 
 adminRouter.post('/price', (req, res) => {
