@@ -60,6 +60,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script>
+        var baixe =  <%-JSON.stringify(baixe)%>;
 
         const mapboxapi = 'pk.eyJ1IjoicXVvY2h1c3QiLCJhIjoiY2t2Z3J6NWliYzRncTJwcTZkdm5hZTE4MiJ9.sZOhK-6OEJ55JR8oLDHBLA'
 
@@ -72,30 +73,6 @@
             zoomOffset: -1,
             accessToken: mapboxapi
         }).addTo(mymap);
-
-
-        var lan1 = L.marker([20.96375241407842, 105.92322986991286]).addTo(mymap);
-        // lan1.bindPopup("<h3>Lán 1</h3>", {autoClose: false, permanent: true}).openPopup();
-        lan1.bindTooltip("<h3>Bãi 1</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
-        lan1.on('click', (e)=>{
-            window.location.href += "/1";
-        })
-       
-        
-
-        var lan2 = L.marker([20.97192424921061, 105.92876179758399]).addTo(mymap);
-        // lan2.bindPopup("<h3>Lán 2</h3>", {autoClose: false}).openPopup();
-        lan2.bindTooltip("<h3>Bãi 2</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})  
-        lan2.on('click', (e)=>{
-            window.location.href += "/2";
-        })
-
-        var lan2 = L.marker([20.957482446398, 105.93568661614833]).addTo(mymap);
-        // lan2.bindPopup("<h3>Lán 2</h3>", {autoClose: false}).openPopup();
-        lan2.bindTooltip("<h3>Bãi 3</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})  
-        lan2.on('click', (e)=>{
-            window.location.href += "/3";
-        })
 
         var polygon1 = L.polygon([
             [20.970969227003827, 105.92287885477188],[20.97020304924185, 105.92257461482852],[20.970013656380758, 105.92128389991737],[20.96654428101809, 105.92217818096145],
@@ -122,7 +99,16 @@
         polygon2.setStyle({fillColor: '#3388FF', fillOpacity: 0.1});
 
         L.control.locate().addTo(mymap);
-        // polygon.style.cursor = 'alias'
+
+        var baitemp;
+        for (let index = 0; index < baixe.length; index++) {
+            baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
+            baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
+            baitemp.on('click', (err) => {
+                window.location.href += "/" + baixe[index].id_bai_xe;
+            })
+        }       
+                
     </script>
 </body>
 <%- include('footer') %> 

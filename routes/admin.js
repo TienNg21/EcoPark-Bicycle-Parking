@@ -21,39 +21,34 @@ adminRouter.get('/', async (req,res) => {
             'SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe',
             (err, results) => {
                 xe = results.rows;
+                console.log(xe);
+                pool.query(
+                    'SELECT * FROM bai_xe;',
+                    (err, results) => {
+                        baixe = results.rows;
+                        pool.query(
+                            'SELECT * FROM khach_hang WHERE email != $1', [process.env.EMAIL_ADMIN],
+                            (err, results) => {
+                                khachhang = results.rows;
+                                pool.query(
+                                    'SELECT * FROM lich_su_thue_xe',
+                                    (err, results) => {
+                                        lsu = results.rows;
+                                        res.render('admintest.ejs', {
+                                            xe: xe,
+                                            baixe: baixe,
+                                            khachhang: khachhang,
+                                            lsu: lsu,
+                                            price: price
+                                        });
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
             }
         );
-        pool.query(
-            'SELECT * FROM bai_xe;',
-            (err, results) => {
-                baixe = results.rows;
-            }
-        );
-        pool.query(
-            'SELECT * FROM khach_hang WHERE email != $1', [process.env.EMAIL_ADMIN],
-            (err, results) => {
-                khachhang = results.rows;
-            }
-        );
-        pool.query(
-            'SELECT * FROM lich_su_thue_xe',
-            (err, results) => {
-                lsu = results.rows;
-            }
-        );
-        function renderAdmin () {
-            res.render('admintest.ejs', {
-                xe: xe,
-                baixe: baixe,
-                khachhang: khachhang,
-                lsu: lsu,
-                price: price
-            });
-        }
-        setTimeout( function(){
-            renderAdmin();
-        }, 2000);
-        // renderAdmin();
     }
     
 })
