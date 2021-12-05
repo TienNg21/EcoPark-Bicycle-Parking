@@ -14,9 +14,6 @@
             margin: 5%;
             max-width: 200px;
         }
-        .navi-img {
-            width: 80%;
-        }
         .btn {
             margin-bottom: 5%;
         }
@@ -34,23 +31,19 @@
             margin-top: 40px;
         }
 
-        .rent-img {
-            margin-bottom: 30px;
-            max-width: 80%;
-        }
-        /**/
-        tr{
-            transition: all ease-in-out .25s
-        }
+
         tbody tr:hover {
             background-color: #478640;
             color: #fff;
         }
-
         .hide {
             display: none;
         }
-        
+        .baixe, .xe, .thoigian {
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
     </style>
 
 </head>
@@ -68,11 +61,11 @@
             </div>
         </div>
     </div>
-
+    
     <div class="container">
         <div class="row">
             <div class="col col-12 ">
-                <input type="image" class="slt-baixe" src="img/chonbaixe.png" />
+                <input type="image" class="slt-baixe" src="img/chonbaixe.png" style="max-width: 80%" />
             </div>
             
             <div class="col col-12 mt-4 baixe hide">
@@ -80,7 +73,7 @@
                 <div class="chon">
                     <h2>Danh sách bãi xe:</h2>
                     <form action="">
-                        <table class="table  formbx">
+                        <table class="table formbx">
                             <thead class="thead-light">
                                 <tr class="first-tr">
                                     <th scope="col">Tên bãi xe</th>
@@ -101,14 +94,15 @@
                             </tbody>   
                         </table>
                     </form>
+                </div>
             </div>
         </div>
     </div>
             
     <div class="container">
         <div class="row">
-            <div class="col col-12 slt">
-                <input type="image" class="slt-xe" src="img/chonxe.png" />
+            <div class="col col-12 ">
+                <input type="image" class="slt-xe" src="img/chonxe.png" style="max-width: 80%" />
             </div>
             <div class="col-col-12 mt-4 xe hide">
                 <div class="chon">
@@ -145,19 +139,19 @@
     <div class="container">
         <div class="row">
             <div class="col-col-12 ">
-                <input type="image" class="slt-thoigian" src="img/thoigianthue.png" />
+                <input type="image" class="slt-thoigian" src="img/thoigianthue.png" style="max-width: 80%"/>
 
             </div>
 
             <div class="col col-12 mt-4 thoigian hide">
                 <div class="chon">
-                    <h1>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h1>
+                    <h2>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h2>
                     <form action="">
                         <table class="table formtg ">
                             <thead>
                             <tr class="">
                                 <th scope="col">Thời gian thuê (giờ)</th>
-                                <th scope="col">Số tiền phải trả (nghìn đồng)</th>
+                                <th scope="col">Số tiền phải trả (vnđ)</th>
                                 <th scope="col">Chọn thời gian</th>
                             </tr>
                             </thead>
@@ -189,7 +183,7 @@
     <div class="container">
         <div class="row">
             <div class="col col-12 mt-4">
-                <a href=""><img src="img/btnthuexe.png" alt="" class="rent-img"></a>  
+                <a href=""><img src="img/btnthuexe.png" alt="" class="rent-img" style="max-width: 80%"></a>  
             </div>
         </div>
     </div>       
