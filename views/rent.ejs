@@ -76,26 +76,28 @@
             <div class="col col-12 mt-4 baixe hide">
                 <div class="chon">
                     <h2>Danh sách bãi xe:</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr class="first-tr">
-                                <th scope="col">Tên bãi xe</th>
-                                <th scope="col">Chọn bãi xe</th>
-                            </tr>
-                        </thead>
-    
-                        <tbody>
-                            <tr class="second-tr">
-                                <td>Bãi A</td>
-                                <td><input type="radio" name="select" id=""></td>
-                            </tr>
-    
-                            <tr>
-                                <td>Bãi B</td>
-                                <td><input type="radio" name="select" id=""></td>
-                            </tr>
-                        </tbody>   
-                    </table>
+                    <form action="">
+                        <table class="table table-striped formbx">
+                            <thead>
+                                <tr class="first-tr">
+                                    <th scope="col">Tên bãi xe</th>
+                                    <th scope="col">Chọn bãi xe</th>
+                                </tr>
+                            </thead>
+        
+                            <tbody>
+                                <tr class="second-tr">
+                                    <td>Bãi A</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+        
+                                <tr>
+                                    <td>Bãi B</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+                            </tbody>   
+                        </table>
+                    </form>
             </div>
         </div>
     </div>
@@ -108,29 +110,31 @@
             <div class="col-col-12 mt-4 xe hide">
                 <div class="chon">
                     <h2>Danh sách xe:</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr class="first-tr">
-                                <th scope="col">ID xe</th>
-                                <th scope="col">Trạng thái xe</th>
-                                <th scope="col">Chọn xe</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr class="second-tr">
-                                <td>A1</td>
-                                <td>ok</td>
-                                <td><input type="radio" name="select" id=""></td>
-                            </tr>
-
-                            <tr>
-                                <td>A2</td>
-                                <td>ok</td>
-                                <td><input type="radio" name="select" id=""></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form action="">
+                        <table class="table table-striped formx">
+                            <thead>
+                                <tr class="first-tr">
+                                    <th scope="col">ID xe</th>
+                                    <th scope="col">Trạng thái xe</th>
+                                    <th scope="col">Chọn xe</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr class="second-tr">
+                                    <td>A1</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+    
+                                <tr>
+                                    <td>A2</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -145,35 +149,36 @@
             <div class="col col-12 mt-4 thoigian hide">
                 <div class="chon">
                     <h1>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h1>
-
-                <table class="table table-striped ">
-                    <thead>
-                    <tr class="first-tr">
-                        <th scope="col">Thời gian thuê (giờ)</th>
-                        <th scope="col">Số tiền phải trả (nghìn đồng)</th>
-                        <th scope="col">Chọn thời gian</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>50000</td>
-                        <td><input type="radio" name="select" id=""></td>
-                    </tr>
-                    <tr>
-                        
-                        <td>2</td>
-                        <td>70000</td>
-                        <td><input type="radio" name="select" id=""></td>
-                    </tr>
-                    <tr>
-                        
-                        <td >3</td>
-                        <td>100000</td>
-                        <td><input type="radio" name="select" id=""></td>
-                    </tr>
-                    </tbody>
-                </table> 
+                    <form action="">
+                        <table class="table table-striped formtg ">
+                            <thead>
+                            <tr class="first-tr">
+                                <th scope="col">Thời gian thuê (giờ)</th>
+                                <th scope="col">Số tiền phải trả (nghìn đồng)</th>
+                                <th scope="col">Chọn thời gian</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>50000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            <tr>
+                                
+                                <td>2</td>
+                                <td>70000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            <tr>
+                                
+                                <td >3</td>
+                                <td>100000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            </tbody>
+                        </table> 
+                    </form>
                 </div>
             </div>
         </div>
@@ -208,6 +213,7 @@
             formTG.classList.toggle("hide");
         }
 
+        /*
         function SelectRow() {
             var radios = document.getElementsByName("select");
             for(var i = 0; i<radios.length; i++) {
@@ -222,7 +228,7 @@
 
         SelectRow();
 
-        
+        */
     </script>
 
 </body> 
