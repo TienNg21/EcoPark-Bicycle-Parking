@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
     <style>
-    
         .body {
             display: block;
         }
@@ -23,8 +22,12 @@
         }
         a {
             text-decoration: none;
-            color: #fff;
+            color: #333;
             font-size: 20px;
+        }
+        a:hover {
+            color:#478640;
+            background-color: #e5e5e5;
         }
 
         .container {
@@ -39,12 +42,11 @@
         tr{
             transition: all ease-in-out .25s
         }
-
-        .selected{
-            background-color: red; 
-            color: #fff; 
-            font-weight: bold;
+        tbody tr:hover {
+            background-color: #478640;
+            color: #fff;
         }
+
         .hide {
             display: none;
         }
@@ -74,11 +76,12 @@
             </div>
             
             <div class="col col-12 mt-4 baixe hide">
+                <a href="/map" class="">Xem bản đồ tại đây</a>
                 <div class="chon">
                     <h2>Danh sách bãi xe:</h2>
                     <form action="">
-                        <table class="table table-striped formbx">
-                            <thead>
+                        <table class="table  formbx">
+                            <thead class="thead-light">
                                 <tr class="first-tr">
                                     <th scope="col">Tên bãi xe</th>
                                     <th scope="col">Chọn bãi xe</th>
@@ -111,9 +114,9 @@
                 <div class="chon">
                     <h2>Danh sách xe:</h2>
                     <form action="">
-                        <table class="table table-striped formx">
+                        <table class="table formx">
                             <thead>
-                                <tr class="first-tr">
+                                <tr class="">
                                     <th scope="col">ID xe</th>
                                     <th scope="col">Trạng thái xe</th>
                                     <th scope="col">Chọn xe</th>
@@ -121,7 +124,7 @@
                             </thead>
     
                             <tbody>
-                                <tr class="second-tr">
+                                <tr class="">
                                     <td>A1</td>
                                     <td>ok</td>
                                     <td><input type="radio" name="select" id=""></td>
@@ -150,9 +153,9 @@
                 <div class="chon">
                     <h1>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h1>
                     <form action="">
-                        <table class="table table-striped formtg ">
+                        <table class="table formtg ">
                             <thead>
-                            <tr class="first-tr">
+                            <tr class="">
                                 <th scope="col">Thời gian thuê (giờ)</th>
                                 <th scope="col">Số tiền phải trả (nghìn đồng)</th>
                                 <th scope="col">Chọn thời gian</th>
@@ -213,22 +216,6 @@
             formTG.classList.toggle("hide");
         }
 
-        /*
-        function SelectRow() {
-            var radios = document.getElementsByName("select");
-            for(var i = 0; i<radios.length; i++) {
-                radios[i].onclick = function () {
-                    this.parentElement.parentElement.classList.toggle("selected");
-                };
-                if(radios[i].checked==null) {
-                    this.parentElement.parentElement.classList.remove("selected");
-                }
-            };
-        };
-
-        SelectRow();
-
-        */
     </script>
 
 </body> 
