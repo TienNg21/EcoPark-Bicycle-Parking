@@ -29,14 +29,14 @@ input{
                 <% for( let index = 0; index < xe.length; index++ ) { %>
                     <div>
                         <form action="/admin/xe" method="post">
-                            <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
-                            <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
-                            <input type="text" id="id_user" value="<%= xe[index].id_user %>">
-                            <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
-                            <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
-                            <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
+                            <input type="text" id="ten_bai" name="ten_bai" value="<%= xe[index].ten_bai %> ">
+                            <input type="text" id="id_bai_xe" name="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
+                            <input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly>
+                            <input type="text" id="id_xe" name="id_xe"  value="<%= xe[index].id_xe %>" readonly>
+                            <input type="text" id="loai_xe" name="loai_xe" value="<%= xe[index].loai_xe %>">
+                            <input type="text" id="trang_thai" name="trang_thai" value="<%= xe[index].trang_thai %>">
+                            <button type="submit" name="action" class="btn btn-primary" value="update">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="action" class="btn btn-danger" value="delete">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
