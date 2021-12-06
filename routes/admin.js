@@ -114,11 +114,15 @@ adminRouter.post('/baixe', (req,res) => {
 })
 
 adminRouter.post('/thembaixe', (req, res) => {
-
+    //random ra 2 cái text ngẫu nhiên (độ dài là 40 giống như hash)
+    let qr_thue_random1 = getRandomString(40);
+    let qr_tra_random2 = getRandomString(40);
+    // console.log(qr_thue_random1, qr_tra_random2);
+    // sau đó thêm nó vào csdl ứng vs .qr_thuê và .qr_trả
     pool.query(
-        `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y)
-        values ($1, 0, $2, $3)`,
-        [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y],
+        `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y, qr_thue_xe, qr_tra_xe)
+        values ($1, 0, $2, $3, $4, $5)`,
+        [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y, qr_thue_random1, qr_tra_random2],
         (err, results) => {
             res.redirect('/admin');
         }
@@ -178,4 +182,14 @@ adminRouter.get('/qrpage/:id', async (req, res)=>{
 adminRouter.get('/logout', (req,res) =>{
     res.redirect('/logout');
 })
+
+function getRandomString(length) {
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+}
+
 module.exports = adminRouter;
