@@ -63,11 +63,11 @@ input{
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <div>
                         <form action="/admin/baixe" method="post">
-                            <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
-                            <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
-                            <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button"class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
+                            <input type="text" id="id_bai_xe" name="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
+                            <input type="text" id="ten_bai_xe" name="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
+                            <input type="text" id="so_luong_xe" name="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
+                            <button type="submit" name="action" class="btn btn-primary" value="update">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="action" class="btn btn-danger" value="delete">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
