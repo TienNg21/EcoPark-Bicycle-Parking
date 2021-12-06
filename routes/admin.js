@@ -102,10 +102,10 @@ adminRouter.post('/baixe', (req,res) => {
 })
 
 adminRouter.post('/thembaixe', (req, res) => {
-    //random ra 2 cái text ngẫu nhiên
+    //random ra 2 cái text ngẫu nhiên (độ dài là 40 giống như hash)
     let qr_thue_random1 = getRandomString(40);
     let qr_tra_random2 = getRandomString(40);
-    console.log(qr_thue_random1, qr_tra_random2);
+    // console.log(qr_thue_random1, qr_tra_random2);
     // sau đó thêm nó vào csdl ứng vs .qr_thuê và .qr_trả
     pool.query(
         `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y, qr_thue_xe, qr_tra_xe)
