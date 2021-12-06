@@ -73,7 +73,13 @@ adminRouter.post('/themxe', (req, res) => {
 adminRouter.post('/baixe', (req,res) => {
     // console.log(req.body);
     if(req.body.action == 'update') {
-        
+        pool.query(
+            'update bai_xe set ten_bai = $1 where id_bai_xe =$2',
+            [req.body.ten_bai_xe, req.body.id_bai_xe],
+            (err, results) => {
+                res.redirect('/admin');
+            }
+        )
     } else {
         pool.query(
             'select so_luong_xe from bai_xe where id_bai_xe=$1',
@@ -96,6 +102,9 @@ adminRouter.post('/baixe', (req,res) => {
 })
 
 adminRouter.post('/thembaixe', (req, res) => {
+    //random ra 2 cái text ngẫu nhiên
+    
+    // sau đó thêm nó vào csdl ứng vs .qr_thuê và .qr_trả
     pool.query(
         `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y)
         values ($1, 0, $2, $3)`,
