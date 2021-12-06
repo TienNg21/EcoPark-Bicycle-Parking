@@ -53,11 +53,13 @@
     <div class="container">
         <div class="row">
             <div class="col col-12">
+
                 <img class="mb-4 logo" src="/img/logo.png" alt="" width="30%">
             </div>
             
             <div class="col col-12">
                 <img class="brand-name" src="/img/ecopark.png" width="80%" alt="logo">
+
             </div>
         </div>
     </div>
@@ -65,13 +67,16 @@
     <div class="container">
         <div class="row">
             <div class="col col-12 ">
+
                 <input type="image" class="slt-baixe" src="/img/chonbaixe.png" style="max-width: 80%" />
+
             </div>
             
             <div class="col col-12 mt-4 baixe hide">
                 <a href="/map" class="">Xem bản đồ tại đây</a>
                 <div class="chon">
                     <h2>Danh sách bãi xe:</h2>
+
                     <form action="/rent/scan" method="post">
                         
                             <table class="table formbx">
@@ -218,10 +223,12 @@
                                 </div>
                             </div>
                         </form>
+
                 </div>
             </div>
         </div>
     </div>      
+
            
             
 
@@ -245,6 +252,7 @@
         sltTG.onclick = function() {
             formTG.classList.toggle("hide");
         }
+
         var bai = '<%= bai  %>'
         console.log(bai);
         if(bai){
@@ -276,6 +284,7 @@
             else if(window.location.href.includes('ecopark-bicycle-parking'))
                 window.location.href = "https://ecopark-bicycle-parking/rent/4";
         }
+
 
     </script>
 

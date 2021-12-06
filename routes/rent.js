@@ -1,3 +1,4 @@
+
 const { Router } = require('express');
 const express = require('express');
 const rentRouter = express.Router();
@@ -5,11 +6,14 @@ const { pool } = require('../dbConfig');
 
 var bai = [];
 
+
+
 rentRouter.get("/", (req, res) => {
     if(req.user==null) {
         res.redirect('../login');
     }
     console.log("view rent page");
+
     // bai = ''
     res.render("rent.ejs", {bai: '', xe: undefined});
 })
