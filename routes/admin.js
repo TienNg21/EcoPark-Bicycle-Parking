@@ -1,7 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
 const { pool } = require('../dbConfig');
-
 var xe;
 var baixe;
 var khachhang;
@@ -140,7 +139,15 @@ adminRouter.post('/price', (req, res) => {
     }    
 })
 
-
+adminRouter.get('/qrpage/:id', async (req, res)=>{
+    if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
+        res.redirect('/login');
+    }else{
+        const data = await pool.query('SELECT qr_thue_xe, qr_tra_xe, ten_bai FROM bai_xe where id_bai_xe = $1', [req.params.id]);
+        console.log(data.rows);
+        return res.render('qrcode.ejs', {dataa: data.rows[0], id_bai: req.params.id});
+    }
+})
 
 adminRouter.get('/logout', (req,res) =>{
     res.redirect('/logout');

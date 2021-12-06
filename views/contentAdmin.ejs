@@ -155,8 +155,10 @@ input{
             accessToken: mapboxapi
         }).addTo(mymap);
         var pos;
+        let addmarker;
         mymap.on("contextmenu", function (event) {
-            L.marker(event.latlng).addTo(mymap);
+            if(addmarker) mymap.removeLayer(addmarker)
+            addmarker = L.marker(event.latlng).addTo(mymap);
             navigator.clipboard.writeText(event.latlng.toString());
             pos = event.latlng;
             document.getElementById('pos_x').value = pos.lat;
@@ -194,6 +196,9 @@ input{
         for (let index = 0; index < baixe.length; index++) {
             baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
+            baitemp.on('click', (err) => {
+                window.location.href += "/qrpage/" + baixe[index].id_bai_xe;
+            })
         }
     </script>
 </div>
