@@ -73,7 +73,7 @@ adminRouter.post('/themxe', (req, res) => {
 adminRouter.post('/baixe', (req,res) => {
     // console.log(req.body);
     if(req.body.action == 'update') {
-
+        
     } else {
         pool.query(
             'select so_luong_xe from bai_xe where id_bai_xe=$1',
@@ -96,7 +96,14 @@ adminRouter.post('/baixe', (req,res) => {
 })
 
 adminRouter.post('/thembaixe', (req, res) => {
-    
+    pool.query(
+        `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y)
+        values ($1, 0, $2, $3)`,
+        [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y],
+        (err, results) => {
+            res.redirect('/admin');
+        }
+    )
 })
 
 adminRouter.post('/price', (req, res) => {
