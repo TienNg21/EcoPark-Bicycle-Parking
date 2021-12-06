@@ -49,7 +49,8 @@ rentRouter.get("/:id_bai", async (req, res)=>{
 rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
     console.log(req.user);
-    pool.query(`update xe set trang_thai = 'pending_${req.user.id_user}' where id_xe = ${req.body.xe}`, async (err, result)=>{
+    pool.query(`update public.xe set trang_thai = 'pending' where id_xe = ${req.body.xe};
+    update public.xe set id_user = ${req.user.id_user} where id_xe = ${req.body.xe}`, async (err, result)=>{
         if(err) console.error(err)
         else {
         console.log('bat dau doi 1phut');
@@ -64,9 +65,11 @@ rentRouter.post("/scan", async (req, res)=>{
             else{
                 console.log(result.rows[0]['trang_thai'])
                 // neu trang thai van la pending thi chuyen thanh available
-                if(result.rows[0]['trang_thai'] == `pending_${req.user.id_user}`){
-                    pool.query("update public.xe set trang_thai = 'available' where id_xe = $1", [req.body.xe])
+                if(result.rows[0]['trang_thai'] == `pending`) {
+                    pool.query(`update public.xe set trang_thai = 'available' where id_xe = ${req.body.xe};
+                    update public.xe set id_user = null where id_xe = ${req.body.xe}`);
                 }
+                //
                 if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
                     console.log('xe da duoc thue');
                 }
@@ -85,8 +88,8 @@ rentRouter.get('/scan', (req, res)=>{
 
 rentRouter.post('/xacnhan', (req, res)=>{
     console.log(req.body);
-
     // so sanh ma qr, thong bao khi sai, dung
+    
     // cap nhat csdl khi quet dung
     // set trang thai xe
     // cap nhat bang lichsuthuexe
