@@ -1,6 +1,216 @@
 <%- include('header') %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
+    <style>
+        .body {
+            display: block;
+        }
+        .logo {
+            max-width: 200px;
+        }
+        .brand-name {
+            margin: 5%;
+            max-width: 200px;
+        }
+        .btn {
+            margin-bottom: 5%;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+        a:hover {
+            color:#478640;
+            background-color: #e5e5e5;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+
+        tbody tr:hover {
+            background-color: #478640;
+            color: #fff;
+        }
+        .hide {
+            display: none;
+        }
+        .baixe, .xe, .thoigian {
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+    </style>
+
 </head>
-<body>
+
+<body class="text-center">
     <%- include('navbar', {page: "Thuê xe"}) %> 
+    <div class="container">
+        <div class="row">
+            <div class="col col-12">
+                <img class="mb-4 logo" src="img/logo.png" alt="" width="30%">
+            </div>
+            
+            <div class="col col-12">
+                <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 ">
+                <input type="image" class="slt-baixe" src="img/chonbaixe.png" style="max-width: 80%" />
+            </div>
+            
+            <div class="col col-12 mt-4 baixe hide">
+                <a href="/map" class="">Xem bản đồ tại đây</a>
+                <div class="chon">
+                    <h2>Danh sách bãi xe:</h2>
+                    <form action="">
+                        <table class="table formbx">
+                            <thead class="thead-light">
+                                <tr class="first-tr">
+                                    <th scope="col">Tên bãi xe</th>
+                                    <th scope="col">Chọn bãi xe</th>
+                                </tr>
+                            </thead>
+        
+                            <tbody>
+                                <tr class="second-tr">
+                                    <td>Bãi A</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+        
+                                <tr>
+                                    <td>Bãi B</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+                            </tbody>   
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 ">
+                <input type="image" class="slt-xe" src="img/chonxe.png" style="max-width: 80%" />
+            </div>
+            <div class="col-col-12 mt-4 xe hide">
+                <div class="chon">
+                    <h2>Danh sách xe:</h2>
+                    <form action="">
+                        <table class="table formx">
+                            <thead>
+                                <tr class="">
+                                    <th scope="col">ID xe</th>
+                                    <th scope="col">Trạng thái xe</th>
+                                    <th scope="col">Chọn xe</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr class="">
+                                    <td>A1</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+    
+                                <tr>
+                                    <td>A2</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-col-12 ">
+                <input type="image" class="slt-thoigian" src="img/thoigianthue.png" style="max-width: 80%"/>
+
+            </div>
+
+            <div class="col col-12 mt-4 thoigian hide">
+                <div class="chon">
+                    <h2>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h2>
+                    <form action="">
+                        <table class="table formtg ">
+                            <thead>
+                            <tr class="">
+                                <th scope="col">Thời gian thuê (giờ)</th>
+                                <th scope="col">Số tiền phải trả (vnđ)</th>
+                                <th scope="col">Chọn thời gian</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>50000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            <tr>
+                                
+                                <td>2</td>
+                                <td>70000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            <tr>
+                                
+                                <td >3</td>
+                                <td>100000</td>
+                                <td><input type="radio" name="select" id=""></td>
+                            </tr>
+                            </tbody>
+                        </table> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>      
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 mt-4">
+                <a href=""><img src="img/btnthuexe.png" alt="" class="rent-img" style="max-width: 80%"></a>  
+            </div>
+        </div>
+    </div>       
+            
+
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        var sltBtnBX = $(".slt-baixe");
+        var formBX = $(".baixe");
+        var sltBtnX = $(".slt-xe");
+        var formX = $(".xe");
+        var sltTG = $(".slt-thoigian");
+        var formTG = $(".thoigian");
+
+        sltBtnBX.onclick = function() {
+            formBX.classList.toggle("hide");
+        };
+        sltBtnX.onclick = function() {
+            formX.classList.toggle("hide");
+        };
+        sltTG.onclick = function() {
+            formTG.classList.toggle("hide");
+        }
+
+    </script>
+
 </body> 
 <%- include('footer') %> 
