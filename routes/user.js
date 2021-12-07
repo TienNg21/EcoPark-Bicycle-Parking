@@ -32,7 +32,7 @@ userRouter.get("/", (req, res) => {
             res.redirect("/admin");
         } else {
             console.log("view dashboard page");
-            res.render("dashboard.ejs");
+            res.render("dashboard.ejs", {message: req.flash('message')});
         }
     }
 })

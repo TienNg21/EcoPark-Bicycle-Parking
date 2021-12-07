@@ -48,7 +48,7 @@ rentRouter.get("/:id_bai", async (req, res)=>{
 
 rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
-    console.log(req.user);
+    // console.log(req.user);
     pool.query(`update public.xe set trang_thai = 'pending' where id_xe = ${req.body.xe};
     update public.xe set id_user = ${req.user.id_user} where id_xe = ${req.body.xe}`, async (err, result)=>{
         if(err) console.error(err)

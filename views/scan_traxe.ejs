@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Html-Qrcode Demo</title>
+  <body>
+    <h2>Scan tra xe</h2>
+    <div id="noti"></div>
+    <div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>
+  </body>
+
+  <!-- <script type="text/plain" src='file:///D:/HUST/20211/NM%20C%C3%B4ng%20ngh%E1%BB%87%20ph%E1%BA%A7n%20m%E1%BB%81m/testqr/html5-qrcode.min.js'></script>     -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <!-- <script type='text/plain' src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script> -->
+<!-- <script src="../html5-qrcode.min.js"></script> -->
+
+  <script>
+    let noti = document.querySelector('#noti')
+    noti.textContent = ''
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    } 
+
+    docReady(function() {
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+        
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                console.log(`Scan result = ${decodedText}`, decodedResult);
+    
+                resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+                
+                // Optional: To close the QR code scannign after the result is found
+                // html5QrcodeScanner.clear();
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/traxe/xacnhan', true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function() { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        // Request finished. Do processing here.
+                        xhr.res
+                        console.log('message when state change: '+ xhr.responseText);
+                        if(xhr.responseText == 'false') noti.textContent = 'Quet  sai roi quet lai di'
+                        if(xhr.responseText == 'true') window.location.href += "/oke" 
+                    }
+                }
+                xhr.send(`qrcode=${decodedText}`);
+                // xhr.send(new Int8Array());
+                // xhr.send(document);
+
+                // window.location.href += '/scan';
+                console.log('post xac nhan');
+
+            }
+        }
+        
+        // Optional callback for error, can be ignored.
+        function onScanError(qrCodeError) {
+            // This callback would be called in case of qr code scan error or setup error.
+            // You can avoid this callback completely, as it can be very verbose in nature.
+        }
+        
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+    });
+  </script>
+  </head>
+</html>
