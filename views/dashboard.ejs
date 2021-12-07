@@ -23,6 +23,13 @@
     </style>
 </head>
 <body class="text-center">
+
+    <% if(message.length > 0){ %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    
     <div class="container">
         <div class="row  align-items-start">
 
@@ -42,6 +49,9 @@
             </div>
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 rent btn">
                 <a href="/rent"><img class="navi-img" src="img/thuexe.png" alt=""></a>
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-4 rent btn">
+                <a href="/traxe" style="color: green;">tra xe</a>
             </div>
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 logout btn">
                 <a href="/logout"><img class="navi-img" src="img/dangxuat.png" alt=""></a>
