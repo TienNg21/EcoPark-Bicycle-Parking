@@ -78,8 +78,7 @@ rentRouter.post("/scan", async (req, res)=>{
                 console.log(result.rows[0]['trang_thai'])
                 // neu trang thai van la pending thi chuyen thanh available
                 if(result.rows[0]['trang_thai'] == `pending`) {
-                    pool.query(`update public.xe set trang_thai = 'available' where id_xe = ${req.body.xe};
-                    update public.xe set id_user = null where id_xe = ${req.body.xe}`);
+                    pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
                 }
                 //
                 if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
