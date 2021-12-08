@@ -51,7 +51,7 @@
                         <% for( let index = 0; index < xe.length; index++ ) { %>
                             <tr>
                                 <form action="/admin/xe" method="post">
-                                    <td><input type="text" id="ten_bai" name="ten_bai" class="form-control" value="<%= xe[index].ten_bai %> "></td>
+                                    <td><input type="text" id="ten_bai" name="ten_bai" value="<%= xe[index].ten_bai %>" readonly></td>
                                     <td><input type="text" id="id_bai_xe" name="id_bai_xe" class="form-control" value="<%= xe[index].id_bai_xe %>"></td>
                                     <td><input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly></td>
                                     <td><input type="text" id="id_xe" name="id_xe" value="<%= xe[index].id_xe %>" readonly></td>
