@@ -85,38 +85,15 @@
                                 </thead>
                                 <tbody>
                             
-                                    <tr class="second-tr" id="baiA">
-                                        <td>Bãi A</td>
-                                        <td><input type="radio" name="bai" id="" value="1" onchange="change_baixe(this.value)"
-                                            <% if(bai == '1'){ %>
-                                                <%="checked"%>
-                                            <%}%>
-                                        ></td>
-                                    </tr>
-                                    <tr class="" id="baiB">
-                                        <td>Bãi B</td>
-                                        <td><input type="radio" name="bai" id="" value="2" onchange="change_baixe(this.value)"
-                                            <% if(bai == '2'){ %>
-                                                <%="checked"%>
-                                            <%}%>
-                                        ></td>
-                                    </tr>
-                                    <tr id="baiC">
-                                        <td>Bãi C</td>
-                                        <td><input type="radio" name="bai" id="" value="3" onchange="change_baixe(this.value)"
-                                            <% if(bai == '3'){ %>
-                                                <%="checked"%>
-                                            <%}%>
-                                        ></td>
-                                    </tr>
-                                    <tr id="baiD">
-                                        <td>Bãi D</td>
-                                        <td><input type="radio" name="bai" id="" value="4" onchange="change_baixe(this.value)"
-                                            <% if(bai == '4'){ %>
-                                                <%="checked"%>
-                                            <%}%>
-                                        ></td>
-                                    </tr>
+                                    <% if (typeof baixe != 'undefined'){
+                                        %> <% baixe.forEach(element =>
+                                        {%>
+                                            <tr class="", id = "<%= element['id_bai_xe'] %>">
+                                                <td><%= element['ten_bai'] %></td>
+                                                <td><input type="radio" name="xe" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"></td>
+                                            </tr>
+                                    <% }) %>
+                                    <% } %>
                             
                                 </tbody>
                             </table>

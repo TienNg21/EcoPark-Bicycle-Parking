@@ -8,14 +8,14 @@ var bai = [];
 
 
 
-rentRouter.get("/", (req, res) => {
-    if(req.user==null) {
-        res.redirect('../login');
-    }
+rentRouter.get("/", async (req, res)=>{
+    if(req.user == null) res.redirect('../login')
     console.log("view rent page");
-
-    // bai = ''
-    res.render("rent.ejs", {bai: '', xe: undefined});
+    pool.query("select id_bai_xe, ten_bai from bai_xe ", (err, result)=>{
+        console.log(result.rows);
+        console.log('in bai lan 1 ');
+        res.render("rent.ejs", {baixe: result.rows, bai: '', xe: undefined});
+    })
 })
 
 rentRouter.get("/:id_bai", async (req, res)=>{
@@ -61,8 +61,7 @@ rentRouter.post('/chonbai', (req, res)=>{
 rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
     // console.log(req.user);
-    pool.query(`update public.xe set trang_thai = 'pending' where id_xe = ${req.body.xe};
-    update public.xe set id_user = ${req.user.id_user} where id_xe = ${req.body.xe}`, async (err, result)=>{
+    pool.query(`update public.xe set trang_thai = 'pending',id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
         if(err) console.error(err)
         else {
         console.log('bat dau doi 1phut');
@@ -78,8 +77,7 @@ rentRouter.post("/scan", async (req, res)=>{
                 console.log(result.rows[0]['trang_thai'])
                 // neu trang thai van la pending thi chuyen thanh available
                 if(result.rows[0]['trang_thai'] == `pending`) {
-                    pool.query(`update public.xe set trang_thai = 'available' where id_xe = ${req.body.xe};
-                    update public.xe set id_user = null where id_xe = ${req.body.xe}`);
+                    pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
                 }
                 //
                 if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
