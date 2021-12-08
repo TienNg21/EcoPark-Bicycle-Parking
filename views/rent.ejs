@@ -53,32 +53,29 @@
     <div class="container">
         <div class="row">
             <div class="col col-12">
-
                 <img class="mb-4 logo" src="/img/logo.png" alt="logo" width="30%">
             </div>
             
             <div class="col col-12">
                 <img class="brand-name" src="/img/ecopark.png" width="80%" alt="logo">
-
+                
             </div>
         </div>
     </div>
     
-    <div class="container">
-        <div class="row">
-            <div class="col col-12 ">
+    <form action="/rent/scan" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 ">
+                    <img class="slt-baixe" src="/img/chonbaixe.png" style="max-width: 80%" onclick="togglee(this.classList[0])" />
+                </div>
+                
+                <div class="col col-12 mt-4 baixe">
+                    <a href="/map" class="">Xem bản đồ tại đây</a>
+                    <div class="chon">
+                        <h2>Danh sách bãi xe:</h2>
 
-                <input type="image" class="slt-baixe" src="/img/chonbaixe.png" style="max-width: 80%" />
-
-            </div>
-            
-            <div class="col col-12 mt-4 baixe hide">
-                <a href="/map" class="">Xem bản đồ tại đây</a>
-                <div class="chon">
-                    <h2>Danh sách bãi xe:</h2>
-
-                    <form action="/rent/scan" method="post">
-                        
+                            
                             <table class="table formbx">
                                 <thead class="thead-light">
                                     <tr class="first-tr">
@@ -90,7 +87,7 @@
                             
                                     <tr class="second-tr" id="baiA">
                                         <td>Bãi A</td>
-                                        <td><input type="radio" name="bai" id="" value="1"
+                                        <td><input type="radio" name="bai" id="" value="1" onchange="change_baixe(this.value)"
                                             <% if(bai == '1'){ %>
                                                 <%="checked"%>
                                             <%}%>
@@ -98,7 +95,7 @@
                                     </tr>
                                     <tr class="" id="baiB">
                                         <td>Bãi B</td>
-                                        <td><input type="radio" name="bai" id="" value="2"
+                                        <td><input type="radio" name="bai" id="" value="2" onchange="change_baixe(this.value)"
                                             <% if(bai == '2'){ %>
                                                 <%="checked"%>
                                             <%}%>
@@ -106,7 +103,7 @@
                                     </tr>
                                     <tr id="baiC">
                                         <td>Bãi C</td>
-                                        <td><input type="radio" name="bai" id="" value="3"
+                                        <td><input type="radio" name="bai" id="" value="3" onchange="change_baixe(this.value)"
                                             <% if(bai == '3'){ %>
                                                 <%="checked"%>
                                             <%}%>
@@ -114,7 +111,7 @@
                                     </tr>
                                     <tr id="baiD">
                                         <td>Bãi D</td>
-                                        <td><input type="radio" name="bai" id="" value="4"
+                                        <td><input type="radio" name="bai" id="" value="4" onchange="change_baixe(this.value)"
                                             <% if(bai == '4'){ %>
                                                 <%="checked"%>
                                             <%}%>
@@ -123,170 +120,166 @@
                             
                                 </tbody>
                             </table>
-                        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                        
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col col-12 ">
-                                            <input type="image" class="slt-xe" src="/img/chonxe.png" style="max-width: 80%" />
-                                        </div>
-                                        <div class="col-col-12 mt-4 xe hide">
-                                            <div class="chon">
-                                                <h2>Danh sách xe <%= bai ? 'bãi ' + bai : "" %>:</h2>
-                                               
-                            <table class="table formx">
-                                <thead>
-                                    <tr class="">
-                                        <th scope="col">ID xe</th>
-                                        <th scope="col">Trạng thái xe</th>
-                                        <th scope="col">Chọn xe</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- <tr class="">
-                                        <td>A1</td>
-                                        <td>ok</td>
-                                        <td><input type="radio" name="select" id=""></td>
-                                    </tr>
-                                    <tr>
-                                    <td>A2</td>
-                                        <td>ok</td>
-                                        <td><input type="radio" name="select" id=""></td>
-                                    </tr> -->
-                                    <% if (typeof xe != 'undefined'){
-                                        %> <% xe.forEach(element =>
-                                        {%>
-                                            <tr class="">
-                                                <td><%= element['id_xe'] %></td>
-                                                <td><%= element['trang_thai'] %></td>
-                                                <td><input type="radio" name="xe" value="<%= element['id_xe']%>"></td>
-                                            </tr>
-                                    <% }) %>
-                                    <% } %>
                             
-                                </tbody>
-                            </table>
-                                              
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-col-12 ">
-                                            <input type="image" class="slt-thoigian" src="/img/thoigianthue.png" style="max-width: 80%"/>
-                            
-                                        </div>
-                            
-                                        <div class="col col-12 mt-4 thoigian hide">
-                                            <div class="chon">
-                                                <h2>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h2>
-                                                
-                            <table class="table formtg ">
-                                <thead>
-                                <tr class="">
-                                    <th scope="col">Thời gian thuê (giờ)</th>
-                                    <th scope="col">Số tiền phải trả (vnđ)</th>
-                                    <th scope="col">Chọn thời gian</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>50000</td>
-                                    <td><input type="radio" name="gio" value="50000"></td>
-                                </tr>
-                                <tr>
-                            
-                                    <td>2</td>
-                                    <td>70000</td>
-                                    <td><input type="radio" name="gio" value="70000"></td>
-                                </tr>
-                                <tr>
-                            
-                                    <td >3</td>
-                                    <td>100000</td>
-                                    <td><input type="radio" name="gio" value="100000"></td>
-                                </tr>
-                                </tbody>
-                            </table> 
-
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col col-12 mt-4">
-                                        <button type="submit"><img src="/img/btnthuexe.png" alt="" class="rent-img" style="max-width: 80%"></button>  
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>      
-
+                                        
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 ">
+                    <img class="slt-xe" src="/img/chonxe.png" style="max-width: 80%" onclick="togglee(this.classList[0])" />
+                </div>
+                <div class="col-col-12 mt-4 xe hide">
+                    <div class="chon">
+                        <h2>Danh sách xe <%= bai ? 'bãi ' + bai : "" %>:</h2>
+                        
+                        <table class="table formx">
+                            <thead>
+                                <tr class="">
+                                    <th scope="col">ID xe</th>
+                                    <th scope="col">Trạng thái xe</th>
+                                    <th scope="col">Chọn xe</th>
+                                </tr>
+                            </thead>
+                            <tbody id='dsxe'>
+                                <!-- <tr class="">
+                                    <td>A1</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr>
+                                <tr>
+                                <td>A2</td>
+                                    <td>ok</td>
+                                    <td><input type="radio" name="select" id=""></td>
+                                </tr> -->
+                                
+                        
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-col-12 ">
+                    <img class="slt-thoigian" src="/img/thoigianthue.png" style="max-width: 80%" onclick="togglee(this.classList[0])" />
+    
+                </div>
+    
+                <div class="col col-12 mt-4 thoigian hide">
+                    <div class="chon">
+                        <h2>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h2>
+                        
+                        <table class="table formtg ">
+                            <thead>
+                            <tr class="">
+                                <th scope="col">Thời gian thuê (giờ)</th>
+                                <th scope="col">Số tiền phải trả (vnđ)</th>
+                                <th scope="col">Chọn thời gian</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>50000</td>
+                                <td><input type="radio" name="gio" value="50000" required></td>
+                            </tr>
+                            <tr>
+                        
+                                <td>2</td>
+                                <td>70000</td>
+                                <td><input type="radio" name="gio" value="70000" required></td>
+                            </tr>
+                            <tr>
+                        
+                                <td >3</td>
+                                <td>100000</td>
+                                <td><input type="radio" name="gio" value="100000" required></td>
+                            </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 mt-4">
+                    <input type="image" src="/img/btnthuexe.png" alt="btnthuexe" class="rent-img" style="max-width: 80%">
+                </div>
+            </div>
+        </div>
+    </form>
+<br>
            
             
 
-    <script>
-        const $ = document.querySelector.bind(document);
-        const $$ = document.querySelectorAll.bind(document);
+<script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
 
-        var sltBtnBX = $(".slt-baixe");
-        var formBX = $(".baixe");
-        var sltBtnX = $(".slt-xe");
-        var formX = $(".xe");
-        var sltTG = $(".slt-thoigian");
-        var formTG = $(".thoigian");
-
-        sltBtnBX.onclick = function() {
-            formBX.classList.toggle("hide");
-        };
-        sltBtnX.onclick = function() {
-            formX.classList.toggle("hide");
-        };
-        sltTG.onclick = function() {
-            formTG.classList.toggle("hide");
-        }
-
-        var bai = '<%= bai  %>'
-        console.log(bai);
-        if(bai){
-            sltBtnX.onclick();
-            sltTG.onclick()
-        }
-        document.querySelector("#baiA").onclick = function(){
-            if(window.location.href.includes('localhost'))
-                window.location.href = "http://localhost:3000/rent/1";
-            else if(window.location.href.includes('ecopark-bicycle-parking'))
-             window.location.href = "https://ecopark-bicycle-parking/rent/1";
-
-        }
-        document.querySelector("#baiB").onclick = function(){
-            if(window.location.href.includes('localhost'))
-                window.location.href = "http://localhost:3000/rent/2";
-            else if(window.location.href.includes('ecopark-bicycle-parking'))
-             window.location.href = "https://ecopark-bicycle-parking/rent/2";
-        }
-        document.querySelector("#baiC").onclick = function(){
-            if(window.location.href.includes('localhost'))
-                window.location.href = "http://localhost:3000/rent/3";
-            else if(window.location.href.includes('ecopark-bicycle-parking'))
-                window.location.href = "https://ecopark-bicycle-parking/rent/3";
-        }
-        document.querySelector("#baiD").onclick = function(){
-            if(window.location.href.includes('localhost'))
-                window.location.href = "http://localhost:3000/rent/4";
-            else if(window.location.href.includes('ecopark-bicycle-parking'))
-                window.location.href = "https://ecopark-bicycle-parking/rent/4";
-        }
+    var sltBtnBX = $(".slt-baixe");
+    var formBX = $(".baixe");
+    var sltBtnX = $(".slt-xe");
+    var formX = $(".xe");
+    var sltTG = $(".slt-thoigian");
+    var formTG = $(".thoigian");
 
 
-    </script>
+    function togglee(form){
+        if(form == 'slt-baixe') formBX.classList.toggle('hide')
+        else if(form == 'slt-xe') formX.classList.toggle('hide')
+        else if(form == 'slt-thoigian') formTG.classList.toggle('hide')
+    }
+
+    // sltBtnBX.onclick = function() {
+    //     formBX.classList.toggle("hide");
+    // };
+    // sltBtnX.onclick = function() {
+    //     formX.classList.toggle("hide");
+    // };
+    // sltTG.onclick = function() {
+    //     formTG.classList.toggle("hide");
+    // }
+
+    // var bai = '<%= bai  %>'
+    // console.log(bai);
+    // if(bai){
+    //     sltBtnX.onclick();
+    //     sltTG.onclick()
+    // }
+    
+
+    function change_baixe(idbai){
+        // console.log(idbai);
+        const xmlhttp = new XMLHttpRequest();
+        formX.classList.remove('hide')
+        formTG.classList.remove('hide')
+        xmlhttp.onload = function() {
+            console.log(this.responseText);
+            dsxe = JSON.parse(this.responseText)
+            let text = ""
+            for(i in dsxe){
+                text += `<tr>
+                            <td> ${dsxe[i].id_xe} </td>
+                            <td> ${dsxe[i].trang_thai} </td>
+                            <td><input type="radio" name="xe" value=" ${dsxe[i].id_xe} " required ></td>
+                        </tr>`
+            }
+            document.querySelector('#dsxe').innerHTML = text
+
+        }
+
+        xmlhttp.open("POST", "/rent/chonbai", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("idbai=" + idbai);
+    }
+</script>
 
 </body> 
 <%- include('footer') %> 
