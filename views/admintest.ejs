@@ -109,7 +109,19 @@
     Toastify({
       text: message,
       position: "center",
-
+      style: {
+        background: "#198754"
+      }
     }).showToast();
+  }
+  var error = <%-JSON.stringify(error)%>;
+  if(error !== ""){
+    Toastify({
+      text: error,
+      position: "center",
+      style: {
+        background: "#ffc107"
+      }
+    })
   }
 </script>

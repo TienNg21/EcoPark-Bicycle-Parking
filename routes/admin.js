@@ -9,6 +9,7 @@ var lsu;
 var price;
 
 var message = "";
+var error = "";
 
 adminRouter.get('/', async (req,res) => {
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
@@ -40,9 +41,11 @@ adminRouter.get('/', async (req,res) => {
                                                     khachhang: khachhang,
                                                     lsu: lsu,
                                                     price: price,
-                                                    message: message
+                                                    message: message,
+                                                    error: error
                                                 });
                                                 message = "";
+                                                error = "";
                                             }
                                         )
                                     }
@@ -60,10 +63,11 @@ adminRouter.get('/', async (req,res) => {
 adminRouter.post('/xe', (req, res) => {
     if(req.body.action == 'update')
     {pool.query(
-        `UPDATE xe SET ten_bai = $1 , id_bai_xe = $2, loai_xe = $3, trang_thai = $4
-        WHERE id_xe =$5`,
-        [req.body.ten_bai, req.body.bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
+        `UPDATE xe SET id_bai_xe = $1, loai_xe = $2, trang_thai = $3
+        WHERE id_xe =$4`,
+        [req.body.id_bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
         (err, results) => {
+            console.log(err);
             console.log("Da sua thong tin xe")
             message = "Đổi thông tin xe thành công";
             res.redirect('/admin');
@@ -115,7 +119,7 @@ adminRouter.post('/baixe', (req,res) => {
                         }
                     )
                 } else{
-                    message = "Xóa bãi xe không thành công";
+                    error = "Xóa bãi xe không thành công";
                 }
             }
         )
