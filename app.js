@@ -50,6 +50,8 @@ const pusher = new Pusher({
 const user = require('./routes/user');
 const map = require('./routes/map');
 const infor = require('./routes/infor');
+const rent = require('./routes/rent');
+const traxe = require('./routes/traxe');
 
 const admin = require('./routes/admin');
 
@@ -58,7 +60,10 @@ const admin = require('./routes/admin');
 app.use('/', user);
 app.use('/map', map);
 app.use('/infor', infor); //Thông tin tài khoản
+app.use('/rent', rent);
+app.use('/traxe', traxe);
 // app.use('/history', history);
+
 
 //admin
 app.use('/admin',admin);
