@@ -1,3 +1,4 @@
+const { text } = require('body-parser');
 const express = require('express');
 const adminRouter = express.Router();
 const { pool } = require('../dbConfig');
@@ -6,6 +7,8 @@ var baixe;
 var khachhang;
 var lsu;
 var price;
+
+var message = "";
 
 adminRouter.get('/', async (req,res) => {
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
@@ -36,8 +39,10 @@ adminRouter.get('/', async (req,res) => {
                                                     baixe: baixe,
                                                     khachhang: khachhang,
                                                     lsu: lsu,
-                                                    price: price
+                                                    price: price,
+                                                    message: message
                                                 });
+                                                message = "";
                                             }
                                         )
                                     }
@@ -60,6 +65,7 @@ adminRouter.post('/xe', (req, res) => {
         [req.body.ten_bai, req.body.bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
         (err, results) => {
             console.log("Da sua thong tin xe")
+            message = "Đổi thông tin xe thành công";
             res.redirect('/admin');
         }
     )
@@ -75,9 +81,10 @@ adminRouter.post('/themxe', (req, res) => {
         [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
         (err, results) => {
             console.log("da them");
+            message = "Thêm xe thành công";
+            res.redirect('/admin');
         }
     )
-    res.redirect('/admin');
 })
 
 adminRouter.post('/baixe', (req,res) => {
@@ -89,6 +96,7 @@ adminRouter.post('/baixe', (req,res) => {
             [req.body.ten_bai_xe, req.body.id_bai_xe],
             (err, results) => {
                 console.log("Da sua thong tin bai xe")
+                message = "Thay đổi thông tin bãi xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -102,11 +110,12 @@ adminRouter.post('/baixe', (req,res) => {
                         'delete from bai_xe where id_bai_xe=$1',
                         [req.body.id_bai_xe],
                         (err, results) => {
+                            message = "Xóa bãi xe thành công";
                             res.redirect('/admin');
                         }
                     )
                 } else{
-                    //không xoá được
+                    message = "Xóa bãi xe không thành công";
                 }
             }
         )
@@ -124,6 +133,7 @@ adminRouter.post('/thembaixe', (req, res) => {
         values ($1, 0, $2, $3, $4, $5)`,
         [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y, qr_thue_random1, qr_tra_random2],
         (err, results) => {
+            message = "Thêm bãi xe thành công"
             res.redirect('/admin');
         }
     )
@@ -136,6 +146,7 @@ adminRouter.post('/price', (req, res) => {
             SET one_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -145,6 +156,7 @@ adminRouter.post('/price', (req, res) => {
             SET two_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -154,6 +166,7 @@ adminRouter.post('/price', (req, res) => {
             SET three_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -163,6 +176,7 @@ adminRouter.post('/price', (req, res) => {
             SET delay_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
