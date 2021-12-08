@@ -70,7 +70,7 @@
 
         <h2>Thêm xe</h2>
         <form action="/admin/themxe" method="post">
-            <select name="id_bai_xe_them" class="form-select" id="id_bai_xe_them">
+            <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
                 <% } %>
