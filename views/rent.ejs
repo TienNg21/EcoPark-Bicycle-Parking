@@ -73,7 +73,7 @@
                 <div class="col col-12 mt-4 baixe">
                     <a href="/map" class="">Xem bản đồ tại đây</a>
                     <div class="chon">
-                        <h2>Danh sách bãi xe:</h2>
+                        <h2>Danh sách bãi xe</h2>
 
                             
                             <table class="table formbx">
@@ -90,7 +90,11 @@
                                         {%>
                                             <tr class="", id = "<%= element['id_bai_xe'] %>">
                                                 <td><%= element['ten_bai'] %></td>
-                                                <td><input type="radio" name="xe" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"></td>
+                                                <td><input type="radio" name="bai" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"
+                                                    <% if(bai == element['id_bai_xe'] ){ %>
+                                                        <%="checked"%>
+                                                    <%}%>
+                                                ></td>
                                             </tr>
                                     <% }) %>
                                     <% } %>
@@ -110,7 +114,7 @@
                 </div>
                 <div class="col-col-12 mt-4 xe hide">
                     <div class="chon">
-                        <h2>Danh sách xe <%= bai ? 'bãi ' + bai : "" %>:</h2>
+                        <h2 id="noti_dsxe"></h2>
                         
                         <table class="table formx">
                             <thead>
@@ -121,18 +125,7 @@
                                 </tr>
                             </thead>
                             <tbody id='dsxe'>
-                                <!-- <tr class="">
-                                    <td>A1</td>
-                                    <td>ok</td>
-                                    <td><input type="radio" name="select" id=""></td>
-                                </tr>
-                                <tr>
-                                <td>A2</td>
-                                    <td>ok</td>
-                                    <td><input type="radio" name="select" id=""></td>
-                                </tr> -->
-                                
-                        
+                        <!-- dsxe trong text o function change_baixe dong 230 -->
                             </tbody>
                         </table>    
                     </div>
@@ -214,31 +207,25 @@
         else if(form == 'slt-thoigian') formTG.classList.toggle('hide')
     }
 
-    // sltBtnBX.onclick = function() {
-    //     formBX.classList.toggle("hide");
-    // };
-    // sltBtnX.onclick = function() {
-    //     formX.classList.toggle("hide");
-    // };
-    // sltTG.onclick = function() {
-    //     formTG.classList.toggle("hide");
-    // }
-
-    // var bai = '<%= bai  %>'
-    // console.log(bai);
-    // if(bai){
-    //     sltBtnX.onclick();
-    //     sltTG.onclick()
-    // }
+   
     
 
     function change_baixe(idbai){
         // console.log(idbai);
+
+        let noti_dsxe = document.querySelector('#noti_dsxe')
+        let dsbaixe = <%-JSON.stringify(baixe)%>;
+        for(i in dsbaixe){
+            if(dsbaixe[i].id_bai_xe != idbai) continue
+            else {
+                noti_dsxe.textContent = `Danh sách xe ${dsbaixe[i].ten_bai}`
+            }
+        }
         const xmlhttp = new XMLHttpRequest();
         formX.classList.remove('hide')
         formTG.classList.remove('hide')
         xmlhttp.onload = function() {
-            console.log(this.responseText);
+            // console.log(this.responseText);
             dsxe = JSON.parse(this.responseText)
             let text = ""
             for(i in dsxe){
@@ -255,6 +242,12 @@
         xmlhttp.open("POST", "/rent/chonbai", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("idbai=" + idbai);
+    }
+
+    let bai = '<%= bai %>'
+    // console.log('id bai laf:  '+bai);
+    if(bai){
+        document.getElementsByTagName("body")[0].setAttribute("onload", `change_baixe(${bai})`)
     }
 </script>
 
