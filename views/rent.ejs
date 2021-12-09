@@ -249,6 +249,10 @@
     if(bai){
         document.getElementsByTagName("body")[0].setAttribute("onload", `change_baixe(${bai})`)
     }
+
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        window.location.href = 'http://localhost:3000/rent'
+    }
 </script>
 
 </body> 
