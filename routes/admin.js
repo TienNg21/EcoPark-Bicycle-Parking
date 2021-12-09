@@ -74,6 +74,19 @@ adminRouter.post('/xe', (req, res) => {
         }
     )
     }
+    else{
+                    pool.query(
+                        'delete from xe where id_xe=$1',
+                        [req.body.id_xe],
+                        (err, results) => {
+                            message = "Xóa xe thành công!";
+                            console.log("Da xoa xe")
+                            res.redirect('/admin');
+                        }
+                    )
+                
+            }
+        
 })
 
 adminRouter.post('/themxe', (req, res) => {

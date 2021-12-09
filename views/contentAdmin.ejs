@@ -8,6 +8,13 @@
         border-color: transparent;
         background-color: transparent !important;
     }
+    #khachhang input {
+        text-align: center;
+        border-color: transparent;
+        background-color: transparent !important;
+        margin-left: 1.5cm;
+    }
+    
     th {
         text-align: center;
     }
@@ -15,6 +22,11 @@
         background-color: white;
         border: solid white;
     }
+    .tenbaithem{
+        background-color: white;
+        border: solid white;
+    }
+    
 
 </style>
 <div>
@@ -69,15 +81,20 @@
         <% } %>
 
         <h2>Thêm xe</h2>
+        
         <form action="/admin/themxe" method="post">
+            
             <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
                 <% } %>
             </select>
-            <input type="text" name="loai_xe_them">
+            
+            <input type="text"  name="loai_xe_them" placeholder="Tên bãi xe thêm">    
             <button type="submit" class="btn btn-primary">Thêm xe</button>
+            
         </form>
+        
     </div>
     <h2>Danh sách bãi xe</h2>
     <div id="baixe" class="baixe admin-content">
@@ -101,9 +118,9 @@
 
         <h2>Thêm bãi xe</h2>
         <form action="/admin/thembaixe" method="post">
-            <input type="text" id="ten_bai_xe_them" name="ten_bai_xe_them" required>
-            <input type="text" id="pos_x" name="pos_x" required>
-            <input type="text" id="pos_y" name="pos_y" required>
+            <input type="text" id="ten_bai_xe_them" name="ten_bai_xe_them" placeholder="Tên bãi xe thêm" required>
+            <input type="text" id="pos_x" name="pos_x" placeholder="Tọa độ x" required>
+            <input type="text" id="pos_y" name="pos_y" placeholder="Tọa độ y" required>
             <button type="submit" class="btn btn-primary">Them bai xe</button>
         </form>
         <div id="map" style="height: 500px; width: 100%;">
@@ -117,20 +134,36 @@
         <% if (khachhang.length === 0) { %>
             <p>Không có người dùng nào</p>
         <% } else { %>
-            <div class="admin-subcontent">
+            <div class="admin-subcontent table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Email</th>
+                            <th scope="col">Tên người dùng</th>
+                            <th scope="col">CMND</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                <tbody>
+            
                 <% for( let index = 0; index < khachhang.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/khachhang" method="post">
-                            <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
-                            <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
-                            <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
-
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
-                        </form>
-                    </div>
+                            <tr>
+                                <form action="/admin/khachhang" method="post">
+                                <td><input type="text" id="email" value="<%= khachhang[index].email %>" readonly></td>
+                                <td><input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly></td>
+                                <td><input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly></td>
+                                <td><button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                <td><button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                </form>
+                            </tr>
+                        
+                    
                 <% } %>
+            </tbody>
+            </table>
             </div>
+            
         <% } %>        
     </div>
 
