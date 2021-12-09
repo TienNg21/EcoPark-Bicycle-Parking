@@ -13,10 +13,13 @@ rentRouter.get("/", async (req, res)=>{
     console.log("view rent page");
     var idbai = req.query.idbai;
     console.log(idbai);
-    pool.query("select id_bai_xe, ten_bai from bai_xe ", (err, result)=>{
+    pool.query("select bx.id_bai_xe, bx.ten_bai, count(x.id_xe) as so_luong from bai_xe bx left join xe x on (bx.id_bai_xe = x.id_bai_xe) group by bx.id_bai_xe", (err, result)=>{
         console.log(result.rows);
         console.log('in bai lan 1 ');
-        res.render("rent.ejs", {baixe: result.rows, bai: (idbai ? idbai : ''), xe: undefined});
+        pool.query("select one_h, two_h, three_h from gia_thue_xe", (errs,results)=>{
+            console.log(results.rows)
+            res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), xe: undefined});
+        })
     })
 })
 
@@ -29,7 +32,7 @@ rentRouter.get("/:id_bai", (req, res, next)=>{
 rentRouter.post('/chonbai', (req, res)=>{
     console.log(req.body.idbai);
     // res.send('nhan dc roi')
-    pool.query("select * from xe where id_bai_xe = $1", [req.body.idbai], (err, result)=>{
+    pool.query("select id_xe, trang_thai, loai_xe from xe where id_bai_xe = $1", [req.body.idbai], (err, result)=>{
         if(err) console.error(err);
         else{
             console.log(result.rows);
