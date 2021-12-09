@@ -1,3 +1,4 @@
+const { text } = require('body-parser');
 const express = require('express');
 const adminRouter = express.Router();
 const { pool } = require('../dbConfig');
@@ -6,6 +7,9 @@ var baixe;
 var khachhang;
 var lsu;
 var price;
+
+var message = "";
+var error = "";
 
 adminRouter.get('/', async (req,res) => {
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
@@ -36,8 +40,12 @@ adminRouter.get('/', async (req,res) => {
                                                     baixe: baixe,
                                                     khachhang: khachhang,
                                                     lsu: lsu,
-                                                    price: price
+                                                    price: price,
+                                                    message: message,
+                                                    error: error
                                                 });
+                                                message = "";
+                                                error = "";
                                             }
                                         )
                                     }
@@ -53,7 +61,32 @@ adminRouter.get('/', async (req,res) => {
 })
 
 adminRouter.post('/xe', (req, res) => {
-
+    if(req.body.action == 'update')
+    {pool.query(
+        `UPDATE xe SET id_bai_xe = $1, loai_xe = $2, trang_thai = $3
+        WHERE id_xe =$4`,
+        [req.body.id_bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
+        (err, results) => {
+            console.log(err);
+            console.log("Da sua thong tin xe")
+            message = "Đổi thông tin xe thành công";
+            res.redirect('/admin');
+        }
+    )
+    }
+    else{
+                    pool.query(
+                        'delete from xe where id_xe=$1',
+                        [req.body.id_xe],
+                        (err, results) => {
+                            message = "Xóa xe thành công!";
+                            console.log("Da xoa xe")
+                            res.redirect('/admin');
+                        }
+                    )
+                
+            }
+        
 })
 
 adminRouter.post('/themxe', (req, res) => {
@@ -65,15 +98,25 @@ adminRouter.post('/themxe', (req, res) => {
         [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
         (err, results) => {
             console.log("da them");
+            message = "Thêm xe thành công";
+            res.redirect('/admin');
         }
     )
-    res.redirect('/admin');
 })
 
 adminRouter.post('/baixe', (req,res) => {
     // console.log(req.body);
     if(req.body.action == 'update') {
-        
+        pool.query(
+            `UPDATE bai_xe SET ten_bai = $1 
+            WHERE id_bai_xe =$2`,
+            [req.body.ten_bai_xe, req.body.id_bai_xe],
+            (err, results) => {
+                console.log("Da sua thong tin bai xe")
+                message = "Thay đổi thông tin bãi xe thành công";
+                res.redirect('/admin');
+            }
+        )
     } else {
         pool.query(
             'select so_luong_xe from bai_xe where id_bai_xe=$1',
@@ -84,11 +127,12 @@ adminRouter.post('/baixe', (req,res) => {
                         'delete from bai_xe where id_bai_xe=$1',
                         [req.body.id_bai_xe],
                         (err, results) => {
+                            message = "Xóa bãi xe thành công";
                             res.redirect('/admin');
                         }
                     )
                 } else{
-                    //không xoá được
+                    error = "Xóa bãi xe không thành công";
                 }
             }
         )
@@ -96,11 +140,17 @@ adminRouter.post('/baixe', (req,res) => {
 })
 
 adminRouter.post('/thembaixe', (req, res) => {
+    //random ra 2 cái text ngẫu nhiên (độ dài là 40 giống như hash)
+    let qr_thue_random1 = getRandomString(40);
+    let qr_tra_random2 = getRandomString(40);
+    // console.log(qr_thue_random1, qr_tra_random2);
+    // sau đó thêm nó vào csdl ứng vs .qr_thuê và .qr_trả
     pool.query(
-        `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y)
-        values ($1, 0, $2, $3)`,
-        [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y],
+        `insert into bai_xe (ten_bai, so_luong_xe, pos_x, pos_y, qr_thue_xe, qr_tra_xe)
+        values ($1, 0, $2, $3, $4, $5)`,
+        [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y, qr_thue_random1, qr_tra_random2],
         (err, results) => {
+            message = "Thêm bãi xe thành công"
             res.redirect('/admin');
         }
     )
@@ -113,6 +163,7 @@ adminRouter.post('/price', (req, res) => {
             SET one_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -122,6 +173,7 @@ adminRouter.post('/price', (req, res) => {
             SET two_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -131,6 +183,7 @@ adminRouter.post('/price', (req, res) => {
             SET three_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -140,6 +193,7 @@ adminRouter.post('/price', (req, res) => {
             SET delay_h = $1`,
             [req.body.pricechange],
             (err, result) => {
+                message = "Thay đổi giá thuê xe thành công";
                 res.redirect('/admin');
             }
         )
@@ -159,4 +213,14 @@ adminRouter.get('/qrpage/:id', async (req, res)=>{
 adminRouter.get('/logout', (req,res) =>{
     res.redirect('/logout');
 })
+
+function getRandomString(length) {
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+}
+
 module.exports = adminRouter;

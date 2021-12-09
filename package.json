@@ -34,7 +34,8 @@
     "path": "^0.12.7",
     "pg": "^8.7.1",
     "pusher": "^5.0.0",
-    "sequelize": "^6.9.0"
+    "sequelize": "^6.9.0",
+    "toastify-js": "^1.11.2"
   },
   "engines": {
     "node": "14.17.3"
