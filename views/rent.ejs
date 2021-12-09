@@ -80,6 +80,7 @@
                                 <thead class="thead-light">
                                     <tr class="first-tr">
                                         <th scope="col">Tên bãi xe</th>
+                                        <th scope="col">Số lượng xe</th>
                                         <th scope="col">Chọn bãi xe</th>
                                     </tr>
                                 </thead>
@@ -90,6 +91,7 @@
                                         {%>
                                             <tr class="", id = "<%= element['id_bai_xe'] %>">
                                                 <td><%= element['ten_bai'] %></td>
+                                                <td><%= element['so_luong'] %></td>
                                                 <td><input type="radio" name="bai" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"
                                                     <% if(bai == element['id_bai_xe'] ){ %>
                                                         <%="checked"%>
@@ -120,6 +122,7 @@
                             <thead>
                                 <tr class="">
                                     <th scope="col">ID xe</th>
+                                    <th scope="col">Loại xe</th>
                                     <th scope="col">Trạng thái xe</th>
                                     <th scope="col">Chọn xe</th>
                                 </tr>
@@ -152,23 +155,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>50000</td>
-                                <td><input type="radio" name="gio" value="50000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td>2</td>
-                                <td>70000</td>
-                                <td><input type="radio" name="gio" value="70000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td >3</td>
-                                <td>100000</td>
-                                <td><input type="radio" name="gio" value="100000" required></td>
-                            </tr>
+                                <% if (typeof gia != 'undefined'){
+                                    %> <% gia.forEach(element =>
+                                    {%>
+                                        <tr class="">
+                                            <td> 1 </td>
+                                            <td><%= element['one_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['one_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 2 </td>
+                                            <td><%= element['two_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['two_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 3 </td>
+                                            <td><%= element['three_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['three_h'] %>" required></td>
+                                        </tr>
+                                <% }) %>
+                                <% } %>
                             </tbody>
                         </table> 
                     </div>
@@ -231,6 +237,7 @@
             for(i in dsxe){
                 text += `<tr>
                             <td> ${dsxe[i].id_xe} </td>
+                            <td> ${dsxe[i].loai_xe} </td>
                             <td> ${dsxe[i].trang_thai} </td>
                             <td><input type="radio" name="xe" value=" ${dsxe[i].id_xe} " required ></td>
                         </tr>`
