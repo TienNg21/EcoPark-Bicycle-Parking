@@ -49,7 +49,7 @@ rentRouter.get("/:id_bai", async (req, res)=>{
 rentRouter.post('/chonbai', (req, res)=>{
     console.log(req.body.idbai);
     // res.send('nhan dc roi')
-    pool.query("select id_xe, trang_thai from xe where id_bai_xe = $1", [req.body.idbai], (err, result)=>{
+    pool.query("select * from xe where id_bai_xe = $1", [req.body.idbai], (err, result)=>{
         if(err) console.error(err);
         else{
             console.log(result.rows);
