@@ -45,34 +45,37 @@ rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
     // console.log(req.user);
     pool.query(`update public.xe set trang_thai = 'pending',id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
-        if(err) console.error(err)
+        if(err) {
+            console.error(err)
+            res.send('loi roi')
+        }
         else {
-        console.log('bat dau doi 1phut');
-        // doi 5 phut
-        await timeout(60000)
-        console.log('het 1 phut')
-        // kiem tra trang thai hien tai cua xe
-        pool.query("select trang_thai, id_user from public.xe where id_xe = $1", [req.body.xe], (err, result)=>{
-            if(err) console.error(err)
-            else{
-            if(result.rows.length == 0){console.error('Khong tim thay xe')}
-            else{
-                console.log(result.rows[0]['trang_thai'])
-                // neu trang thai van la pending thi chuyen thanh available
-                if(result.rows[0]['trang_thai'] == `pending`) {
-                    pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
+            res.render('scan.ejs', {bai: req.body.bai})
+            console.log('bat dau doi 1phut');
+            // doi 5 phut
+            await timeout(60000)
+            console.log('het 1 phut')
+            // kiem tra trang thai hien tai cua xe
+            pool.query("select trang_thai, id_user from public.xe where id_xe = $1", [req.body.xe], (err, result)=>{
+                if(err) console.error(err)
+                else{
+                    if(result.rows.length == 0){console.error('Khong tim thay xe')}
+                else{
+                    console.log(result.rows[0]['trang_thai'])
+                    // neu trang thai van la pending thi chuyen thanh available
+                    if(result.rows[0]['trang_thai'] == `pending`) {
+                        pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
+                    }
+                    //
+                    if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
+                        console.log('xe da duoc thue');
+                    }
+                    // neu trang thai khac pending tuc la nguoi dung da quet ma thanh cong, xe dang duoc su dung
                 }
-                //
-                if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
-                    console.log('xe da duoc thue');
-                }
-                // neu trang thai khac pending tuc la nguoi dung da quet ma thanh cong, xe dang duoc su dung
-            }
             }
         })
         }
     })
-    res.render('scan.ejs', {bai: req.body.bai})
 })
 
 rentRouter.get('/scan', (req, res)=>{
