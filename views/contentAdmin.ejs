@@ -63,11 +63,11 @@ input{
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <div>
                         <form action="/admin/baixe" method="post">
-                            <input type="text" id="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
-                            <input type="text" id="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
-                            <input type="text" id="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button"class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
+                            <input type="text" id="id_bai_xe" name="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
+                            <input type="text" id="ten_bai_xe" name="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
+                            <input type="text" id="so_luong_xe" name="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
+                            <button type="submit" name="action" class="btn btn-primary" value="update">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            <button type="submit" name="action" class="btn btn-danger" value="delete">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
                         </form>
                     </div>
                 <% } %>
@@ -76,10 +76,9 @@ input{
 
         <h2>Them bai xe</h2>
         <form action="/admin/thembaixe" method="post">
-            <input type="text" id="id_bai_xe_them" required>
-            <input type="text" id="ten_bai_xe_them" required>
-            <input type="text" id="pos_x" required>
-            <input type="text" id="pos_y" required>
+            <input type="text" id="ten_bai_xe_them" name="ten_bai_xe_them" required>
+            <input type="text" id="pos_x" name="pos_x" required>
+            <input type="text" id="pos_y" name="pos_y" required>
             <button type="submit">Them bai xe</button>
         </form>
         <div id="map" style="height: 500px; width: 100%;">
@@ -196,6 +195,9 @@ input{
         for (let index = 0; index < baixe.length; index++) {
             baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
+            baitemp.on('click', (err) => {
+                window.location.href += "/qrpage/" + baixe[index].id_bai_xe;
+            })
         }
     </script>
 </div>
