@@ -70,7 +70,7 @@ adminRouter.post('/xe', (req, res) => {
             console.log(err);
             console.log("Da sua thong tin xe")
             message = "Đổi thông tin xe thành công";
-            res.redirect('/admin');
+            res.redirect('/admin#xe');
         }
     )
     }
@@ -81,7 +81,7 @@ adminRouter.post('/xe', (req, res) => {
                         (err, results) => {
                             message = "Xóa xe thành công!";
                             console.log("Da xoa xe")
-                            res.redirect('/admin');
+                            res.redirect('/admin#xe');
                         }
                     )
                 
@@ -99,7 +99,7 @@ adminRouter.post('/themxe', (req, res) => {
         (err, results) => {
             console.log("da them");
             message = "Thêm xe thành công";
-            res.redirect('/admin');
+            res.redirect('/admin#xe');
         }
     )
 })
@@ -114,7 +114,7 @@ adminRouter.post('/baixe', (req,res) => {
             (err, results) => {
                 console.log("Da sua thong tin bai xe")
                 message = "Thay đổi thông tin bãi xe thành công";
-                res.redirect('/admin');
+                res.redirect('/admin#baixe');
             }
         )
     } else {
@@ -128,11 +128,12 @@ adminRouter.post('/baixe', (req,res) => {
                         [req.body.id_bai_xe],
                         (err, results) => {
                             message = "Xóa bãi xe thành công";
-                            res.redirect('/admin');
+                            res.redirect('/admin#baixe');
                         }
                     )
                 } else{
                     error = "Xóa bãi xe không thành công";
+                    res.redirect('/admin#baixe');
                 }
             }
         )
@@ -151,7 +152,7 @@ adminRouter.post('/thembaixe', (req, res) => {
         [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y, qr_thue_random1, qr_tra_random2],
         (err, results) => {
             message = "Thêm bãi xe thành công"
-            res.redirect('/admin');
+            res.redirect('/admin#baixe');
         }
     )
 })
@@ -164,7 +165,7 @@ adminRouter.post('/price', (req, res) => {
             [req.body.pricechange],
             (err, result) => {
                 message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                res.redirect('/admin#price');
             }
         )
     }else if(req.body.action == 'two_h'){
@@ -174,7 +175,7 @@ adminRouter.post('/price', (req, res) => {
             [req.body.pricechange],
             (err, result) => {
                 message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                res.redirect('/admin#price');
             }
         )
     }else if(req.body.action == 'three_h'){
@@ -184,7 +185,7 @@ adminRouter.post('/price', (req, res) => {
             [req.body.pricechange],
             (err, result) => {
                 message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                res.redirect('/admin#price');
             }
         )
     }else{
@@ -194,7 +195,7 @@ adminRouter.post('/price', (req, res) => {
             [req.body.pricechange],
             (err, result) => {
                 message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                res.redirect('/admin#price');
             }
         )
     }    
