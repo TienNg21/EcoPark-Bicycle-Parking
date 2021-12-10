@@ -11,39 +11,19 @@ var bai = [];
 rentRouter.get("/", async (req, res)=>{
     if(req.user == null) res.redirect('../login')
     console.log("view rent page");
+    var idbai = req.query.idbai;
+    console.log(idbai);
     pool.query("select id_bai_xe, ten_bai from bai_xe ", (err, result)=>{
         console.log(result.rows);
         console.log('in bai lan 1 ');
-        res.render("rent.ejs", {baixe: result.rows, bai: '', xe: undefined});
+        res.render("rent.ejs", {baixe: result.rows, bai: (idbai ? idbai : ''), xe: undefined});
     })
 })
 
-rentRouter.get("/:id_bai", async (req, res)=>{
+rentRouter.get("/:id_bai", (req, res, next)=>{
     if(req.user == null) res.redirect('../login')
-    // bai = ''
-    console.log(req.params.id_bai)
-    let id_bai = req.params.id_bai
-    pool.query("select id_bai_xe, ten_bai from bai_xe where id_bai_xe = $1", [id_bai], (err, result)=>{
-        if(err) console.error(err);
-        else{
-            bai = result.rows;
-            
-            console.log(bai);
-            // console.log('innn' + bai['ten_bai']);
-            // var tenbai = bai['ten_bai']
-            // var idbai = bai['id_bai_xe']
-            pool.query("select id_xe, trang_thai from xe where id_bai_xe = $1", [id_bai], (err, result)=>{
-                
-                    console.log(result.rows);
-                    console.log('in bai lan 2: ' + id_bai);
-                    res.render("rent.ejs", {bai: id_bai, xe: result.rows});
-        
-                
-            })
-        }
-    })
-    
-
+    var string = encodeURIComponent(req.params.id_bai);
+    res.redirect('/rent?idbai=' + string);
 })
 
 rentRouter.post('/chonbai', (req, res)=>{
