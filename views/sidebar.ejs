@@ -1,0 +1,159 @@
+<html lang="en" dir="ltr">
+    <head>
+
+    </head>
+
+    <body>
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+        <div class="sidebar">
+            <i class='bx bx-menu' id="btn"></i>
+            <ul class="nav_list">
+                <li>
+                    <a href="#">
+                        <i class='bx bx-home-alt' ></i>
+                        <span class="links_name">Trang chủ</span>
+                    </a>
+                    <span class="tooltip">Trang chủ</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-line-chart' ></i>
+                        <span class="links_name">Doanh số</span>
+                    </a>
+                    <span class="tooltip">Doanh số</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-calendar' ></i>
+                        <span class="links_name">Lịch sử thuê xe</span>
+                    </a>
+                    <span class="tooltip">Lịch sử thuê xe</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-cycling' ></i>
+                        <span class="links_name">Xe</span>
+                    </a>
+                    <span class="tooltip">Xe</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-add-to-queue' ></i>
+                        <span class="links_name">Thêm xe</span>
+                    </a>
+                    <span class="tooltip">Thêm xe</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-parking' ></i>
+                        <span class="links_name">Bãi xe</span>
+                    </a>
+                    <span class="tooltip">Bãi xe</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-add-to-queue' ></i>
+                        <span class="links_name">Thêm bãi xe</span>
+                    </a>
+                    <span class="tooltip">Thêm bãi xe</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-list-ul' ></i>
+                        <span class="links_name">Danh sách người dùng</span>
+                    </a>
+                    <span class="tooltip">Danh sách người dùng</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-credit-card' ></i>
+                        <span class="links_name">Giá thuê xe</span>
+                    </a>
+                    <span class="tooltip">Giá thuê xe</span>
+                </li>
+            </ul>
+
+        </div>
+
+      
+
+    </body>
+
+
+    <style>
+    *{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+
+    body{
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sidebar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: #343a40;
+        padding: 6px 14px;    
+    }
+
+    .sidebar #btn {
+        position: absolute;
+        color: #fff;
+        left: 90%;
+        top: 6px;
+        font-size: 20px;
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        line-height: 50px;
+        transform: translateX(-50%);
+    }
+
+    .sidebar ul {
+        margin-top: 20px;
+    }
+
+    .sidebar ul li {
+        position: relative;
+        height: 50px;
+        width: 100px;
+        margin: 0 5px;
+        list-style: none;
+        line-height: 50px;
+    }
+
+    .sidebar ul li a{
+        color: #c2c7d0;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        border-radius: 12px;
+    }
+
+    .sidebar ul li a :hover{
+        color: #343a40;
+        background: #c2c7d0;
+    }
+     
+    .sidebar ul li a i{
+        height: 50px;
+        min-width: 50px;
+        border-radius: 12px;
+        line-height: 50px;
+        text-align: center;
+    }
+
+    </style>
+
+
+</html>
