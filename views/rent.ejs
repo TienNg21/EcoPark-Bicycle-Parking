@@ -73,13 +73,14 @@
                 <div class="col col-12 mt-4 baixe">
                     <a href="/map" class="">Xem bản đồ tại đây</a>
                     <div class="chon">
-                        <h2>Danh sách bãi xe:</h2>
+                        <h2>Danh sách bãi xe</h2>
 
                             
                             <table class="table formbx">
                                 <thead class="thead-light">
                                     <tr class="first-tr">
                                         <th scope="col">Tên bãi xe</th>
+                                        <th scope="col">Số lượng xe</th>
                                         <th scope="col">Chọn bãi xe</th>
                                     </tr>
                                 </thead>
@@ -90,7 +91,12 @@
                                         {%>
                                             <tr class="", id = "<%= element['id_bai_xe'] %>">
                                                 <td><%= element['ten_bai'] %></td>
-                                                <td><input type="radio" name="xe" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"></td>
+                                                <td><%= element['so_luong'] %></td>
+                                                <td><input type="radio" name="bai" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"
+                                                    <% if(bai == element['id_bai_xe'] ){ %>
+                                                        <%="checked"%>
+                                                    <%}%>
+                                                ></td>
                                             </tr>
                                     <% }) %>
                                     <% } %>
@@ -110,29 +116,19 @@
                 </div>
                 <div class="col-col-12 mt-4 xe hide">
                     <div class="chon">
-                        <h2>Danh sách xe <%= bai ? 'bãi ' + bai : "" %>:</h2>
+                        <h2 id="noti_dsxe"></h2>
                         
                         <table class="table formx">
                             <thead>
                                 <tr class="">
                                     <th scope="col">ID xe</th>
+                                    <th scope="col">Loại xe</th>
                                     <th scope="col">Trạng thái xe</th>
                                     <th scope="col">Chọn xe</th>
                                 </tr>
                             </thead>
                             <tbody id='dsxe'>
-                                <!-- <tr class="">
-                                    <td>A1</td>
-                                    <td>ok</td>
-                                    <td><input type="radio" name="select" id=""></td>
-                                </tr>
-                                <tr>
-                                <td>A2</td>
-                                    <td>ok</td>
-                                    <td><input type="radio" name="select" id=""></td>
-                                </tr> -->
-                                
-                        
+                        <!-- dsxe trong text o function change_baixe dong 230 -->
                             </tbody>
                         </table>    
                     </div>
@@ -159,23 +155,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>50000</td>
-                                <td><input type="radio" name="gio" value="50000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td>2</td>
-                                <td>70000</td>
-                                <td><input type="radio" name="gio" value="70000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td >3</td>
-                                <td>100000</td>
-                                <td><input type="radio" name="gio" value="100000" required></td>
-                            </tr>
+                                <% if (typeof gia != 'undefined'){
+                                    %> <% gia.forEach(element =>
+                                    {%>
+                                        <tr class="">
+                                            <td> 1 </td>
+                                            <td><%= element['one_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['one_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 2 </td>
+                                            <td><%= element['two_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['two_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 3 </td>
+                                            <td><%= element['three_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['three_h'] %>" required></td>
+                                        </tr>
+                                <% }) %>
+                                <% } %>
                             </tbody>
                         </table> 
                     </div>
@@ -214,36 +213,31 @@
         else if(form == 'slt-thoigian') formTG.classList.toggle('hide')
     }
 
-    // sltBtnBX.onclick = function() {
-    //     formBX.classList.toggle("hide");
-    // };
-    // sltBtnX.onclick = function() {
-    //     formX.classList.toggle("hide");
-    // };
-    // sltTG.onclick = function() {
-    //     formTG.classList.toggle("hide");
-    // }
-
-    // var bai = '<%= bai  %>'
-    // console.log(bai);
-    // if(bai){
-    //     sltBtnX.onclick();
-    //     sltTG.onclick()
-    // }
+   
     
 
     function change_baixe(idbai){
         // console.log(idbai);
+
+        let noti_dsxe = document.querySelector('#noti_dsxe')
+        let dsbaixe = <%-JSON.stringify(baixe)%>;
+        for(i in dsbaixe){
+            if(dsbaixe[i].id_bai_xe != idbai) continue
+            else {
+                noti_dsxe.textContent = `Danh sách xe ${dsbaixe[i].ten_bai}`
+            }
+        }
         const xmlhttp = new XMLHttpRequest();
         formX.classList.remove('hide')
         formTG.classList.remove('hide')
         xmlhttp.onload = function() {
-            console.log(this.responseText);
+            // console.log(this.responseText);
             dsxe = JSON.parse(this.responseText)
             let text = ""
             for(i in dsxe){
                 text += `<tr>
                             <td> ${dsxe[i].id_xe} </td>
+                            <td> ${dsxe[i].loai_xe} </td>
                             <td> ${dsxe[i].trang_thai} </td>
                             <td><input type="radio" name="xe" value=" ${dsxe[i].id_xe} " required ></td>
                         </tr>`
@@ -255,6 +249,16 @@
         xmlhttp.open("POST", "/rent/chonbai", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("idbai=" + idbai);
+    }
+
+    let bai = '<%= bai %>'
+    // console.log('id bai laf:  '+bai);
+    if(bai){
+        document.getElementsByTagName("body")[0].setAttribute("onload", `change_baixe(${bai})`)
+    }
+
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        window.location.href = 'http://localhost:3000/rent'
     }
 </script>
 
