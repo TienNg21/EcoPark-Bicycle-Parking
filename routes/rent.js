@@ -3,10 +3,7 @@ const { Router } = require('express');
 const express = require('express');
 const rentRouter = express.Router();
 const { pool } = require('../dbConfig');
-
-var bai = [];
-
-
+var errors = [];
 
 rentRouter.get("/", async (req, res)=>{
     if(req.user == null) res.redirect('../login')
@@ -50,7 +47,8 @@ rentRouter.post("/scan", async (req, res)=>{
             res.send('loi roi')
         }
         else {
-            res.render('scan.ejs', {bai: req.body.bai})
+            res.render('scan.ejs', {bai: req.body.bai, errors: errors});
+            errors = [];
             console.log('bat dau doi 1phut');
             // doi 5 phut
             await timeout(60000)
@@ -84,17 +82,59 @@ rentRouter.get('/scan', (req, res)=>{
 
 rentRouter.post('/xacnhan', (req, res)=>{
     console.log(req.body);
+    console.log(req.user.id_user);
     // so sanh ma qr, thong bao khi sai, dung
-    
-    // cap nhat csdl khi quet dung
-    // set trang thai xe
-    // cap nhat bang lichsuthuexe
+    pool.query("select id_xe from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
+        let id_xe = result.rows[0].id_xe;
+        if(err) console.error(err);
+        else {
+            if(result.rows.length == 0) { console.error('Thong tin khach hang khong dung');}
+            else {
+                pool.query("select * from bai_xe where id_bai_xe = $1 and qr_thue_xe = $2", [req.body.idbai, req.body.qrcode], (err, result) => {
+                    if(err) console.error(err)
+                    else {
+                        if (result.rows.length == 0) {
+                            console.log("quet sai ma roi");
 
-
+                            errors.push({message: "Bạn quét sai mã rồi!"});
+                            res.render('scan.ejs', {bai: req.body.bai, errors: errors});
+                            errors = [];
+                        }
+                        else {
+                            // cap nhat csdl khi quet dung
+                            console.log("thue xe thanh cong");
+                            req.flash('success_msg', "Thuê xe thành công!");
+                            // set trang thai xe
+                            pool.query("update xe set trang_thai = 'active' where id_user = $1 and id_bai_xe = $2 and trang_thai = 'pending'", [req.user.id_user, req.body.idbai]);
+                            // console.log("set trang thai xe thanh cong");
+                            // doi qr_thue_xe
+                            let random = makeRandom(40);
+                            pool.query("update bai_xe set qr_thue_xe = $1 where id_bai_xe = $2", [random, req.body.idbai]);
+                            // console.log("set lai qr_thue thanh cong")
+                            // cap nhat bang lichsuthuexe
+                            pool.query("insert into lich_su_thue_xe (ngay_thue, bat_dau, id_user, id_xe) values (current_date, localtime, $1, $2)", [req.user.id_user, id_xe]);
+                            res.redirect('/dashboard');
+                        }
+                    }
+                });
+            }
+        }
+    })
 })
 
 // tra xe tinh tien
 
+function makeRandom(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+  charactersLength));
+   }
+   return result;
+  }
+  
 
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
