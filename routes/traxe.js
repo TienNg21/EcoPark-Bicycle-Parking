@@ -20,36 +20,33 @@ traxeRouter.get('/', (req,res, next)=>{
 })
 
 traxeRouter.post('/xacnhan', (req,res)=>{
-    let success = false
-    pool.query("select id_bai_xe, qr_tra_xe from bai_xe", (err, result)=>{
-        console.log(result.rows);
-        for(var i = 0; i < result.rows.length; i++) {
-            var obj = result.rows[i];
-            // console.log(obj.qr_tra_xe);
-            if(obj.qr_tra_xe == req.body.qrcode){
-                console.log(obj.qr_tra_xe);
-                pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null where id_user = $2 and trang_thai = 'active'", [obj.id_bai_xe, req.user.id_user])
-                console.log('tra xe thanh cong tai bai: ' + obj.id_bai_xe);
-
-                // update bang lich su thue xe, tinh tien... 
-
-                success = true
-                break
-            }
-        }
-        if(!success) {
-            console.log('quet sai ma roi');
-            // send text sang hàm onreadystatechange trong file scan_traxe.ejs 
+    // let success = false
+    pool.query("select id_bai_xe from bai_xe where qr_tra_xe = $1", [req.body.qrcode], async (err, result)=>{
+        if(err) console.error(err);
+        else if(result.rows.length == 0){
             res.send('false')
         }
         else{
-            // send text sang hàm onreadystatechange trong file scan_traxe.ejs
-            res.send('true')
-            
-        }
+            console.log(result.rows);
+            await pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null where id_user = $2 and trang_thai = 'active'", 
+            [result.rows.id_bai_xe, req.user.id_user])
+            console.log('update trang thai xe xong');
 
-        // thong bao tra xe thanh coong
-        // chuyển sang page thông tin hoá đơn/ lịch sử thuê xe
+            await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [makeRandom(40), result.rows.id_bai_xe]);
+            console.log('update bai xe xong');
+
+            // tìm cuốc xe hiện tại để trả xe
+            pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null order by id desc limit 1", [req.user.id_user], (err, results)=>{
+                // update bang lich su thue xe, tinh tien... 
+                pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh' where id = $1", [results.rows[0].id])
+    
+                // send text sang hàm onreadystatechange trong file scan_traxe.ejs 
+                res.send('true')
+    
+                
+            })
+
+        }
     })
 })
 
@@ -57,7 +54,16 @@ traxeRouter.get('/oke', (req, res)=>{
     res.render('oke.ejs')
 })
 
-
+function makeRandom(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+  charactersLength));
+   }
+   return result;
+  }
 module.exports = traxeRouter;
 
 
