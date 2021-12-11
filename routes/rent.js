@@ -80,7 +80,7 @@ rentRouter.post("/scan", async (req, res)=>{
                     errors = [];
                     console.log('bat dau doi 5 phut');
                     // doi 5 phut
-                    await timeout(60000)
+                    await timeout(300000)
                     console.log('het 5 phut')
                     // kiem tra trang thai hien tai cua xe
                     pool.query("select trang_thai, id_user from public.xe where id_xe = $1", [req.body.xe], (err, result)=>{
@@ -143,16 +143,12 @@ rentRouter.post('/xacnhan', (req, res)=>{
                     else {
                         if (result.rows.length == 0) {
                             console.log("quet sai ma roi");
-                            // errors.push({message: "Bạn quét sai mã rồi!"});
-                            // res.render('scan.ejs', {bai: req.body.bai, errors: errors});
-                            // errors = [];
                             // thong bao quet sai va cho quet lai
                             res.send('quet_sai');
                         }
                         else {
                             // cap nhat csdl khi quet dung
                             console.log("thue xe thanh cong");
-                            // req.flash('success_msg', "Thuê xe thành công!");
                             // set trang thai xe
                             pool.query("update xe set trang_thai = 'active' where id_user = $1 and id_bai_xe = $2 and trang_thai = 'pending'", [req.user.id_user, req.body.idbai]);
                             // console.log("set trang thai xe thanh cong");
@@ -163,7 +159,7 @@ rentRouter.post('/xacnhan', (req, res)=>{
                             // cap nhat bang lichsuthuexe
                             pool.query("insert into lich_su_thue_xe (ngay_thue, bat_dau, id_user, id_xe) values (current_date at time zone 'Asia/Ho_Chi_Minh', localtime at time zone 'Asia/Ho_Chi_Minh', $1, $2)", [req.user.id_user, id_xe]);
                             // thong bao thue xe thanh cong
-                            // res.redirect('/dashboard');
+                            // chuyen ve dashboard '/'
                             res.send('thue_xe_thanh_cong');
                         }
                     }
