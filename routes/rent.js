@@ -18,12 +18,12 @@ rentRouter.get("/", async (req, res)=>{
             pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
                 if(xe_pending.rows.length == 0){
 
-                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null});
+                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null, message: req.flash('message')});
                 }
                 
                 else if(xe_pending.rows.length > 0){
                     console.log(xe_pending.rows);
-                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe']});
+                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe'], message: req.flash('message')});
 
                 }
             })
@@ -114,6 +114,7 @@ rentRouter.get('/scan/:idbai', (req, res)=>{
     // var idbai = req.query.idbai;
     pool.query("select * from xe where trang_thai = 'pending' and id_user = $1", [req.user.id_user], (err, result)=>{
         if(result.rows.length == 0) {
+            req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
             res.redirect('/rent')}
         else{
             res.render('scan.ejs', {bai: req.params.idbai});
@@ -128,15 +129,15 @@ rentRouter.post('/xacnhan', (req, res)=>{
     console.log(req.user.id_user);
     // so sanh ma qr, thong bao khi sai, dung
     pool.query("select id_xe from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
-        let id_xe = result.rows[0].id_xe;
         // err thi thong bao xe khong con trong trang thai pending
         if(err) console.error(err);
         else {
             if(result.rows.length == 0) { 
                 console.error('Het thoi gian pending');
-                req.send('het_pending');
+                res.send('het_pending');
             }
             else {
+                let id_xe = result.rows[0].id_xe;
                 pool.query("select * from bai_xe where id_bai_xe = $1 and qr_thue_xe = $2", [req.body.idbai, req.body.qrcode], (err, result) => {
                     if(err) console.error(err)
                     else {
