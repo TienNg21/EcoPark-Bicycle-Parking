@@ -2,6 +2,25 @@
   <head>
     <title>Html-Qrcode Demo</title>
   <body>
+    <div>
+        <% if (typeof errors != 'undefined'){
+            %> <% errors.forEach(element =>
+            {%> <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= element.message%>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% }) %>
+        <% } %>
+    </div>
+
+    <div>
+        <% if (messages.success_msg) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert"><%= messages.success_msg %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+            </div>
+        <% } %>   
+    </div>
+    
     <h2>Scan cho bai: </h2><h1 id='bai'><%= bai%></h1>
     <div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>

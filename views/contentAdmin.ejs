@@ -1,12 +1,32 @@
 <style>
-input{
+    input{
+        border-radius: 5px;
+        height: 1.1cm;
+    }
+    #xe input {
+        text-align: center;
+        border-color: transparent;
+        background-color: transparent !important;
+    }
+    #khachhang input {
+        text-align: center;
+        border-color: transparent;
+        background-color: transparent !important;
+        margin-left: 1.5cm;
+    }
     
-    border-radius: 5px;
-    height: 1.1cm;
-    margin-top: 0.2cm;
-    margin-bottom: 0.2cm;
+    th {
+        text-align: center;
+    }
+    .admin-subcontent {
+        background-color: white;
+        border: solid white;
+    }
+    .tenbaithem{
+        background-color: white;
+        border: solid white;
+    }
     
-}
 
 </style>
 <div>
@@ -20,41 +40,63 @@ input{
         -sprint sau
     </div>
 
-    <h2>Xe</h2>
+    <h2>Danh sách các xe</h2>
     <div id="xe" class="xe admin-content">
         <% if (xe.length === 0) { %>
             <p>Không có xe nào</p>
         <% }else{ %>
-            <div class="admin-subcontent">
-                <% for( let index = 0; index < xe.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/xe" method="post">
-                            <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
-                            <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
-                            <input type="text" id="id_user" value="<%= xe[index].id_user %>">
-                            <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
-                            <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
-                            <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
-                        </form>
-                    </div>
-                <% } %>
+            <div class="admin-subcontent table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tên bãi xe</th>
+                            <th scope="col">ID bãi xe</th>
+                            <th scope="col">ID người đang dùng xe</th>
+                            <th scope="col">ID xe</th>
+                            <th scope="col">Loại xe</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for( let index = 0; index < xe.length; index++ ) { %>
+                            <tr>
+                                <form action="/admin/xe" method="post">
+                                    <td><input type="text" id="ten_bai" name="ten_bai" value="<%= xe[index].ten_bai %>" readonly></td>
+                                    <td><input type="text" id="id_bai_xe" name="id_bai_xe" class="form-control" value="<%= xe[index].id_bai_xe %>"></td>
+                                    <td><input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly></td>
+                                    <td><input type="text" id="id_xe" name="id_xe" value="<%= xe[index].id_xe %>" readonly></td>
+                                    <td><input type="text" id="loai_xe" name="loai_xe" class="form-control" value="<%= xe[index].loai_xe %>"></td>
+                                    <td><input type="text" id="trang_thai" name="trang_thai" class="form-control" value="<%= xe[index].trang_thai %>"></td>
+                                    <td><button type="submit" name="action" class="btn btn-primary" class="form-control" value="update"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                    <td><button type="submit" name="action" class="btn btn-danger" class="form-control" value="delete"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                </form>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                
             </div>
         <% } %>
 
-        <h2>Them xe</h2>
+        <h2>Thêm xe</h2>
+        
         <form action="/admin/themxe" method="post">
-            <select name="id_bai_xe_them" id="id_bai_xe_them">
+            
+            <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
                 <% for( let index = 0; index < baixe.length; index++ ) { %>
                     <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
                 <% } %>
             </select>
-            <input type="text" name="loai_xe_them">
-            <button type="submit">Thêm xe</button>
+            
+            <input type="text"  name="loai_xe_them" placeholder="Tên bãi xe thêm">    
+            <button type="submit" class="btn btn-primary">Thêm xe</button>
+            
         </form>
+        
     </div>
-    <h2>Bai xe</h2>
+    <h2>Danh sách bãi xe</h2>
     <div id="baixe" class="baixe admin-content">
         <% if (baixe.length === 0) { %>
             <p>Không có bãi xe nào</p>
@@ -74,12 +116,12 @@ input{
             </div>
         <% } %>
 
-        <h2>Them bai xe</h2>
+        <h2>Thêm bãi xe</h2>
         <form action="/admin/thembaixe" method="post">
-            <input type="text" id="ten_bai_xe_them" name="ten_bai_xe_them" required>
-            <input type="text" id="pos_x" name="pos_x" required>
-            <input type="text" id="pos_y" name="pos_y" required>
-            <button type="submit">Them bai xe</button>
+            <input type="text" id="ten_bai_xe_them" name="ten_bai_xe_them" placeholder="Tên bãi xe thêm" required>
+            <input type="text" id="pos_x" name="pos_x" placeholder="Tọa độ x" required>
+            <input type="text" id="pos_y" name="pos_y" placeholder="Tọa độ y" required>
+            <button type="submit" class="btn btn-primary">Them bai xe</button>
         </form>
         <div id="map" style="height: 500px; width: 100%;">
 
@@ -92,20 +134,36 @@ input{
         <% if (khachhang.length === 0) { %>
             <p>Không có người dùng nào</p>
         <% } else { %>
-            <div class="admin-subcontent">
+            <div class="admin-subcontent table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Email</th>
+                            <th scope="col">Tên người dùng</th>
+                            <th scope="col">CMND</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                <tbody>
+            
                 <% for( let index = 0; index < khachhang.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/khachhang" method="post">
-                            <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
-                            <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
-                            <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
-
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
-                        </form>
-                    </div>
+                            <tr>
+                                <form action="/admin/khachhang" method="post">
+                                <td><input type="text" id="email" value="<%= khachhang[index].email %>" readonly></td>
+                                <td><input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly></td>
+                                <td><input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly></td>
+                                <td><button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                <td><button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                </form>
+                            </tr>
+                        
+                    
                 <% } %>
+            </tbody>
+            </table>
             </div>
+            
         <% } %>        
     </div>
 

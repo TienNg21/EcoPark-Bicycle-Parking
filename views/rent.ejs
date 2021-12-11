@@ -62,7 +62,9 @@
             </div>
         </div>
     </div>
-    
+
+    <div id="pending"></div>
+
     <form action="/rent/scan" method="post">
         <div class="container">
             <div class="row">
@@ -80,6 +82,7 @@
                                 <thead class="thead-light">
                                     <tr class="first-tr">
                                         <th scope="col">Tên bãi xe</th>
+                                        <th scope="col">Số lượng xe</th>
                                         <th scope="col">Chọn bãi xe</th>
                                     </tr>
                                 </thead>
@@ -90,6 +93,7 @@
                                         {%>
                                             <tr class="", id = "<%= element['id_bai_xe'] %>">
                                                 <td><%= element['ten_bai'] %></td>
+                                                <td><%= element['so_luong'] %></td>
                                                 <td><input type="radio" name="bai" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"
                                                     <% if(bai == element['id_bai_xe'] ){ %>
                                                         <%="checked"%>
@@ -120,6 +124,7 @@
                             <thead>
                                 <tr class="">
                                     <th scope="col">ID xe</th>
+                                    <th scope="col">Loại xe</th>
                                     <th scope="col">Trạng thái xe</th>
                                     <th scope="col">Chọn xe</th>
                                 </tr>
@@ -152,23 +157,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>50000</td>
-                                <td><input type="radio" name="gio" value="50000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td>2</td>
-                                <td>70000</td>
-                                <td><input type="radio" name="gio" value="70000" required></td>
-                            </tr>
-                            <tr>
-                        
-                                <td >3</td>
-                                <td>100000</td>
-                                <td><input type="radio" name="gio" value="100000" required></td>
-                            </tr>
+                                <% if (typeof gia != 'undefined'){
+                                    %> <% gia.forEach(element =>
+                                    {%>
+                                        <tr class="">
+                                            <td> 1 </td>
+                                            <td><%= element['one_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['one_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 2 </td>
+                                            <td><%= element['two_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['two_h'] %>" required></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td> 3 </td>
+                                            <td><%= element['three_h'] %></td>
+                                            <td><input type="radio" name="gio" value="<%= element['three_h'] %>" required></td>
+                                        </tr>
+                                <% }) %>
+                                <% } %>
                             </tbody>
                         </table> 
                     </div>
@@ -209,16 +217,17 @@
 
    
     
+    let dsbaixe = <%-JSON.stringify(baixe)%>;
 
     function change_baixe(idbai){
         // console.log(idbai);
 
         let noti_dsxe = document.querySelector('#noti_dsxe')
-        let dsbaixe = <%-JSON.stringify(baixe)%>;
         for(i in dsbaixe){
             if(dsbaixe[i].id_bai_xe != idbai) continue
             else {
                 noti_dsxe.textContent = `Danh sách xe ${dsbaixe[i].ten_bai}`
+                break
             }
         }
         const xmlhttp = new XMLHttpRequest();
@@ -231,6 +240,7 @@
             for(i in dsxe){
                 text += `<tr>
                             <td> ${dsxe[i].id_xe} </td>
+                            <td> ${dsxe[i].loai_xe} </td>
                             <td> ${dsxe[i].trang_thai} </td>
                             <td><input type="radio" name="xe" value=" ${dsxe[i].id_xe} " required ></td>
                         </tr>`
@@ -248,6 +258,29 @@
     // console.log('id bai laf:  '+bai);
     if(bai){
         document.getElementsByTagName("body")[0].setAttribute("onload", `change_baixe(${bai})`)
+    }
+
+    if (window.location.href.includes('idbai') && performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000/rent'
+        else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com/rent'
+    }
+
+    let pending = '<%= pending %>'
+    let id_bai_pending = '<%= id_bai_pending %>'
+    console.log(pending);
+    if(pending == 'true'){
+        let pending_noti = document.querySelector('#pending')
+        for(i in dsbaixe){
+            if(dsbaixe[i].id_bai_xe != id_bai_pending) continue
+            else {
+                pending_noti.innerHTML = `<div>Đang có xe đang chờ bạn quét mã xác nhận thuê tại ${dsbaixe[i].ten_bai}.</div>
+                                <div>Vui lòng quét mã để thuê xe hoặc đợi 5 phút để được thuê xe khác.</div>
+                                <a class="btn btn-outline-secondary" href="/rent/scan/${id_bai_pending}">Quét mã</a>`
+                break
+            }
+        }
+        
+
     }
 </script>
 
