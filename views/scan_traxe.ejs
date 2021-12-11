@@ -3,19 +3,15 @@
     <title>Html-Qrcode Demo</title>
   <body>
     <h2>Scan tra xe</h2>
-    <div id="noti"></div>
     <div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>
   </body>
 
-  <!-- <script type="text/plain" src='file:///D:/HUST/20211/NM%20C%C3%B4ng%20ngh%E1%BB%87%20ph%E1%BA%A7n%20m%E1%BB%81m/testqr/html5-qrcode.min.js'></script>     -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  <!-- <script type='text/plain' src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script> -->
-<!-- <script src="../html5-qrcode.min.js"></script> -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <script>
-    let noti = document.querySelector('#noti')
-    noti.textContent = ''
     function docReady(fn) {
         // see if DOM is already available
         if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -56,8 +52,30 @@
                         // Request finished. Do processing here.
                         xhr.res
                         console.log('message when state change: '+ xhr.responseText);
-                        if(xhr.responseText == 'false') noti.textContent = 'Quet  sai roi quet lai di'
-                        if(xhr.responseText == 'true') window.location.href += "/oke" 
+                        if(xhr.responseText == 'false') {
+                          // noti.textContent = 'Quet  sai roi quet lai di'
+                          Toastify({
+                            text: 'Mã QR không hợp lệ! Vui lòng quét mã QR trả xe tại bãi!',
+                            position: "center",
+                            style: {
+                              background: "#ffc107"
+                            }
+                          }).showToast();
+                        }
+                        if(xhr.responseText == 'true') {
+                          Toastify({
+                            text: 'Trả xe thành công!',
+                            position: "center",
+                            style: {
+                              background: "#198754"
+                            },
+                            callback: ()=>{
+                              // redirect  sang page thông tin hoá đơn chuyến xe vừa xong
+                              window.location.href += "/oke"
+
+                            }
+                          }).showToast();
+                        } 
                     }
                 }
                 xhr.send(`qrcode=${decodedText}`);
@@ -79,5 +97,6 @@
         html5QrcodeScanner.render(onScanSuccess, onScanError);
     });
   </script>
+  
   </head>
 </html>
