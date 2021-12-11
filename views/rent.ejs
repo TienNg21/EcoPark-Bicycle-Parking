@@ -62,7 +62,9 @@
             </div>
         </div>
     </div>
-    
+
+    <div id="pending"></div>
+
     <form action="/rent/scan" method="post">
         <div class="container">
             <div class="row">
@@ -215,16 +217,17 @@
 
    
     
+    let dsbaixe = <%-JSON.stringify(baixe)%>;
 
     function change_baixe(idbai){
         // console.log(idbai);
 
         let noti_dsxe = document.querySelector('#noti_dsxe')
-        let dsbaixe = <%-JSON.stringify(baixe)%>;
         for(i in dsbaixe){
             if(dsbaixe[i].id_bai_xe != idbai) continue
             else {
                 noti_dsxe.textContent = `Danh sách xe ${dsbaixe[i].ten_bai}`
+                break
             }
         }
         const xmlhttp = new XMLHttpRequest();
@@ -257,8 +260,27 @@
         document.getElementsByTagName("body")[0].setAttribute("onload", `change_baixe(${bai})`)
     }
 
-    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-        window.location.href = 'http://localhost:3000/rent'
+    if (window.location.href.includes('idbai') && performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000/rent'
+        else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com/rent'
+    }
+
+    let pending = '<%= pending %>'
+    let id_bai_pending = '<%= id_bai_pending %>'
+    console.log(pending);
+    if(pending == 'true'){
+        let pending_noti = document.querySelector('#pending')
+        for(i in dsbaixe){
+            if(dsbaixe[i].id_bai_xe != id_bai_pending) continue
+            else {
+                pending_noti.innerHTML = `<div>Đang có xe đang chờ bạn quét mã xác nhận thuê tại ${dsbaixe[i].ten_bai}.</div>
+                                <div>Vui lòng quét mã để thuê xe hoặc đợi 5 phút để được thuê xe khác.</div>
+                                <a class="btn btn-outline-secondary" href="/rent/scan/${id_bai_pending}">Quét mã</a>`
+                break
+            }
+        }
+        
+
     }
 </script>
 
