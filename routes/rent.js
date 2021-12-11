@@ -15,7 +15,18 @@ rentRouter.get("/", async (req, res)=>{
         console.log('in bai lan 1 ');
         pool.query("select one_h, two_h, three_h from gia_thue_xe", (errs,results)=>{
             console.log(results.rows)
-            res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), xe: undefined});
+            pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
+                if(xe_pending.rows.length == 0){
+
+                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null});
+                }
+                
+                else if(xe_pending.rows.length > 0){
+                    console.log(xe_pending.rows);
+                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe']});
+
+                }
+            })
         })
     })
 })
@@ -41,43 +52,68 @@ rentRouter.post('/chonbai', (req, res)=>{
 rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
     // console.log(req.user);
-    pool.query(`update public.xe set trang_thai = 'pending',id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
-        if(err) {
-            console.error(err)
-            res.send('loi roi')
-        }
-        else {
-            res.render('scan.ejs', {bai: req.body.bai, errors: errors});
-            errors = [];
-            console.log('bat dau doi 1phut');
-            // doi 5 phut
-            await timeout(60000)
-            console.log('het 1 phut')
-            // kiem tra trang thai hien tai cua xe
-            pool.query("select trang_thai, id_user from public.xe where id_xe = $1", [req.body.xe], (err, result)=>{
-                if(err) console.error(err)
-                else{
-                    if(result.rows.length == 0){console.error('Khong tim thay xe')}
-                else{
-                    console.log(result.rows[0]['trang_thai'])
-                    // neu trang thai van la pending thi chuyen thanh available
-                    if(result.rows[0]['trang_thai'] == `pending`) {
-                        pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
-                    }
-                    //
-                    if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
-                        console.log('xe da duoc thue');
-                    }
-                    // neu trang thai khac pending tuc la nguoi dung da quet ma thanh cong, xe dang duoc su dung
-                }
+    pool.query("select * from xe where id_user = $1 and (trang_thai = 'active' or trang_thai = 'pending')", [req.user.id_user], (err, result)=>{
+        if(result.rows.length > 0){
+            // user đã thuê xe hoặc đã chọn xe rồi nhưng chưa quét, không cho thuê nữa
+            if(result.rows[0]['trang_thai'] == 'pending'){
+                // thông báo yêu cầu đợi hết pending hoặc thuê luôn xe đó
+                console.log('có xe đang pending');
+                res.redirect('/rent')
+
             }
-        })
+            if(result.rows[0]['trang_thai'] == 'active'){
+                // thông báo yêu cầu trả xe để thuê xe mới
+                console.log('user đã có xe đang thuê');
+                req.flash('message', 'Bạn đã có xe đang thuê, vui lòng trả xe trước khi thuê xe mới!')
+                res.redirect('/')
+
+            }
+        }
+        else{
+            pool.query(`update public.xe set trang_thai = 'pending', id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
+                if(err) {
+                    console.error(err)
+                    res.send('loi roi')
+                }
+                else {
+                    res.render('scan.ejs', {bai: req.body.bai});
+                    errors = [];
+                    console.log('bat dau doi 1phut');
+                    // doi 5 phut
+                    await timeout(60000)
+                    console.log('het 1 phut')
+                    // kiem tra trang thai hien tai cua xe
+                    pool.query("select trang_thai, id_user from public.xe where id_xe = $1", [req.body.xe], (err, result)=>{
+                        if(err) console.error(err)
+                        else{
+                            if(result.rows.length == 0){console.error('Khong tim thay xe')}
+                        else{
+                            console.log(result.rows[0]['trang_thai'])
+                            // neu trang thai van la pending thi chuyen thanh available
+                            if(result.rows[0]['trang_thai'] == `pending`) {
+                                pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
+                            }
+                            //
+                            if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
+                                console.log('xe da duoc thue');
+                            }
+                            // neu trang thai khac pending tuc la nguoi dung da quet ma thanh cong, xe dang duoc su dung
+                        }
+                    }
+                })
+                }
+            })
         }
     })
+    
 })
 
-rentRouter.get('/scan', (req, res)=>{
-    res.send('get scan')
+rentRouter.get('/scan/:idbai', (req, res)=>{
+    if(req.user == null) res.redirect('../login')
+    // res.send('get scan')
+    // var idbai = req.query.idbai;
+    res.render('scan.ejs', {bai: req.params.idbai});
+
 })
 
 rentRouter.post('/xacnhan', (req, res)=>{
@@ -86,6 +122,7 @@ rentRouter.post('/xacnhan', (req, res)=>{
     // so sanh ma qr, thong bao khi sai, dung
     pool.query("select id_xe from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
         let id_xe = result.rows[0].id_xe;
+        // err thi thong bao xe khong con trong trang thai pending
         if(err) console.error(err);
         else {
             if(result.rows.length == 0) { console.error('Thong tin khach hang khong dung');}
@@ -112,7 +149,7 @@ rentRouter.post('/xacnhan', (req, res)=>{
                             pool.query("update bai_xe set qr_thue_xe = $1 where id_bai_xe = $2", [random, req.body.idbai]);
                             // console.log("set lai qr_thue thanh cong")
                             // cap nhat bang lichsuthuexe
-                            pool.query("insert into lich_su_thue_xe (ngay_thue, bat_dau, id_user, id_xe) values (current_date, localtime, $1, $2)", [req.user.id_user, id_xe]);
+                            pool.query("insert into lich_su_thue_xe (ngay_thue, bat_dau, id_user, id_xe) values (current_date at time zone 'Asia/Ho_Chi_Minh', localtime at time zone 'Asia/Ho_Chi_Minh', $1, $2)", [req.user.id_user, id_xe]);
                             res.redirect('/dashboard');
                         }
                     }
