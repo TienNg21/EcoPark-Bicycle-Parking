@@ -99,6 +99,8 @@
                             }).showToast();
                         }
                         if(xhr.responseText == 'thue_xe_thanh_cong') {
+                            html5QrcodeScanner.clear();
+                            xhr.abort()
                             Toastify({
                                 text: 'Thuê xe thành công! Kính chúc quý khách có một chuyến tham quan vui vẻ!',
                                 position: "center",

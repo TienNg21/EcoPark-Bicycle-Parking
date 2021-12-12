@@ -64,6 +64,8 @@
                           }).showToast();
                         }
                         if(xhr.responseText == 'true') {
+                          html5QrcodeScanner.clear();
+                          xhr.abort()
                           Toastify({
                             text: 'Trả xe thành công!',
                             position: "center",
@@ -72,7 +74,8 @@
                             },
                             callback: ()=>{
                               // redirect  sang page thông tin hoá đơn chuyến xe vừa xong
-                              window.location.href += "/oke"
+                              if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000/bill';
+                              else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com/bill'
 
                             }
                           }).showToast();
