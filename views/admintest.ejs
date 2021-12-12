@@ -4,12 +4,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
+        html {
+          scroll-behavior: smooth;
+        }
         body {
             display: block;
-        }
-
-        .admin-content {
-            margin-top: 40px;
         }
 
         .admin-subcontent {
@@ -95,7 +94,7 @@
                     </ul>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 10px;" >
-                <h1>Hệ thống quản lý thuê xe ECOPARK BICYCLE PARKING</h1>
+              <br>
                 <%- include('contentAdmin') %> 
             </main>
         </div>
