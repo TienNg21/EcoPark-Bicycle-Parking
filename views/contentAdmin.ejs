@@ -375,6 +375,12 @@
                                 <em>Nghìn VND</em>
                                 <button type="submit" name="action" value="delay_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
+                            <form action="/admin/price" method="post">
+                                <label for="disc" style="width: 150px">Giảm giá cho cư dân EcoPark</label>
+                                <input type="text" id="disc" name="pricechange" value="<%= price.disc %>">
+                                <em>%</em>
+                                <button type="submit" name="action" value="disc" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -445,7 +451,8 @@
             baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
             baitemp.on('click', (err) => {
-                window.location.href += "/qrpage/" + baixe[index].id_bai_xe;
+                window.location.href = window.location.href.split('#')[0];
+                window.location.href = "/admin/qrpage/" + baixe[index].id_bai_xe;
             })
         }
     </script>
