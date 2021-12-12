@@ -23,11 +23,18 @@
     </style>
 </head>
 <body class="text-center">
+
+    <% if(message.length > 0){ %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    
     <div class="container">
         <div class="row  align-items-start">
 
             <div class="col col-12">
-                <img class="mb-4" src="img/logo.png" alt="" width="30%">
+                <img class="mb-4" src="img/logo.png" alt="logo" width="30%">
             </div>
             
             <div class="col col-12">
@@ -35,16 +42,19 @@
             </div>
 
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 infor btn">
-                <a href="/infor"><img class="navi-img" src="img/taikhoan.png" alt="" ></a>
+                <a href="/infor"><img class="navi-img" src="img/taikhoan.png" alt="taikhoan" ></a>
             </div>
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 map btn">
-                <a href="/map"><img class="navi-img" src="img/bando.png" alt=""></a>
+                <a href="/map"><img class="navi-img" src="img/bando.png" alt="bando"></a>
             </div>
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 rent btn">
-                <a href="/rent"><img class="navi-img" src="img/thuexe.png" alt=""></a>
+                <a href="/rent"><img class="navi-img" src="img/thuexe.png" alt="thuexe"></a>
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-4 rent btn">
+                <a href="/traxe"><img class="navi-img" src="/img/traxe.png" alt="traxe"></a>
             </div>
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 logout btn">
-                <a href="/logout"><img class="navi-img" src="img/dangxuat.png" alt=""></a>
+                <a href="/logout"><img class="navi-img" src="img/dangxuat.png" alt="dangxuat"></a>
             </div>
         </div>
     </div>
