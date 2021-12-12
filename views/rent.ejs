@@ -272,16 +272,18 @@
     }
 
     let pending = '<%= pending %>'
-    let id_bai_pending = '<%= id_bai_pending %>'
-    console.log(pending);
+    // console.log(pending);
     if(pending == 'true'){
+        let id_bai_pending = '<%= id_bai_pending %>'
+        let id_xe_pending = '<%= id_xe_pending %>'
         let pending_noti = document.querySelector('#pending')
         for(i in dsbaixe){
             if(dsbaixe[i].id_bai_xe != id_bai_pending) continue
             else {
-                pending_noti.innerHTML = `<div>Đang có xe đang chờ bạn quét mã xác nhận thuê tại ${dsbaixe[i].ten_bai}.</div>
-                                <div>Vui lòng quét mã để thuê xe hoặc đợi 5 phút để được thuê xe khác.</div>
-                                <a class="btn btn-outline-secondary" href="/rent/scan/${id_bai_pending}">Quét mã</a>`
+                pending_noti.innerHTML = `<div>Đang có xe <strong><em>${id_xe_pending}</em></strong> chờ bạn quét mã xác nhận thuê tại <strong><em>${dsbaixe[i].ten_bai}</em></strong>.</div>
+                                <div>Vui lòng quét mã để thuê xe hoặc huỷ xe đã chọn để được thuê xe khác.</div>
+                                <a class="btn btn-outline-success" href="/rent/scan/${id_bai_pending}">Quét mã</a>
+                                <a class="btn btn-outline-danger" href="/rent/cancel/${id_xe_pending}">Huỷ xe</a>`
                 break
             }
         }
