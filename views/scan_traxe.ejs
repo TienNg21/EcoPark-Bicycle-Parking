@@ -1,7 +1,37 @@
 <html>
   <head>
+    <%- include('header') %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        body {
+            background-color: #E5E5E5;
+        }
+        #qr-reader {
+            margin: 40px auto;
+        }
+
+        #qr-reader-results {
+            margin-top: 20px;
+        }
+
+        h2, h1 {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        button {
+            border-radius: 10px;
+        }
+    </style>
+
     <title>Html-Qrcode Demo</title>
-  <body>
+
+  <body class="text-center">
+    <%- include('navbar', {page: "Scan QR Code"}) %>
     <h2>Scan tra xe</h2>
     <div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>
