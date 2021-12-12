@@ -62,30 +62,34 @@ adminRouter.get('/', async (req,res) => {
 
 adminRouter.post('/xe', (req, res) => {
     if(req.body.action == 'update')
-    {pool.query(
-        `UPDATE xe SET id_bai_xe = $1, loai_xe = $2, trang_thai = $3
-        WHERE id_xe =$4`,
-        [req.body.id_bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
-        (err, results) => {
-            console.log(err);
-            console.log("Da sua thong tin xe")
-            message = "Đổi thông tin xe thành công";
-            res.redirect('/admin');
-        }
-    )
+    {
+        pool.query(
+            `UPDATE xe SET id_bai_xe = $1, loai_xe = $2, trang_thai = $3
+            WHERE id_xe =$4`,
+            [req.body.id_bai_xe, req.body.loai_xe, req.body.trang_thai, req.body.id_xe],
+            (err, results) => {
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi thông tin xe";
+                }else{
+                    message = "Đổi thông tin xe thành công";
+                }
+                res.redirect('/admin#xe');
+            })
     }
     else{
-                    pool.query(
-                        'delete from xe where id_xe=$1',
-                        [req.body.id_xe],
-                        (err, results) => {
-                            message = "Xóa xe thành công!";
-                            console.log("Da xoa xe")
-                            res.redirect('/admin');
-                        }
-                    )
-                
+        pool.query(
+            'delete from xe where id_xe=$1',
+            [req.body.id_xe],
+            (err, results) => {
+                if(err){
+                    error = "Đã xảy ra lỗi khi xóa xe"
+                }else{
+                    message = "Xóa xe thành công!";
+                }
+                res.redirect('/admin#xe');
             }
+        )
+    }
         
 })
 
@@ -97,9 +101,12 @@ adminRouter.post('/themxe', (req, res) => {
         VALUES ($1, $2, $3, $4)`,
         [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
         (err, results) => {
-            console.log("da them");
-            message = "Thêm xe thành công";
-            res.redirect('/admin');
+            if(err){
+                error = "Đã xảy ra lỗi khi thêm xe";
+            }else{
+                message = "Thêm xe thành công";
+            }
+            res.redirect('/admin#xe');
         }
     )
 })
@@ -112,9 +119,12 @@ adminRouter.post('/baixe', (req,res) => {
             WHERE id_bai_xe =$2`,
             [req.body.ten_bai_xe, req.body.id_bai_xe],
             (err, results) => {
-                console.log("Da sua thong tin bai xe")
-                message = "Thay đổi thông tin bãi xe thành công";
-                res.redirect('/admin');
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi thông tin bãi xe";
+                }else{
+                    message = "Thay đổi thông tin bãi xe thành công";
+                }
+                res.redirect('/admin#baixe');
             }
         )
     } else {
@@ -122,17 +132,26 @@ adminRouter.post('/baixe', (req,res) => {
             'select so_luong_xe from bai_xe where id_bai_xe=$1',
             [req.body.id_bai_xe],
             (err, results) => {
+                if(err){
+                    err = "Đã xảy ra lỗi khi xóa bãi xe";
+                    res.redirect('/admin');
+                }
                 if (results.rows[0].so_luong_xe == 0) {
                     pool.query(
                         'delete from bai_xe where id_bai_xe=$1',
                         [req.body.id_bai_xe],
                         (err, results) => {
-                            message = "Xóa bãi xe thành công";
-                            res.redirect('/admin');
+                            if(err){
+                                error = "Đã xảy ra lỗi khi xóa bãi xe";
+                            }else{
+                                message = "Xóa bãi xe thành công";
+                            }
+                            res.redirect('/admin#baixe');
                         }
                     )
                 } else{
                     error = "Xóa bãi xe không thành công";
+                    res.redirect('/admin#baixe');
                 }
             }
         )
@@ -150,54 +169,108 @@ adminRouter.post('/thembaixe', (req, res) => {
         values ($1, 0, $2, $3, $4, $5)`,
         [req.body.ten_bai_xe_them, req.body.pos_x, req.body.pos_y, qr_thue_random1, qr_tra_random2],
         (err, results) => {
-            message = "Thêm bãi xe thành công"
-            res.redirect('/admin');
+            if(err){
+                error = "Đã xảy ra lỗi khi thêm bãi xe";
+            }else{
+                message = "Thêm bãi xe thành công"                
+            }
+            res.redirect('/admin#baixe');
         }
     )
 })
 
 adminRouter.post('/price', (req, res) => {
     if(req.body.action == 'one_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET one_h = $1`,
             [req.body.pricechange],
             (err, result) => {
-                message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
             }
         )
     }else if(req.body.action == 'two_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET two_h = $1`,
             [req.body.pricechange],
             (err, result) => {
-                message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
             }
         )
     }else if(req.body.action == 'three_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET three_h = $1`,
             [req.body.pricechange],
             (err, result) => {
-                message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
             }
         )
-    }else{
+    }else if(req.body.action == 'delay_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET delay_h = $1`,
             [req.body.pricechange],
             (err, result) => {
-                message = "Thay đổi giá thuê xe thành công";
-                res.redirect('/admin');
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
             }
         )
-    }    
+    }else{
+        if(req.body.pricechange < 0 || req.body.pricechange > 100) {
+            error = "Tỉ lệ giảm giá từ 0 đến 100%";
+            res.redirect('/admin#price');
+        }
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET disc = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
+            }
+        )
+    }
 })
 
 adminRouter.get('/qrpage/:id', async (req, res)=>{

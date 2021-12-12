@@ -95,9 +95,8 @@
                                 </thead>
                                 <tbody>
                             
-                                    <% if (typeof baixe != 'undefined'){
-                                        %> <% baixe.forEach(element =>
-                                        {%>
+                                    <% if (typeof baixe != 'undefined'){ %>
+                                        %> <% baixe.forEach(element => {%>
                                             <tr class="", id = "<%= element['id_bai_xe'] %>">
                                                 <td><%= element['ten_bai'] %></td>
                                                 <td><%= element['so_luong'] %></td>
@@ -126,7 +125,7 @@
                 <div class="col-col-12 mt-4 xe hide">
                     <div class="chon">
                         <h2 id="noti_dsxe"></h2>
-                        
+                    
                         <table class="table formx">
                             <thead>
                                 <tr class="">
@@ -153,7 +152,7 @@
     
                 <div class="col col-12 mt-4 thoigian hide">
                     <div class="chon">
-                        <h2>Khuyến mãi đặc biệt: giảm 60% cho cư dân EcoPark</h2>
+                        <h2>Khuyến mãi đặc biệt: giảm <%= gia[0].disc %>% cho cư dân EcoPark</h2>
                         
                         <table class="table formtg ">
                             <thead>
