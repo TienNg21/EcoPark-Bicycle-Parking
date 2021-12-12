@@ -16,15 +16,15 @@ adminRouter.get('/', async (req,res) => {
         res.redirect('/login');
     }else{        
         pool.query(
-            'SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe',
+            'SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe ORDER BY bai_xe.ten_bai ASC',
             (err, results) => {
                 xe = results.rows;
                 pool.query(
-                    'SELECT * FROM bai_xe;',
+                    'SELECT bx.id_bai_xe , bx.ten_bai , (SELECT COUNT(*) FROM xe WHERE xe.id_bai_xe = bx.id_bai_xe) AS so_luong_xe FROM bai_xe bx ORDER BY bx.ten_bai ASC;',
                     (err, results) => {
                         baixe = results.rows;
                         pool.query(
-                            'SELECT * FROM khach_hang WHERE email != $1', [process.env.EMAIL_ADMIN],
+                            'SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN],
                             (err, results) => {
                                 khachhang = results.rows;
                                 pool.query(
