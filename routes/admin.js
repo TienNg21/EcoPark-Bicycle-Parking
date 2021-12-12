@@ -222,7 +222,7 @@ adminRouter.post('/price', (req, res) => {
                 res.redirect('/admin#price');
             }
         )
-    }else{
+    }else if(req.body.action == 'delay_h'){
         pool.query(
             `UPDATE gia_thue_xe
             SET delay_h = $1`,
@@ -236,7 +236,21 @@ adminRouter.post('/price', (req, res) => {
                 res.redirect('/admin#price');
             }
         )
-    }    
+    }else{
+        pool.query(
+            `UPDATE gia_thue_xe
+            SET disc = $1`,
+            [req.body.pricechange],
+            (err, result) => {
+                if(err){
+                    error = "Đã xảy ra lỗi khi thay đổi giá";
+                }else{
+                    message = "Thay đổi giá thuê xe thành công";
+                }
+                res.redirect('/admin#price');
+            }
+        )
+    }
 })
 
 adminRouter.get('/qrpage/:id', async (req, res)=>{
