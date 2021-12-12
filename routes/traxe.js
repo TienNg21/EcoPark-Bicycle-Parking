@@ -29,10 +29,10 @@ traxeRouter.post('/xacnhan', (req,res)=>{
         else{
             console.log(result.rows);
             await pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null where id_user = $2 and trang_thai = 'active'", 
-            [result.rows.id_bai_xe, req.user.id_user])
+            [result.rows[0].id_bai_xe, req.user.id_user])
             console.log('update trang thai xe xong');
-
-            await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [makeRandom(40), result.rows.id_bai_xe]);
+            let qr_code = makeRandom(40);
+            await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [qr_code, result.rows[0].id_bai_xe]);
             console.log('update bai xe xong');
 
             // tìm cuốc xe hiện tại để trả xe

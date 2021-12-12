@@ -25,11 +25,9 @@
     <div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>
   </body>
-
-  <!-- <script type="text/plain" src='file:///D:/HUST/20211/NM%20C%C3%B4ng%20ngh%E1%BB%87%20ph%E1%BA%A7n%20m%E1%BB%81m/testqr/html5-qrcode.min.js'></script>     -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">\
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  <!-- <script type='text/plain' src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script> -->
-<!-- <script src="../html5-qrcode.min.js"></script> -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <script>
     const bai = document.querySelector('#bai')
@@ -72,6 +70,48 @@
                 xhr.onreadystatechange = function() { // Call a function when the state changes.
                     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                         // Request finished. Do processing here.
+                        xhr.res
+                        console.log('message when state change: ' + xhr.responseText);
+                        if(xhr.responseText == 'het_pending') {
+                            // thong bao het pending, thue lai
+                            Toastify({
+                                text: 'Hết thời gian chờ. Quý khách vui lòng chọn lại xe để thuê!',
+                                position: "center",
+                                style: {
+                                    background: "#ffc107"
+                                },
+                                callback: () => {
+                                    //redirect sang rent
+                                    if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000/rent';
+                                    else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com/rent'
+                                }
+                            }).showToast();
+                        }
+                        if(xhr.responseText == 'quet_sai') {
+                            // thong bao quet sai, yêu cầu quét lại
+                            Toastify({
+                                text: 'Mã QR không hợp lệ! Vui lòng quét đúng mã QR thuê xe tại bãi!',
+                                position: "center",
+                                style: {
+                                    background: "#ffc107"
+                                },
+                                duration: 5000
+                            }).showToast();
+                        }
+                        if(xhr.responseText == 'thue_xe_thanh_cong') {
+                            Toastify({
+                                text: 'Thuê xe thành công! Kính chúc quý khách có một chuyến tham quan vui vẻ!',
+                                position: "center",
+                                style: {
+                                    background: "#198754"
+                                },
+                                callback: () => {
+                                    //redirect sang dashboard
+                                    if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000';
+                                    else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com'
+                                }
+                            }).showToast();
+                        }
                     }
                 }
                 xhr.send(`idbai=${bai.textContent}&qrcode=${decodedText}`);

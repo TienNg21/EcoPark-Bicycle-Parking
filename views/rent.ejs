@@ -50,6 +50,13 @@
 
 <body class="text-center">
     <%- include('navbar', {page: "Thuê xe"}) %> 
+
+    <% if(message.length > 0){ %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    
     <div class="container">
         <div class="row">
             <div class="col col-12">
