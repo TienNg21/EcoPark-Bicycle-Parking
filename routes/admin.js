@@ -181,6 +181,10 @@ adminRouter.post('/thembaixe', (req, res) => {
 
 adminRouter.post('/price', (req, res) => {
     if(req.body.action == 'one_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET one_h = $1`,
@@ -195,6 +199,10 @@ adminRouter.post('/price', (req, res) => {
             }
         )
     }else if(req.body.action == 'two_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET two_h = $1`,
@@ -209,6 +217,10 @@ adminRouter.post('/price', (req, res) => {
             }
         )
     }else if(req.body.action == 'three_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET three_h = $1`,
@@ -223,6 +235,10 @@ adminRouter.post('/price', (req, res) => {
             }
         )
     }else if(req.body.action == 'delay_h'){
+        if(req.body.pricechange < 0){
+            error = "Giá thuê xe không hợp lệ";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET delay_h = $1`,
@@ -237,6 +253,10 @@ adminRouter.post('/price', (req, res) => {
             }
         )
     }else{
+        if(req.body.pricechange < 0 || req.body.pricechange > 100) {
+            error = "Tỉ lệ giảm giá từ 0 đến 100%";
+            res.redirect('/admin#price');
+        }
         pool.query(
             `UPDATE gia_thue_xe
             SET disc = $1`,
