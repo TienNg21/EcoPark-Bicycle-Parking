@@ -50,7 +50,7 @@
 
 <body class="text-center">
     <%- include('navbar', {page: "Thuê xe"}) %> 
-
+    <br>
     <% if(message.length > 0){ %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= message %>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -282,7 +282,7 @@
             else {
                 pending_noti.innerHTML = `<div>Đang có xe <strong><em>${id_xe_pending}</em></strong> chờ bạn quét mã xác nhận thuê tại <strong><em>${dsbaixe[i].ten_bai}</em></strong>.</div>
                                 <div>Vui lòng quét mã để thuê xe hoặc huỷ xe đã chọn để được thuê xe khác.</div>
-                                <a class="btn btn-outline-success" href="/rent/scan/${id_bai_pending}">Quét mã</a>
+                                <a class="btn btn-outline-success" href="/rent/scan/${id_bai_pending}/${dsbaixe[i].ten_bai}">Quét mã</a>
                                 <a class="btn btn-outline-danger" href="/rent/cancel/${id_xe_pending}">Huỷ xe</a>`
                 break
             }

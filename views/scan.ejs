@@ -1,17 +1,20 @@
 <html>
   <head>
     <%- include('header') %>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
-
+    <title>Html-Qrcode Demo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  </head>
+
     <style>
         body {
             background-color: #E5E5E5;
+            width: 100%;
+            position: relative;
         }
         #qr-reader {
             margin: 40px auto;
+            width: 75vw;
         }
 
         #qr-reader-results {
@@ -29,33 +32,28 @@
 
     </style>
 
-    <title>Html-Qrcode Demo</title>
   <body class="text-center">
-    <%- include('navbar', {page: "Scan QR Code"}) %>
-    <div>
-        <% if (typeof errors != 'undefined'){
-            %> <% errors.forEach(element =>
-            {%> <div class="alert alert-warning alert-dismissible fade show" role="alert"><%= element.message%>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <% }) %>
-        <% } %>
-    </div>
 
-    <div>
-        <% if (messages.success_msg) { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert"><%= messages.success_msg %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
-            </div>
-        <% } %>   
-    </div>
+    <nav class="navbar" style="color: aliceblue; background-color: #478640; position: fixed; width: 100%; height: 8%; min-height: 50px; top: 0; z-index: 5;">
+        <ul class="nav justify-content-center" style="width: 100%">
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="/" style="position: absolute; left: 0; width: 30%; max-width: 70px; color: aliceblue;"><i class="bi bi-arrow-return-left" style="font-size: 20px"></i></a>
+            </li> -->
+            <li class="nav-item" style="width: 100%" >
+              <div class="nav-link" style="color: aliceblue; font-family: 'Quicksand'; font-size: 1.2rem; text-align: center;">Quét mã QR</div>
+            </li>
+          </ul>
+    </nav>
+    <br>
     
-    <h2>Scan cho bãi xe: </h2><h1 id='bai'><%= bai%></h1>
-    <div id="qr-reader" style="width:500px"></div>
-    <div id="qr-reader-results"></div>
+    <h2>Quét mã cho</h2><h1 id='bai'><%= ten_bai%></h1>
+    <div id="qr-reader"></div>
+    <!-- <div id="qr-reader-results"></div> -->
+    <a href="/rent" class="btn btn-secondary">Trở lại</a>
+    <br>
   </body>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">\
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
@@ -73,7 +71,7 @@
     } 
 
     docReady(function() {
-        var resultContainer = document.getElementById('qr-reader-results');
+        // var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
         
         var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -85,7 +83,7 @@
                 lastResult = decodedText;
                 console.log(`Scan result = ${decodedText}`, decodedResult);
     
-                resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+                // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
                 
                 // Optional: To close the QR code scannign after the result is found
                 // html5QrcodeScanner.clear();
@@ -146,7 +144,8 @@
                         }
                     }
                 }
-                xhr.send(`idbai=${bai.textContent}&qrcode=${decodedText}`);
+                let id_bai = '<%= id_bai %>'
+                xhr.send(`idbai=${id_bai}&qrcode=${decodedText}`);
                 // xhr.send(new Int8Array());
                 // xhr.send(document);
 
@@ -165,5 +164,4 @@
         html5QrcodeScanner.render(onScanSuccess, onScanError);
     });
   </script>
-  </head>
 </html>
