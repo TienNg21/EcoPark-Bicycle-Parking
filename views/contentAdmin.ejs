@@ -9,6 +9,9 @@
         border-color: transparent;
         background-color: transparent !important;
     }
+    #khachhang{
+        margin-top: 0.5cm;
+    }
     #khachhang input {
         text-align: center;
         border-color: transparent;
@@ -146,6 +149,7 @@
                     Lịch sử thuê xe
                 </div>
                 <div class="card-body">
+                    <div id="xethue"></div>
                     <em>Đang phát triển</em>
                 </div>
             </div>
@@ -216,7 +220,8 @@
                             <% } %>
                         </select>
                         
-                        <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm">    
+                        <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm">  
+                        <div id = "cacbaixe"></div>  
                         <button type="submit" class="btn btn-primary">Thêm xe</button>
                         
                     </form>
@@ -289,6 +294,7 @@
                     </div>
                     <div class="col-8">
                         <div id="map" style="height: 500px; width: 100%;"></div>
+                        <div id="khachhangthuexe"></div>
                     </div>
                 </div>
             </div>
