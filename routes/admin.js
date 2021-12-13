@@ -2,11 +2,6 @@ const { text } = require('body-parser');
 const express = require('express');
 const adminRouter = express.Router();
 const { pool } = require('../dbConfig');
-var xe;
-var baixe;
-var khachhang;
-var lsu;
-var price;
 
 var message = "";
 var error = "";
@@ -15,47 +10,24 @@ adminRouter.get('/', async (req,res) => {
     if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
         res.redirect('/login');
     }else{        
-        pool.query(
-            'SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe ORDER BY bai_xe.ten_bai ASC',
-            (err, results) => {
-                xe = results.rows;
-                pool.query(
-                    'SELECT bx.id_bai_xe , bx.ten_bai , (SELECT COUNT(*) FROM xe WHERE xe.id_bai_xe = bx.id_bai_xe) AS so_luong_xe FROM bai_xe bx ORDER BY bx.ten_bai ASC;',
-                    (err, results) => {
-                        baixe = results.rows;
-                        pool.query(
-                            'SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN],
-                            (err, results) => {
-                                khachhang = results.rows;
-                                pool.query(
-                                    'SELECT * FROM lich_su_thue_xe',
-                                    (err, results) => {
-                                        lsu = results.rows;
-                                        pool.query(
-                                            'SELECT * FROM gia_thue_xe',
-                                            (err, results) => {
-                                                price = results.rows[0];
-                                                res.render('admintest.ejs', {
-                                                    xe: xe,
-                                                    baixe: baixe,
-                                                    khachhang: khachhang,
-                                                    lsu: lsu,
-                                                    price: price,
-                                                    message: message,
-                                                    error: error
-                                                });
-                                                message = "";
-                                                error = "";
-                                            }
-                                        )
-                                    }
-                                );
-                            }
-                        );
-                    }
-                );
-            }
-        );
+
+        const xe = await pool.query('SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe ORDER BY bai_xe.ten_bai ASC');
+        const baixe = await pool.query('SELECT bx.id_bai_xe , bx.ten_bai , bx.pos_x, bx.pos_y , (SELECT COUNT(*) FROM xe WHERE xe.id_bai_xe = bx.id_bai_xe) AS so_luong_xe FROM bai_xe bx ORDER BY bx.ten_bai ASC;');
+        const khachhang = await pool.query('SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN]);
+        const lsu = await pool.query('SELECT * FROM lich_su_thue_xe');
+        const price = await pool.query('SELECT * FROM gia_thue_xe');
+
+        res.render('admintest.ejs', {
+            xe: xe.rows,
+            baixe: baixe.rows,
+            khachhang: khachhang.rows,
+            lsu: lsu.rows,
+            price: price.rows[0],
+            message: message,
+            error: error
+        });
+        message = "";
+        error = "";
     }
     
 })
