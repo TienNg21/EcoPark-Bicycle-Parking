@@ -41,9 +41,22 @@ const pusher = new Pusher({
     }
     pgClient = client;
     client.on('notification', function(msg) {
-      pusher.trigger('watch_realtime_bai_xe', 'update-qr', JSON.parse(msg.payload));
+      const events = [
+        {
+          channel: 'watch_realtime_bai_xe',
+          name: 'update-qr',
+          data: JSON.parse(msg.payload)
+        },
+        {
+          channel: 'watch_realtime_xe',
+          name: 'update_xe',
+          data: JSON.parse(msg.payload)
+        }
+      ]
+      pusher.triggerBatch(events);
     });
     const query = client.query('LISTEN watch_realtime_bai_xe');
+    client.query('LISTEN watch-realtime_xe');
   });
 
 

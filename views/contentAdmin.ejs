@@ -163,7 +163,7 @@
                             <p>Không có xe nào</p>
                         <% }else{ %>
                             <div class="admin-subcontent table-responsive">
-                                <table class="table table-striped table-sm">
+                                <table class="table table-striped table-sm" id="table-xe">
                                     <thead>
                                         <tr>
                                             <th scope="col">Tên bãi xe</th>
@@ -236,7 +236,7 @@
                             <p>Không có bãi xe nào</p>
                         <% } else { %>
                             <div class="admin-subcontent table-responsive">
-                                <table class="table table-striped table-sm">
+                                <table class="table table-striped table-sm" id="table-bai-xe">
                                     <thead>
                                         <tr>
                                             <th scope="col">ID bãi xe</th>
@@ -455,5 +455,54 @@
                 window.location.href = "/admin/qrpage/" + baixe[index].id_bai_xe;
             })
         }
+    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script>
+        var pusher = new Pusher('21a133a5939937831c0f', {
+            cluster: 'ap1',
+            encrypted: true
+        });
+        var channel = pusher.subscribe('watch_realtime_xe');
+        channel.bind('update_xe', function(data) {
+            //Lay thong tin ten bai xe
+            var table_baixe = document.getElementById('table-bai-xe');
+            var bai_xe;
+            for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                    bai_xe = row;
+                    break;
+                }
+            }
+
+            var table = document.getElementById("table-xe");
+            var newRow;
+            for (var i = 1, row; row = table.rows[i]; i++) {
+                // console.log(row.cells[3].querySelector('[id = id_xe]').value);
+                if(row.cells[3].querySelector('[id = id_xe]').value == data.id_xe){
+                    newRow = row;
+                    break;
+                }
+            }
+
+            newRow.cells[5].querySelector('[id = trang_thai]').value = data.trang_thai;
+            newRow.cells[4].querySelector('[id = loai_xe]').value = data.loai_xe;
+            newRow.cells[2].querySelector('[id = id_user]').value = data.id_user;
+            newRow.cells[1].querySelector('[id = id_bai_xe]').value = data.id_bai_xe;
+            newRow.cells[0].querySelector('[id = ten_bai]').value = bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value;
+            
+            Toastify({
+                text: "Thông tin xe (id: " + data.id_xe + ") đã được cập nhật!",
+                position: "center",
+                style: {
+                    background: "#198754"
+                },
+                duration: -1,
+                close: true
+            }).showToast();
+            // console.log(data);
+        })
     </script>
 </div>
