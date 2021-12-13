@@ -1,10 +1,8 @@
 <html>
   <head>
     <%- include('header') %>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         body {
@@ -12,6 +10,7 @@
         }
         #qr-reader {
             margin: 40px auto;
+            width: 75vw;
         }
 
         #qr-reader-results {
@@ -32,9 +31,11 @@
 
   <body class="text-center">
     <%- include('navbar', {page: "Scan QR Code"}) %>
-    <h2>Scan tra xe</h2>
-    <div id="qr-reader" style="width:500px"></div>
-    <div id="qr-reader-results"></div>
+    <br>
+    <h2>Quét mã trả xe</h2>
+    <div id="qr-reader"></div>
+    <br>
+    <!-- <div id="qr-reader-results"></div> -->
   </body>
 
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -53,7 +54,7 @@
     } 
 
     docReady(function() {
-        var resultContainer = document.getElementById('qr-reader-results');
+        // var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
         
         var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -65,7 +66,7 @@
                 lastResult = decodedText;
                 console.log(`Scan result = ${decodedText}`, decodedResult);
     
-                resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+                // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
                 
                 // Optional: To close the QR code scannign after the result is found
                 // html5QrcodeScanner.clear();
