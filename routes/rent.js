@@ -123,7 +123,7 @@ rentRouter.get('/scan/:idbai/:tenbai', (req, res)=>{
     if(req.user == null) res.redirect('../login')
     // res.send('get scan')
     // var idbai = req.query.idbai;
-    pool.query("select * from xe where trang_thai = 'pending' and id_user = $1", [req.user.id_user], (err, result)=>{
+    pool.query("select * from xe where trang_thai = 'pending' and id_user = $1 and id_bai_xe = $2", [req.user.id_user, req.params.idbai], (err, result)=>{
         if(result.rows.length == 0) {
             req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
             res.redirect('/rent')}
