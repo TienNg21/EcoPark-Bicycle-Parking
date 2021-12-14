@@ -172,7 +172,7 @@
                                         <tr>
                                             <th scope="col">Tên bãi xe</th>
                                             <th scope="col">ID bãi xe</th>
-                                            <th scope="col">ID người đang dùng xe</th>
+                                            <th scope="col">ID khách</th>
                                             <th scope="col">ID xe</th>
                                             <th scope="col">Loại xe</th>
                                             <th scope="col">Trạng thái</th>
@@ -188,7 +188,7 @@
                                                     <td><input type="text" id="id_bai_xe" name="id_bai_xe" class="form-control" value="<%= xe[index].id_bai_xe %>"></td>
                                                     <td><input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly></td>
                                                     <td><input type="text" id="id_xe" name="id_xe" value="<%= xe[index].id_xe %>" readonly></td>
-                                                    <td><input type="text" id="loai_xe" name="loai_xe" class="form-control" value="<%= xe[index].loai_xe %>"></td>
+                                                    <td><input type="text" id="loai_xe" style="width:max-content" name="loai_xe" class="form-control" value="<%= xe[index].loai_xe %>"></td>
                                                     <td><input type="text" id="trang_thai" name="trang_thai" class="form-control" value="<%= xe[index].trang_thai %>"></td>
                                                     <td><button type="submit" name="action" class="btn btn-primary" class="form-control" value="update"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
                                                     <td><button type="submit" name="action" class="btn btn-danger" class="form-control" value="delete"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
