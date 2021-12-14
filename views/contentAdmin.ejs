@@ -149,7 +149,7 @@
                     Lịch sử thuê xe
                 </div>
                 <div class="card-body">
-                    <div id="xethue"></div>
+                    <div id="xethue" style="display: inline;"></div>
                     <em>Đang phát triển</em>
                 </div>
             </div>
@@ -213,7 +213,6 @@
                     Thêm xe
                 </div>
                 <div class="card-body">
-                    <div id = "cacbaixe"></div>  
                     <form action="/admin/themxe" method="post">
             
                         <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
@@ -223,6 +222,8 @@
                         </select>
                         
                         <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm" required>  
+                        <div id = "cacbaixe" style="display: inline;"></div>  
+
                         <button type="submit" class="btn btn-primary">Thêm xe</button>
                         
                     </form>
@@ -295,7 +296,7 @@
                     </div>
                     <div class="col-8">
                         <div id="map" style="height: 500px; width: 100%;"></div>
-                        <div id="khachhangthuexe"></div>
+                        <div id="khachhangthuexe" style="display: inline;"></div>
                     </div>
                 </div>
             </div>
