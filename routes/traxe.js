@@ -49,9 +49,9 @@ traxeRouter.post('/xacnhan', (req,res)=>{
     })
 })
 
-traxeRouter.get('/oke', (req, res)=>{
-    res.render('oke.ejs')
-})
+// traxeRouter.get('/oke', (req, res)=>{
+//     res.render('oke.ejs')
+// })
 
 function makeRandom(length) {
     var result           = '';
