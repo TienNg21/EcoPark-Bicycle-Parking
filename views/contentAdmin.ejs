@@ -481,18 +481,18 @@
     <style>
         .ani1 {
             color: #32f097 !important;
-            border: #32f097 solid 4px !important;
-            box-shadow: #32f097 2px 2px;
+            /* border: #32f097 solid 4px !important;
+            box-shadow: #32f097 2px 2px; */
         }
         .ani2 {
             color: #f0da9b !important;
-            border: #f0da9b solid 4px !important;
-            box-shadow: #f0da9b 2px 2px;
+            /* border: #f0da9b solid 4px !important;
+            box-shadow: #f0da9b 2px 2px; */
         }
         .ani3 {
             color: #d3727c !important;
-            border: #d3727c solid 4px !important;
-            box-shadow: #d3727c 2px 2px;
+            /* border: #d3727c solid 4px !important;
+            box-shadow: #d3727c 2px 2px; */
         }
     </style>
 
@@ -576,36 +576,21 @@
                 newRow.cells[1].querySelector('[id = id_bai_xe]').value = data.id_bai_xe;
                 newRow.cells[0].querySelector('[id = ten_bai]').value = bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value;
                 
-                function ani(name) {
-                    newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
-                    setTimeout(function () {
-                        var rm = newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
-                        setTimeout(async function () {
-                            var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
-                            setTimeout(async function () {
-                                var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
-                                setTimeout(async function () {
-                                    var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
-                                    setTimeout(async function () {
-                                        var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
-                                        setTimeout(async function () {
-                                            var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
-                                            setTimeout(async function () {
-                                                var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
-                                                setTimeout(async function () {
-                                                    var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
-                                                    setTimeout(async function () {
-                                                        var rm = await newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
-                                                        
-                                                    }, 1000);
-                                                }, 1000);
-                                            }, 1000);
-                                        }, 1000);
-                                    }, 1000);    
-                                }, 1000);    
-                            }, 1000);    
-                        }, 1000);    
-                    }, 1000);  
+                function ani(name, count) {
+                    if(count != 0){
+                        if(count % 2 == 0){
+                            newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
+                            setTimeout(async function() {
+                                ani(name, count - 1);
+                            }, 1000);
+                        }else{
+                            newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
+                            setTimeout(async function() {
+                                ani(name, count - 1);
+                            }, 1000);
+                        }
+                        
+                    }
                 }
                   
             
@@ -614,13 +599,13 @@
                     row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
                     if(row.cells[5].querySelector('[id = trang_thai]').value == 'available'){
                         row.cells[5].querySelector('[id = trang_thai]').style.color = "#198754";
-                        ani("ani1");
+                        ani("ani1", 10);
                     }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'pending') {
                         row.cells[5].querySelector('[id = trang_thai]').style.color = "#ffc107";
-                        ani("ani2");
+                        ani("ani2", 10);
                     }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'active'){
                         row.cells[5].querySelector('[id = trang_thai]').style.color = "#dc3545";
-                        ani("ani3");
+                        ani("ani3", 10);
                     }
                 }
                 Toastify({
