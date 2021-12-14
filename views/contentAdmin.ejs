@@ -205,6 +205,7 @@
             </div>
 
         </div>        
+
         <!-- Thêm xe -->
         <div class="col-12 mb-4"  id="themxe">
             <div class="card shadow">
@@ -212,6 +213,7 @@
                     Thêm xe
                 </div>
                 <div class="card-body">
+                    <div id = "cacbaixe"></div>  
                     <form action="/admin/themxe" method="post">
             
                         <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
@@ -220,8 +222,7 @@
                             <% } %>
                         </select>
                         
-                        <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm">  
-                        <div id = "cacbaixe"></div>  
+                        <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm" required>  
                         <button type="submit" class="btn btn-primary">Thêm xe</button>
                         
                     </form>

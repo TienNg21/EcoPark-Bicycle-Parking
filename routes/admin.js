@@ -71,7 +71,7 @@ adminRouter.post('/themxe', (req, res) => {
     pool.query(
         `INSERT INTO xe (id_bai_xe, id_user, loai_xe, trang_thai)
         VALUES ($1, $2, $3, $4)`,
-        [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
+        [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'available'],
         async (err, results) => {
             if(err){
                 error = "Đã xảy ra lỗi khi thêm xe";
