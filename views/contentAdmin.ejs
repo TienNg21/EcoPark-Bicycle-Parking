@@ -58,6 +58,18 @@
         border-radius: 0.25rem;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
+
+    .card-header {
+        color: #478640;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .news {
+        color: #478640 !important;
+        font-size: 16px;
+        font-weight: 500;
+    }
 </style>
 <div>
     <div class="row">
@@ -67,7 +79,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Doanh thu hôm nay</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
                         </div>
@@ -84,7 +96,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Xe đang được thuê</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
                         </div>
@@ -101,7 +113,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Tổng số tài khoản</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
                         </div>
@@ -118,7 +130,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Bãi xe hấp dẫn nhất</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
                         </div>
@@ -360,37 +372,50 @@
                     <div class="price admin-content" id="gia-thue-xe">
                         <div>
                             <form action="/admin/price" method="post">
-                                <label for="one" style="width: 150px">Giá 1 giờ</label>
+                                <label for="one" style="width: 250px">Giá 1 giờ</label>
                                 <input type="text" id="one" name="pricechange" value="<%= price.one_h %>">
-                                <em>Nghìn VND</em>
+                                <em>VND</em>
                                 <button type="submit" name="action" value="one_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
                             <form action="/admin/price" method="post">
-                                <label for="two" style="width: 150px">Giá 2 giờ</label>
+                                <label for="two" style="width: 250px">Giá 2 giờ</label>
                                 <input type="text" id="two" name="pricechange" value="<%= price.two_h %>">
-                                <em>Nghìn VND</em>
+                                <em>VND</em>
                                 <button type="submit" name="action" value="two_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
                             <form action="/admin/price" method="post">
-                                <label for="three" style="width: 150px">Giá 3 giờ</label>
+                                <label for="three" style="width: 250px">Giá 3 giờ</label>
                                 <input type="text" id="three" name="pricechange" value="<%= price.three_h %>">
-                                <em>Nghìn VND</em>
+                                <em>VND</em>
                                 <button type="submit" name="action" value="three_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
                             <form action="/admin/price" method="post">
-                                <label for="late30" style="width: 150px">Giá muộn 30 phút</label>
+                                <label for="late30" style="width: 250px">Giá muộn 30 phút</label>
                                 <input type="text" id="three" name="pricechange" value="<%= price.delay_h %>">
-                                <em>Nghìn VND</em>
+                                <em>VND</em>
                                 <button type="submit" name="action" value="delay_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
                             <form action="/admin/price" method="post">
-                                <label for="disc" style="width: 150px">Giảm giá cho cư dân EcoPark</label>
+                                <label for="disc" style="width: 250px">Giảm giá cho cư dân EcoPark</label>
                                 <input type="text" id="disc" name="pricechange" value="<%= price.disc %>">
                                 <em>%</em>
                                 <button type="submit" name="action" value="disc" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đổi mật khẩu -->
+        <div id="password" class="col-12 mb-4">
+            <br>
+            <div class="card shadow">
+                <div class="card-header">
+                    Đổi mật khẩu
+                </div>
+                <div class="card-body">
+                    <em>Đang phát triển</em>
                 </div>
             </div>
         </div>
