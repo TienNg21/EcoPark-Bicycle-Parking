@@ -349,7 +349,7 @@
                     Giá thuê xe
                 </div>
                 <div class="card-body">
-                    <div class="price admin-content">
+                    <div class="price admin-content" id="gia-thue-xe">
                         <div>
                             <form action="/admin/price" method="post">
                                 <label for="one" style="width: 150px">Giá 1 giờ</label>
@@ -468,41 +468,88 @@
         var channel = pusher.subscribe('watch_realtime_xe');
         channel.bind('update_xe', function(data) {
             //Lay thong tin ten bai xe
-            var table_baixe = document.getElementById('table-bai-xe');
-            var bai_xe;
-            for(var i = 1, row; row = table_baixe.rows[i]; i++){
-                if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
-                    bai_xe = row;
-                    break;
+            if(data.so_luong_xe != null){
+                //Thay doi bai xe
+                var table_baixe = document.getElementById('table-bai-xe');
+                var bai_xe;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        bai_xe = row;
+                        break;
+                    }
                 }
-            }
+                //Thay doi ten bai
+                bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value = data.ten_bai;
 
-            var table = document.getElementById("table-xe");
-            var newRow;
-            for (var i = 1, row; row = table.rows[i]; i++) {
-                // console.log(row.cells[3].querySelector('[id = id_xe]').value);
-                if(row.cells[3].querySelector('[id = id_xe]').value == data.id_xe){
-                    newRow = row;
-                    break;
+                // Tinh lai so xe
+                var so_xe = 0;
+                
+                var table_baixe = document.getElementById('table-bai-xe');
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        so_xe ++;
+                    }
                 }
-            }
 
-            newRow.cells[5].querySelector('[id = trang_thai]').value = data.trang_thai;
-            newRow.cells[4].querySelector('[id = loai_xe]').value = data.loai_xe;
-            newRow.cells[2].querySelector('[id = id_user]').value = data.id_user;
-            newRow.cells[1].querySelector('[id = id_bai_xe]').value = data.id_bai_xe;
-            newRow.cells[0].querySelector('[id = ten_bai]').value = bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value;
+                bai_xe.cells[2].querySelector('[id = so_luong_xe]').value = so_xe;
+                Toastify({
+                    text: "Thông tin bãi xe (id: " + data.id_bai_xe + ") đã được cập nhật!",
+                    position: "center",
+                    style: {
+                        background: "#198754"
+                    },
+                    duration: -1,
+                    close: true
+                }).showToast();
+            }else if(data.id_xe != null){
+                //Thay doi xe
+                var table_baixe = document.getElementById('table-bai-xe');
+                var bai_xe;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        bai_xe = row;
+                        break;
+                    }
+                }
+                bai_xe.cells[2].querySelector('[id = so_luong_xe]').value++;
+
+                var table = document.getElementById("table-xe");
+                var newRow;
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    // console.log(row.cells[3].querySelector('[id = id_xe]').value);
+                    if(row.cells[3].querySelector('[id = id_xe]').value == data.id_xe){
+                        newRow = row;
+                        break;
+                    }
+                }
+                var bai_xe_cu;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == newRow.cells[1].querySelector('[id = id_bai_xe]').value){
+                        bai_xe_cu = row;
+                        break;
+                    }
+                }
+                bai_xe_cu.cells[2].querySelector('[id = so_luong_xe]').value--;
+
+                newRow.cells[5].querySelector('[id = trang_thai]').value = data.trang_thai;
+                newRow.cells[4].querySelector('[id = loai_xe]').value = data.loai_xe;
+                newRow.cells[2].querySelector('[id = id_user]').value = data.id_user;
+                newRow.cells[1].querySelector('[id = id_bai_xe]').value = data.id_bai_xe;
+                newRow.cells[0].querySelector('[id = ten_bai]').value = bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value;
+                
+                Toastify({
+                    text: "Thông tin xe (id: " + data.id_xe + ") đã được cập nhật!",
+                    position: "center",
+                    style: {
+                        background: "#198754"
+                    },
+                    duration: -1,
+                    close: true
+                }).showToast();
+                // console.log(data);
+            }
             
-            Toastify({
-                text: "Thông tin xe (id: " + data.id_xe + ") đã được cập nhật!",
-                position: "center",
-                style: {
-                    background: "#198754"
-                },
-                duration: -1,
-                close: true
-            }).showToast();
-            // console.log(data);
+            
         })
     </script>
 </div>

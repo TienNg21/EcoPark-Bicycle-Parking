@@ -32,7 +32,7 @@ adminRouter.get('/', async (req,res) => {
     
 })
 
-adminRouter.post('/xe', (req, res) => {
+adminRouter.post('/xe', async (req, res) => {
     if(req.body.action == 'update')
     {
         pool.query(
@@ -52,7 +52,7 @@ adminRouter.post('/xe', (req, res) => {
         pool.query(
             'delete from xe where id_xe=$1',
             [req.body.id_xe],
-            (err, results) => {
+            async (err, results) => {
                 if(err){
                     error = "Đã xảy ra lỗi khi xóa xe"
                 }else{
@@ -72,7 +72,7 @@ adminRouter.post('/themxe', (req, res) => {
         `INSERT INTO xe (id_bai_xe, id_user, loai_xe, trang_thai)
         VALUES ($1, $2, $3, $4)`,
         [xethem.id_bai_xe_them, null, xethem.loai_xe_them, 'avaiable'],
-        (err, results) => {
+        async (err, results) => {
             if(err){
                 error = "Đã xảy ra lỗi khi thêm xe";
             }else{

@@ -34,7 +34,6 @@ traxeRouter.post('/xacnhan', (req,res)=>{
             let qr_code = makeRandom(40);
             await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [qr_code, result.rows[0].id_bai_xe]);
             console.log('update bai xe xong');
-
             // tìm cuốc xe hiện tại để trả xe
             pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null order by id desc limit 1", [req.user.id_user], (err, results)=>{
                 // update bang lich su thue xe, tinh tien... 
