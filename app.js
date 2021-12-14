@@ -40,10 +40,24 @@ const pusher = new Pusher({
       console.log(err);
     }
     pgClient = client;
+    client.query('LISTEN watch_realtime_bai_xe');
+    client.query('LISTEN watch_realtime_xe');
     client.on('notification', function(msg) {
-      pusher.trigger('watch_realtime_bai_xe', 'update-qr', JSON.parse(msg.payload));
+      console.log(msg);
+      const events = [
+        // {
+        //   channel: 'watch_realtime_bai_xe',
+        //   name: 'update-qr',
+        //   data: JSON.parse(msg.payload)
+        // },
+        {
+          channel: 'watch_realtime_xe',
+          name: 'update_xe',
+          data: JSON.parse(msg.payload)
+        }
+      ]
+      pusher.triggerBatch(events);
     });
-    const query = client.query('LISTEN watch_realtime_bai_xe');
   });
 
 
