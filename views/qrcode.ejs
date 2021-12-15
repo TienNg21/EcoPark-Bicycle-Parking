@@ -56,7 +56,10 @@
   
   <script type='text/javascript' src="/javascripts/qrcode/build/qrcode.js"></script>
   <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
-  
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
   <script>
       
       var pusher = new Pusher('21a133a5939937831c0f', {
@@ -92,22 +95,46 @@
       else noti_tra.textContent = 'Quét để trả xe'
       // console.log('success!');
       })
-  
+      
+      let qrcontent_thue = firstQR_thue
+      let qrcontent_tra = firstQR_tra
       var channel = pusher.subscribe('watch_realtime_bai_xe');
       channel.bind('update-qr', function(data) {
 
-        // console.log(data);
-        // console.log(data.qr_thue_xe);
+        console.log(data);
+        console.log(data.qr_thue_xe);
         if(data.qr_thue_xe !== undefined){
           var str = window.location.href;
           var n = str.lastIndexOf('/');
           var result = str.substring(n + 1);
-          // console.log(result);
+          console.log(result);
           if(data.id_bai_xe == result){
-            // console.log('bat dau doi qr');
+            console.log('bat dau doi qr');
+            if(qrcontent_thue != data['qr_thue_xe']){
+              Toastify({
+                text: 'Thuê xe thành công!',
+                position: "center",
+                style: {
+                    background: "#198754"
+                },
+                duration: 5000
+              }).showToast();
+            }
+
+            if(qrcontent_tra != data['qr_tra_xe']){
+              Toastify({
+                text: 'Trả xe thành công!',
+                position: "center",
+                style: {
+                    background: "#198754"
+                },
+                duration: 5000
+              }).showToast();
+            }
+
             var canvas_thue = document.getElementById('canvas_thue');
             var noti_thue = document.querySelector('#noti_thue')
-            var qrcontent_thue = data['qr_thue_xe']
+            qrcontent_thue = data['qr_thue_xe']
             // console.log(qrcontent_thue)
             
             QRCode.toCanvas(canvas_thue, qrcontent_thue, {
@@ -119,7 +146,7 @@
             
             var canvas_tra = document.getElementById('canvas_tra');
             var noti_tra = document.querySelector('#noti_tra')
-            var qrcontent_tra = data['qr_tra_xe']
+            qrcontent_tra = data['qr_tra_xe']
             // console.log(qrcontent_tra)
             
             QRCode.toCanvas(canvas_tra, qrcontent_tra,  {
