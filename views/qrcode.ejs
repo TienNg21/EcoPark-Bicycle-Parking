@@ -95,37 +95,43 @@
   
       var channel = pusher.subscribe('watch_realtime_bai_xe');
       channel.bind('update-qr', function(data) {
-          // var show_thue = document.querySelector('#show_thue')
-          // show_thue.textContent = JSON.stringify(data['qr_thue_xe'])
-          // alert(JSON.stringify(data));
-          var canvas_thue = document.getElementById('canvas_thue');
-          var noti_thue = document.querySelector('#noti_thue')
-          var qrcontent_thue = data['qr_thue_xe']
-          console.log(qrcontent_thue)
-          
-          QRCode.toCanvas(canvas_thue, qrcontent_thue, {
-            width: 500,
-            height: 500
-          },  function (error) {
-          if (error) console.error(error)
-          else noti_thue.textContent = 'Quét để thuê xe'})
-          // console.log('success!');
-  
-          // var show_tra = document.querySelector('#show_tra')
-          // show_tra.textContent = JSON.stringify(data['qr_tra_xe'])
-          // alert(JSON.stringify(data));
-          var canvas_tra = document.getElementById('canvas_tra');
-          var noti_tra = document.querySelector('#noti_tra')
-          var qrcontent_tra = data['qr_tra_xe']
-          console.log(qrcontent_tra)
-          
-          QRCode.toCanvas(canvas_tra, qrcontent_tra,  {
-            width: 500,
-            height: 500
-          }, function (error) {
-          if (error) console.error(error)
-          else noti_tra.textContent = 'Quét để trả xe'
-          })
+
+        // console.log(data);
+        // console.log(data.qr_thue_xe);
+        if(data.qr_thue_xe !== undefined){
+          var str = window.location.href;
+          var n = str.lastIndexOf('/');
+          var result = str.substring(n + 1);
+          // console.log(result);
+          if(data.id_bai_xe == result){
+            // console.log('bat dau doi qr');
+            var canvas_thue = document.getElementById('canvas_thue');
+            var noti_thue = document.querySelector('#noti_thue')
+            var qrcontent_thue = data['qr_thue_xe']
+            // console.log(qrcontent_thue)
+            
+            QRCode.toCanvas(canvas_thue, qrcontent_thue, {
+              width: 500,
+              height: 500
+            },  function (error) {
+            if (error) console.error(error)
+            else noti_thue.textContent = 'Quét để thuê xe'})
+            
+            var canvas_tra = document.getElementById('canvas_tra');
+            var noti_tra = document.querySelector('#noti_tra')
+            var qrcontent_tra = data['qr_tra_xe']
+            // console.log(qrcontent_tra)
+            
+            QRCode.toCanvas(canvas_tra, qrcontent_tra,  {
+              width: 500,
+              height: 500
+            }, function (error) {
+            if (error) console.error(error)
+            else noti_tra.textContent = 'Quét để trả xe'
+            })
+
+          }
+        }
         }
       )
   </script>
