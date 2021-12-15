@@ -547,14 +547,14 @@
                     }
                 }
 
-                bai_xe.cells[2].querySelector('[id = so_luong_xe]').value = so_xe;
+                bai_xe.cells[3].querySelector('[id = so_luong_xe]').value = so_xe;
                 Toastify({
                     text: "Thông tin bãi xe (id: " + data.id_bai_xe + ") đã được cập nhật!",
                     position: "center",
                     style: {
                         background: "#198754"
                     },
-                    duration: -1,
+                    duration: 5000,
                     close: true
                 }).showToast();
             }else if(data.id_xe != null){
@@ -567,7 +567,7 @@
                         break;
                     }
                 }
-                bai_xe.cells[2].querySelector('[id = so_luong_xe]').value++;
+                bai_xe.cells[3].querySelector('[id = so_luong_xe]').value++;
 
                 var table = document.getElementById("table-xe");
                 var newRow;
@@ -585,7 +585,7 @@
                         break;
                     }
                 }
-                bai_xe_cu.cells[2].querySelector('[id = so_luong_xe]').value--;
+                bai_xe_cu.cells[3].querySelector('[id = so_luong_xe]').value--;
 
                 newRow.cells[5].querySelector('[id = trang_thai]').value = data.trang_thai;
                 newRow.cells[4].querySelector('[id = loai_xe]').value = data.loai_xe;
@@ -631,7 +631,7 @@
                     style: {
                         background: "#198754"
                     },
-                    duration: -1,
+                    duration: 5000,
                     close: true
                 }).showToast();
                 // console.log(data);
