@@ -1,140 +1,429 @@
 <style>
-input{
+    input{
+        border-radius: 5px;
+        height: 1.1cm;
+    }
+    #xe input,
+    #baixe input {
+        text-align: center;
+        border-color: transparent;
+        background-color: transparent !important;
+    }
+    #khachhang{
+        margin-top: 0.5cm;
+    }
+    #khachhang input {
+        text-align: center;
+        border-color: transparent;
+        background-color: transparent !important;
+        margin-left: 1.5cm;
+    }
     
-    border-radius: 5px;
-    height: 1.1cm;
-    margin-top: 0.2cm;
-    margin-bottom: 0.2cm;
+    #thembaixe li {
+        margin-top: 1rem;
+        width: 100%;
+    }
+    th, td {
+        text-align: center;
+    }
+    .admin-subcontent {
+        background-color: white;
+        border: solid white;
+    }
+    .tenbaithem{
+        background-color: white;
+        border: solid white;
+    }
     
-}
+    li {
+        list-style-type: none;
+    }
 
+    #price em {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #themxe input,
+    #price input {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        appearance: none;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    .card-header {
+        color: #478640;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .news {
+        color: #478640 !important;
+        font-size: 16px;
+        font-weight: 500;
+    }
 </style>
 <div>
-    <h2>Danh số thuê xe</h2>
-    <div id="doanhso" class="doanhso admin-content">
-        -sprint sau
-    </div>
-
-    <h2>Lịch sử thuê xe</h2>
-    <div id="lsu" class="lsu admincontent">
-        -sprint sau
-    </div>
-
-    <h2>Xe</h2>
-    <div id="xe" class="xe admin-content">
-        <% if (xe.length === 0) { %>
-            <p>Không có xe nào</p>
-        <% }else{ %>
-            <div class="admin-subcontent">
-                <% for( let index = 0; index < xe.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/xe" method="post">
-                            <input type="text" id="ten_bai" value="<%= xe[index].ten_bai %> ">
-                            <input type="text" id="id_bai_xe" value="<%= xe[index].id_bai_xe %>">
-                            <input type="text" id="id_user" value="<%= xe[index].id_user %>">
-                            <input type="text" id="id_xe" value="<%= xe[index].id_xe %>">
-                            <input type="text" id="loai_xe" value="<%= xe[index].loai_xe %>">
-                            <input type="text" id="trang_thai" value="<%= xe[index].trang_thai %>">
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
-                        </form>
+    <div class="row">
+        <!-- Tổng quan -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh thu hôm nay</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+                        </div>
                     </div>
-                <% } %>
+                </div>
             </div>
-        <% } %>
-
-        <h2>Them xe</h2>
-        <form action="/admin/themxe" method="post">
-            <select name="id_bai_xe_them" id="id_bai_xe_them">
-                <% for( let index = 0; index < baixe.length; index++ ) { %>
-                    <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
-                <% } %>
-            </select>
-            <input type="text" name="loai_xe_them">
-            <button type="submit">Thêm xe</button>
-        </form>
-    </div>
-    <h2>Bai xe</h2>
-    <div id="baixe" class="baixe admin-content">
-        <% if (baixe.length === 0) { %>
-            <p>Không có bãi xe nào</p>
-        <% } else { %>
-            <div class="admin-subcontent">
-                <% for( let index = 0; index < baixe.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/baixe" method="post">
-                            <input type="text" id="id_bai_xe" name="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly>
-                            <input type="text" id="ten_bai_xe" name="ten_bai_xe" value="<%= baixe[index].ten_bai %>">
-                            <input type="text" id="so_luong_xe" name="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly>
-                            <button type="submit" name="action" class="btn btn-primary" value="update">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="action" class="btn btn-danger" value="delete">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
-                        </form>
-                    </div>
-                <% } %>
-            </div>
-        <% } %>
-
-        <h2>Them bai xe</h2>
-        <form action="/admin/thembaixe" method="post">
-            <input type="text" id="id_bai_xe_them" required>
-            <input type="text" id="ten_bai_xe_them" required>
-            <input type="text" id="pos_x" required>
-            <input type="text" id="pos_y" required>
-            <button type="submit">Them bai xe</button>
-        </form>
-        <div id="map" style="height: 500px; width: 100%;">
-
         </div>
-    </div>
 
-    <h2>Danh sách người dùng</h2>
-    <div id="khachhang" class="khachhang admin-content">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Xe đang được thuê</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-biking fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <% if (khachhang.length === 0) { %>
-            <p>Không có người dùng nào</p>
-        <% } else { %>
-            <div class="admin-subcontent">
-                <% for( let index = 0; index < khachhang.length; index++ ) { %>
-                    <div>
-                        <form action="/admin/khachhang" method="post">
-                            <input type="text" id="email" value="<%= khachhang[index].email %>" readonly>
-                            <input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly>
-                            <input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng số tài khoản</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <button type="submit" name="update-button" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-                            <button type="submit" name="delete-button" class="btn btn-danger">Xóa <span class="text-gradient"><i class="fas fa-times"></i></span></button>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Bãi xe hấp dẫn nhất</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doanh số thuê xe  -->
+        <div class="col-12 mb-4" id="doanhso">
+            <div class="card shadow">
+                <div class="card-header">
+                    Doanh số thuê xe
+                </div>
+                <div class="card-body">
+                    <em>Đang phát triển</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lịch sử thuê xe  -->
+        <div class="col-12 mb-4" id="lsu">
+            <div class="card shadow">
+                <div class="card-header">
+                    Lịch sử thuê xe
+                </div>
+                <div class="card-body">
+                    <div id="xethue" style="display: inline;"></div>
+                    <em>Đang phát triển</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách các xe  -->
+        <div class="col-12 mb-4" id="xe">
+            <div class="card shadow">
+                <div class="card-header">
+                    Danh sách các xe
+                </div>
+                <div class="card-body">
+                    <div class="xe admin-content">
+                        <% if (xe.length === 0) { %>
+                            <p>Không có xe nào</p>
+                        <% }else{ %>
+                            <div class="admin-subcontent table-responsive">
+                                <table class="table table-striped table-sm" id="table-xe">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tên bãi xe</th>
+                                            <th scope="col">ID bãi xe</th>
+                                            <th scope="col">ID khách</th>
+                                            <th scope="col">ID xe</th>
+                                            <th scope="col">Loại xe</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let index = 0; index < xe.length; index++ ) { %>
+                                            <tr>
+                                                <form action="/admin/xe" method="post">
+                                                    <td><input type="text" id="ten_bai" name="ten_bai" value="<%= xe[index].ten_bai %>" readonly></td>
+                                                    <td><input type="text" id="id_bai_xe" name="id_bai_xe" class="form-control" value="<%= xe[index].id_bai_xe %>"></td>
+                                                    <td><input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly></td>
+                                                    <td><input type="text" id="id_xe" name="id_xe" value="<%= xe[index].id_xe %>" readonly></td>
+                                                    <td><input type="text" id="loai_xe" style="width:max-content" name="loai_xe" class="form-control" value="<%= xe[index].loai_xe %>"></td>
+                                                    <td><input type="text" id="trang_thai" name="trang_thai" class="form-control" value="<%= xe[index].trang_thai %>"></td>
+                                                    <td><button type="submit" name="action" class="btn btn-primary" class="form-control" value="update"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                                    <td><button type="submit" name="action" class="btn btn-danger" class="form-control" value="delete"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                                </form>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </div>        
+
+        <!-- Thêm xe -->
+        <div class="col-12 mb-4"  id="themxe">
+            <div class="card shadow">
+                <div class="card-header">
+                    Thêm xe
+                </div>
+                <div class="card-body">
+                    <form action="/admin/themxe" method="post">
+            
+                        <select name="id_bai_xe_them" class="form-select" style="width: auto; display: inline-block;" id="id_bai_xe_them">
+                            <% for( let index = 0; index < baixe.length; index++ ) { %>
+                                <option value="<%= baixe[index].id_bai_xe %>"><%= baixe[index].ten_bai %></option>
+                            <% } %>
+                        </select>
+                        
+                        <input type="text"  name="loai_xe_them" placeholder="Tên loại xe thêm" required>  
+                        <div id = "cacbaixe" style="display: inline;"></div>  
+
+                        <button type="submit" class="btn btn-primary">Thêm xe</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách bãi xe -->
+        <div class="col-12 mb-4" id="baixe">
+            <div class="card shadow">
+                <div class="card-header">
+                    Danh sách bãi xe
+                </div>
+                <div class="card-body">
+                    <div class="baixe admin-content">
+                        <% if (baixe.length === 0) { %>
+                            <p>Không có bãi xe nào</p>
+                        <% } else { %>
+                            <div class="admin-subcontent table-responsive">
+                                <table class="table table-striped table-sm" id="table-bai-xe">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID bãi xe</th>
+                                            <th scope="col">Tên bãi xe</th>
+                                            <th scope="col">Trang QR thuê, trả</th>
+                                            <th scope="col">Số lượng xe</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let index = 0; index < baixe.length; index++ ) { %>
+                                            <tr>
+                                                <form action="/admin/baixe" method="post">
+                                                    <td><input type="text" id="id_bai_xe" name="id_bai_xe" value="<%= baixe[index].id_bai_xe %>" readonly></td>
+                                                    <td><input type="text" id="ten_bai_xe" name="ten_bai_xe" value="<%= baixe[index].ten_bai %>"></td>
+                                                    <td><a href="/admin/qrpage/<%= baixe[index].id_bai_xe %>" style="color: #478640;">Chuyển hướng</a></td>
+                                                    <td><input type="text" id="so_luong_xe" name="so_luong_xe" value="<%= baixe[index].so_luong_xe %>" readonly></td>
+                                                    <td><button type="submit" name="action" class="btn btn-primary" value="update"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                                    <td><button type="submit" name="action" class="btn btn-danger" value="delete"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                                </form>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thêm bãi xe -->
+        <div class="col-12 mb-4" id="thembaixe">
+            <div class="card shadow">
+                <div class="card-header">
+                    Thêm bãi xe
+                </div>
+                <div class="card-body row">
+                    <div class="col-4">
+                        <form action="/admin/thembaixe" method="post">
+                            <ul>
+                                <li><input type="text" id="ten_bai_xe_them" class="form-control" name="ten_bai_xe_them" placeholder="Tên bãi xe thêm" required></li>
+                                <li><input type="text" id="pos_x" class="form-control" name="pos_x" placeholder="Tọa độ x" required readonly></li>
+                                <li><input type="text" id="pos_y" class="form-control" name="pos_y" placeholder="Tọa độ y" required readonly></li>
+                                <li><em>Nhấp chuột phải vào bản đồ để lấy hai tọa độ của bãi xe.</em></li>
+                                <li><button type="submit" class="btn btn-primary">Thêm bãi xe</button></li>
+                                <br>
+                                <li><em>Nhấp chuột trái vào từng bãi để xem trang QR thuê, trả xe của từng bãi.</em></li>                            
+                            </ul>                        
                         </form>
                     </div>
-                <% } %>
+                    <div class="col-8">
+                        <div id="map" style="height: 500px; width: 100%;"></div>
+                        <div id="khachhangthuexe" style="display: inline;"></div>
+                    </div>
+                </div>
             </div>
-        <% } %>        
-    </div>
-
-    <h2>Giá thuê xe</h2>
-    <div id="price" class="price admin-content">
-        <div>
-            <form action="/admin/price" method="post">
-                <label for="one">Giá 1 giờ</label>
-                <input type="text" id="one" name="pricechange" value="<%= price.one_h %>">
-                <button type="submit" name="action" value="one_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-            </form>
-            <form action="/admin/price" method="post">
-                <label for="two">Giá 2 giờ</label>
-                <input type="text" id="two" name="pricechange" value="<%= price.two_h %>">
-                <button type="submit" name="action" value="two_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-            </form>
-            <form action="/admin/price" method="post">
-                <label for="three">Giá 3 giờ</label>
-                <input type="text" id="three" name="pricechange" value="<%= price.three_h %>">
-                <button type="submit" name="action" value="three_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-            </form>
-            <form action="/admin/price" method="post">
-                <label for="late30">Giá muộn 30 phút</label>
-                <input type="text" id="three" name="pricechange" value="<%= price.delay_h %>">
-                <button type="submit" name="action" value="delay_h" class="btn btn-primary">Cập nhật <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
-            </form>
         </div>
+
+        <!-- danh sách người dùng -->
+        <div class="col-12 mb-4" id="khachhang">
+            <div class="card shadow">
+                <div class="card-header">
+                    Danh sách người dùng
+                </div>
+                <div class="card-body">
+                    <div class="khachhang admin-content">
+
+                        <% if (khachhang.length === 0) { %>
+                            <p>Không có người dùng nào</p>
+                        <% } else { %>
+                            <div class="admin-subcontent table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID người dùng</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Tên người dùng</th>
+                                            <th scope="col">CMND</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let index = 0; index < khachhang.length; index++ ) { %>
+                                            <tr>
+                                                <form action="/admin/khachhang" method="post">
+                                                <td><input type="text" id="iduser" value="<%= khachhang[index].id_user %>" readonly></td>
+                                                <td><input type="text" id="email" value="<%= khachhang[index].email %>" readonly></td>
+                                                <td><input type="text" id="ten" value="<%= khachhang[index].ten %>" readonly></td>
+                                                <td><input type="text" id="cmnd" value="<%= khachhang[index].cmnd %>" readonly></td>
+                                                <td><button type="submit" name="update-button" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
+                                                <td><button type="submit" name="delete-button" class="btn btn-danger"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
+                                                </form>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        <% } %>        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Giá thuê xe -->
+        <div class="col-12 mb-4" id="price">
+            <br>
+            <div class="card shadow">
+                <div class="card-header">
+                    Giá thuê xe
+                </div>
+                <div class="card-body">
+                    <div class="price admin-content" id="gia-thue-xe">
+                        <div>
+                            <form action="/admin/price" method="post">
+                                <label for="one" style="width: 250px">Giá 1 giờ</label>
+                                <input type="text" id="one" name="pricechange" value="<%= price.one_h %>">
+                                <em>VND</em>
+                                <button type="submit" name="action" value="one_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
+                            <form action="/admin/price" method="post">
+                                <label for="two" style="width: 250px">Giá 2 giờ</label>
+                                <input type="text" id="two" name="pricechange" value="<%= price.two_h %>">
+                                <em>VND</em>
+                                <button type="submit" name="action" value="two_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
+                            <form action="/admin/price" method="post">
+                                <label for="three" style="width: 250px">Giá 3 giờ</label>
+                                <input type="text" id="three" name="pricechange" value="<%= price.three_h %>">
+                                <em>VND</em>
+                                <button type="submit" name="action" value="three_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
+                            <form action="/admin/price" method="post">
+                                <label for="late30" style="width: 250px">Giá muộn 30 phút</label>
+                                <input type="text" id="three" name="pricechange" value="<%= price.delay_h %>">
+                                <em>VND</em>
+                                <button type="submit" name="action" value="delay_h" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
+                            <form action="/admin/price" method="post">
+                                <label for="disc" style="width: 250px">Giảm giá cho cư dân EcoPark</label>
+                                <input type="text" id="disc" name="pricechange" value="<%= price.disc %>">
+                                <em>%</em>
+                                <button type="submit" name="action" value="disc" class="btn btn-primary"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đổi mật khẩu -->
+        <div id="password" class="col-12 mb-4">
+            <br>
+            <div class="card shadow">
+                <div class="card-header">
+                    Đổi mật khẩu
+                </div>
+                <div class="card-body">
+                    <em>Đang phát triển</em>
+                </div>
+            </div>
+        </div>
+
     </div>
+    
 
     <!-- SCRIPT  -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -197,8 +486,158 @@ input{
             baitemp = L.marker([baixe[index].pos_x, baixe[index].pos_y]).addTo(mymap);
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
             baitemp.on('click', (err) => {
-                window.location.href += "/qrpage/" + baixe[index].id_bai_xe;
+                window.location.href = window.location.href.split('#')[0];
+                window.location.href = "/admin/qrpage/" + baixe[index].id_bai_xe;
             })
         }
+    </script>
+
+    <script>
+        var table = document.getElementById("table-xe");
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
+            if(row.cells[5].querySelector('[id = trang_thai]').value == 'available'){
+                row.cells[5].querySelector('[id = trang_thai]').style.color = "#198754";
+            }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'pending') {
+                row.cells[5].querySelector('[id = trang_thai]').style.color = "#ffc107";
+            }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'active'){
+                row.cells[5].querySelector('[id = trang_thai]').style.color = "#dc3545";
+            }
+        }
+    </script>
+    <style>
+        .ani {
+            color: transparent !important;
+            /* border: #32f097 solid 4px !important;
+            box-shadow: #32f097 2px 2px; */
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script>
+        var pusher = new Pusher('21a133a5939937831c0f', {
+            cluster: 'ap1',
+            encrypted: true
+        });
+        var channel = pusher.subscribe('watch_realtime_xe');
+        channel.bind('update_xe', function(data) {
+            //Lay thong tin ten bai xe
+            if(data.so_luong_xe != null){
+                //Thay doi bai xe
+                var table_baixe = document.getElementById('table-bai-xe');
+                var bai_xe;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        bai_xe = row;
+                        break;
+                    }
+                }
+                //Thay doi ten bai
+                bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value = data.ten_bai;
+
+                // Tinh lai so xe
+                var so_xe = 0;
+                
+                var table_baixe = document.getElementById('table-bai-xe');
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        so_xe ++;
+                    }
+                }
+
+                bai_xe.cells[3].querySelector('[id = so_luong_xe]').value = so_xe;
+                Toastify({
+                    text: "Thông tin bãi xe (id: " + data.id_bai_xe + ") đã được cập nhật!",
+                    position: "center",
+                    style: {
+                        background: "#198754"
+                    },
+                    duration: 5000,
+                    close: true
+                }).showToast();
+            }else if(data.id_xe != null){
+                //Thay doi xe
+                var table_baixe = document.getElementById('table-bai-xe');
+                var bai_xe;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == data.id_bai_xe){
+                        bai_xe = row;
+                        break;
+                    }
+                }
+                bai_xe.cells[3].querySelector('[id = so_luong_xe]').value++;
+
+                var table = document.getElementById("table-xe");
+                var newRow;
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    // console.log(row.cells[3].querySelector('[id = id_xe]').value);
+                    if(row.cells[3].querySelector('[id = id_xe]').value == data.id_xe){
+                        newRow = row;
+                        break;
+                    }
+                }
+                var bai_xe_cu;
+                for(var i = 1, row; row = table_baixe.rows[i]; i++){
+                    if(row.cells[0].querySelector('[id = id_bai_xe]').value == newRow.cells[1].querySelector('[id = id_bai_xe]').value){
+                        bai_xe_cu = row;
+                        break;
+                    }
+                }
+                bai_xe_cu.cells[3].querySelector('[id = so_luong_xe]').value--;
+
+                newRow.cells[5].querySelector('[id = trang_thai]').value = data.trang_thai;
+                newRow.cells[4].querySelector('[id = loai_xe]').value = data.loai_xe;
+                newRow.cells[2].querySelector('[id = id_user]').value = data.id_user;
+                newRow.cells[1].querySelector('[id = id_bai_xe]').value = data.id_bai_xe;
+                newRow.cells[0].querySelector('[id = ten_bai]').value = bai_xe.cells[1].querySelector('[id = ten_bai_xe]').value;
+                
+                function ani(name, count) {
+                    if(count != 0){
+                        if(count % 2 == 0){
+                            newRow.cells[5].querySelector('[id = trang_thai]').classList.add(name);
+                            setTimeout(async function() {
+                                ani(name, count - 1);
+                            }, 1000);
+                        }else{
+                            newRow.cells[5].querySelector('[id = trang_thai]').classList.remove(name);
+                            setTimeout(async function() {
+                                ani(name, count - 1);
+                            }, 1000);
+                        }
+                        
+                    }
+                }
+                  
+            
+                
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
+                    if(row.cells[5].querySelector('[id = trang_thai]').value == 'available'){
+                        row.cells[5].querySelector('[id = trang_thai]').style.color = "#198754";
+                        ani("ani", 20);
+                    }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'pending') {
+                        row.cells[5].querySelector('[id = trang_thai]').style.color = "#ffc107";
+                        ani("ani", 20);
+                    }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'active'){
+                        row.cells[5].querySelector('[id = trang_thai]').style.color = "#dc3545";
+                        ani("ani", 20);
+                    }
+                }
+                Toastify({
+                    text: "Thông tin xe (id: " + data.id_xe + ") đã được cập nhật!",
+                    position: "center",
+                    style: {
+                        background: "#198754"
+                    },
+                    duration: 5000,
+                    close: true
+                }).showToast();
+                // console.log(data);
+            }
+            
+            
+        })
     </script>
 </div>
