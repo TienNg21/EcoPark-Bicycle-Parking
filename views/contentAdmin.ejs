@@ -97,8 +97,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Xe đang được thuê</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                                Trạng thái các xe</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <span id="xeavailable" style="color: #478640;"></span> /
+                                <span id="xepending" style="color: #ffc107;"></span> /
+                                <span id="xeactive" style="color: #dc3545;"></span>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-biking fa-2x text-gray-300"></i>
@@ -115,7 +119,9 @@
                         <div class="col mr-2">
                             <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Tổng số tài khoản</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <span id="tongsotaikhoan"><%= souser %> </span>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -507,17 +513,26 @@
     </script>
 
     <script>
+        var xeavailable = 0;
+        var xepending = 0;
+        var xeactive = 0
         var table = document.getElementById("table-xe");
         for (var i = 1, row; row = table.rows[i]; i++) {
             row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
             if(row.cells[5].querySelector('[id = trang_thai]').value == 'available'){
                 row.cells[5].querySelector('[id = trang_thai]').style.color = "#198754";
+                xeavailable ++;
             }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'pending') {
                 row.cells[5].querySelector('[id = trang_thai]').style.color = "#ffc107";
+                xepending++;
             }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'active'){
                 row.cells[5].querySelector('[id = trang_thai]').style.color = "#dc3545";
+                xeactive++;
             }
         }
+        document.getElementById('xeavailable').innerHTML = xeavailable;
+        document.getElementById('xepending').innerHTML = xepending;
+        document.getElementById('xeactive').innerHTML = xeactive;
     </script>
     <style>
         .ani {
@@ -623,8 +638,6 @@
                         
                     }
                 }
-                  
-            
                 
                 for (var i = 1, row; row = table.rows[i]; i++) {
                     row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
@@ -639,6 +652,24 @@
                         ani("ani", 20);
                     }
                 }
+
+                var xeavailable = 0;
+                var xepending = 0;
+                var xeactive = 0
+                var table = document.getElementById("table-xe");
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    row.cells[5].querySelector('[id = trang_thai]').style.fontWeight = "500";
+                    if(row.cells[5].querySelector('[id = trang_thai]').value == 'available'){
+                        xeavailable ++;
+                    }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'pending') {
+                        xepending++;
+                    }else if(row.cells[5].querySelector('[id = trang_thai]').value == 'active'){
+                        xeactive++;
+                    }
+                }
+                document.getElementById('xeavailable').innerHTML = xeavailable;
+                document.getElementById('xepending').innerHTML = xepending;
+                document.getElementById('xeactive').innerHTML = xeactive;
                 Toastify({
                     text: "Thông tin xe (id: " + data.id_xe + ") đã được cập nhật!",
                     position: "center",
