@@ -4,19 +4,20 @@ const { pool } = require('../dbConfig');
 
 traxeRouter.get('/', (req,res, next)=>{
     if(req.user == null) res.redirect('../login')
-    pool.query("select trang_thai, id_user from xe where id_user = $1 and trang_thai = 'active'", [req.user.id_user], (err, result)=>{
-        if(err) console.error(err);
-        else
-            {if(result.rows.length == 0){
-                req.flash('message', 'Bạn cần thuê xe trước để có thể trả xe!')
-                res.redirect('/')
-            }
-            else{
-                res.render('scan_traxe.ejs')
-            }
-         }  
-    })
-    // res.render('scan_traxe.ejs')
+    else{
+        pool.query("select trang_thai, id_user from xe where id_user = $1 and trang_thai = 'active'", [req.user.id_user], (err, result)=>{
+            if(err) console.error(err);
+            else
+                {if(result.rows.length == 0){
+                    req.flash('message', 'Bạn cần thuê xe trước để có thể trả xe!')
+                    res.redirect('/')
+                }
+                else{
+                    res.render('scan_traxe.ejs')
+                }
+            }  
+        })
+    }
 })
 
 traxeRouter.post('/xacnhan', (req,res)=>{
@@ -42,16 +43,12 @@ traxeRouter.post('/xacnhan', (req,res)=>{
                 // send text sang hàm onreadystatechange trong file scan_traxe.ejs 
                 res.send('true')
     
-                
             })
 
         }
     })
 })
 
-// traxeRouter.get('/oke', (req, res)=>{
-//     res.render('oke.ejs')
-// })
 
 function makeRandom(length) {
     var result           = '';
@@ -62,7 +59,8 @@ function makeRandom(length) {
   charactersLength));
    }
    return result;
-  }
+}
+
 module.exports = traxeRouter;
 
 

@@ -101,15 +101,15 @@
       var channel = pusher.subscribe('watch_realtime_bai_xe');
       channel.bind('update-qr', function(data) {
 
-        console.log(data);
-        console.log(data.qr_thue_xe);
+        // console.log(data);
+        // console.log(data.qr_thue_xe);
         if(data.qr_thue_xe !== undefined){
           var str = window.location.href;
           var n = str.lastIndexOf('/');
           var result = str.substring(n + 1);
-          console.log(result);
+          // console.log(result);
           if(data.id_bai_xe == result){
-            console.log('bat dau doi qr');
+            // console.log('bat dau doi qr');
             if(qrcontent_thue != data['qr_thue_xe']){
               Toastify({
                 text: 'Thuê xe thành công!',
