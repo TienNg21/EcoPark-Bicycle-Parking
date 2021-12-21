@@ -97,7 +97,7 @@
                             
                                     <% if (typeof baixe != 'undefined'){ %>
                                         %> <% baixe.forEach(element => {%>
-                                            <tr class="", id = "<%= element['id_bai_xe'] %>">
+                                            <tr class="bai_xe_row", id = "<%= element['id_bai_xe'] %>" onclick="wholeLineBaixe(this)">
                                                 <td><%= element['ten_bai'] %></td>
                                                 <td><%= element['so_luong'] %></td>
                                                 <td><input type="radio" name="bai" value="<%= element['id_bai_xe'] %>" onchange="change_baixe(this.value)"
@@ -166,17 +166,17 @@
                                 <% if (typeof gia != 'undefined'){
                                     %> <% gia.forEach(element =>
                                     {%>
-                                        <tr class="">
+                                        <tr class="" onclick="wholeLine(this)">
                                             <td> 1 </td>
                                             <td><%= element['one_h'] %></td>
                                             <td><input type="radio" name="gio" value="<%= element['one_h'] %>" required></td>
                                         </tr>
-                                        <tr class="">
+                                        <tr class="" onclick="wholeLine(this)">
                                             <td> 2 </td>
                                             <td><%= element['two_h'] %></td>
                                             <td><input type="radio" name="gio" value="<%= element['two_h'] %>" required></td>
                                         </tr>
-                                        <tr class="">
+                                        <tr class="" onclick="wholeLine(this)">
                                             <td> 3 </td>
                                             <td><%= element['three_h'] %></td>
                                             <td><input type="radio" name="gio" value="<%= element['three_h'] %>" required></td>
@@ -221,7 +221,16 @@
         else if(form == 'slt-thoigian') formTG.classList.toggle('hide')
     }
 
-   
+   function wholeLineBaixe(thiss){
+    let radio = thiss.querySelector("input")
+    radio.onchange()
+    radio.checked = true
+   }
+
+   function wholeLine(thiss){
+    let radio = thiss.querySelector("input")
+    radio.checked = true
+   }
     
     let dsbaixe = <%-JSON.stringify(baixe)%>;
 
@@ -244,7 +253,7 @@
             dsxe = JSON.parse(this.responseText)
             let text = ""
             for(i in dsxe){
-                text += `<tr>
+                text += `<tr onclick="wholeLine(this)">
                             <td> ${dsxe[i].id_xe} </td>
                             <td> ${dsxe[i].loai_xe} </td>
                             <td> ${dsxe[i].trang_thai} </td>

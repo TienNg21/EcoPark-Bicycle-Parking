@@ -6,37 +6,40 @@ const { pool } = require('../dbConfig');
 
 rentRouter.get("/", async (req, res)=>{
     if(req.user == null) res.redirect('../login')
-    console.log("view rent page");
-    var idbai = req.query.idbai;
-    // console.log(idbai);
-    pool.query("select bx.id_bai_xe, bx.ten_bai, count(x.id_xe) as so_luong from bai_xe bx left join xe x on (bx.id_bai_xe = x.id_bai_xe) where x.trang_thai not in ('pending', 'active') group by bx.id_bai_xe", (err, result)=>{
-        console.log(result.rows);
-        pool.query("select one_h, two_h, three_h, disc from gia_thue_xe", (errs,results)=>{
-            console.log(results.rows)
-            pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
-                if(xe_pending.rows.length == 0){
-                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null, id_xe_pending: null, message: req.flash('message')});
-                }
-                
-                else if(xe_pending.rows.length > 0){
-                    console.log(xe_pending.rows);
-                    res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe'], id_xe_pending: xe_pending.rows[0]['id_xe'], message: req.flash('message')});
+    else{
+        console.log("view rent page");
+        var idbai = req.query.idbai;
+        // console.log(idbai);
+        pool.query("select bx.id_bai_xe, bx.ten_bai, count(x.id_xe) as so_luong from bai_xe bx left join xe x on (bx.id_bai_xe = x.id_bai_xe) where x.trang_thai not in ('pending', 'active') group by bx.id_bai_xe", (err, result)=>{
+            console.log(result.rows);
+            pool.query("select one_h, two_h, three_h, disc from gia_thue_xe", (errs,results)=>{
+                console.log(results.rows)
+                pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
+                    if(xe_pending.rows.length == 0){
+                        res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null, id_xe_pending: null, message: req.flash('message')});
+                    }
+                    
+                    else if(xe_pending.rows.length > 0){
+                        console.log(xe_pending.rows);
+                        res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe'], id_xe_pending: xe_pending.rows[0]['id_xe'], message: req.flash('message')});
 
-                }
+                    }
+                })
             })
         })
-    })
+    }
 })
 
 rentRouter.get("/:id_bai", (req, res, next)=>{
-    if(req.user == null) res.redirect('../login')
-    var string = encodeURIComponent(req.params.id_bai);
-    res.redirect('/rent?idbai=' + string);
+    if(req.user == null) res.redirect('/login')
+    else{
+        var string = encodeURIComponent(req.params.id_bai);
+        res.redirect('/rent?idbai=' + string);
+    }
 })
 
 rentRouter.post('/chonbai', (req, res)=>{
     // console.log(req.body.idbai);
-    // res.send('nhan dc roi')
     pool.query("select id_xe, trang_thai, loai_xe from xe where id_bai_xe = $1 and trang_thai not in ('active', 'pending')", [req.body.idbai], (err, result)=>{
         if(err) console.error(err);
         else{
@@ -121,37 +124,38 @@ rentRouter.post("/scan", async (req, res)=>{
 
 rentRouter.get('/scan/:idbai/:tenbai', (req, res)=>{
     if(req.user == null) res.redirect('../login')
-    // res.send('get scan')
-    // var idbai = req.query.idbai;
-    pool.query("select * from xe where trang_thai = 'pending' and id_user = $1 and id_bai_xe = $2", [req.user.id_user, req.params.idbai], (err, result)=>{
-        if(result.rows.length == 0) {
-            req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
-            res.redirect('/rent')}
-        else{
-            res.render('scan.ejs', {id_bai: req.params.idbai, ten_bai: req.params.tenbai});
+    else{
+        pool.query("select * from xe where trang_thai = 'pending' and id_user = $1 and id_bai_xe = $2", [req.user.id_user, req.params.idbai], (err, result)=>{
+            if(result.rows.length == 0) {
+                req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
+                res.redirect('/rent')}
+            else{
+                res.render('scan.ejs', {id_bai: req.params.idbai, ten_bai: req.params.tenbai});
 
-        }
-    })
-
+            }
+        })
+    }
 })
 
 rentRouter.get('/cancel/:id_xe', (req, res)=>{
     if(req.user == null) res.redirect('../login')
-    pool.query("select * from xe where id_xe = $1 and id_user = $2 and trang_thai = 'pending'", [req.params.id_xe, req.user.id_user], (err, result)=>{
-        if(err) console.error(err);
-        else{
-            if(result.rows.length == 0) {
-                req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
-                res.redirect('/rent')
-            }
+    else{
+        pool.query("select * from xe where id_xe = $1 and id_user = $2 and trang_thai = 'pending'", [req.params.id_xe, req.user.id_user], (err, result)=>{
+            if(err) console.error(err);
             else{
-                pool.query("update xe set id_user = null, trang_thai = 'available' where id_xe = $1", [req.params.id_xe])    
-                req.flash('message', 'Huỷ xe thành công, mời bạn chọn lại xe!')
-                res.redirect('/rent')
-            }
+                if(result.rows.length == 0) {
+                    req.flash('message', 'Hết thời gian chờ, mời bạn chọn lại xe!')
+                    res.redirect('/rent')
+                }
+                else{
+                    pool.query("update xe set id_user = null, trang_thai = 'available' where id_xe = $1", [req.params.id_xe])    
+                    req.flash('message', 'Huỷ xe thành công, mời bạn chọn lại xe!')
+                    res.redirect('/rent')
+                }
 
-        }
-    })
+            }
+        })
+    }
 })
 
 rentRouter.post('/xacnhan', (req, res)=>{
@@ -172,7 +176,6 @@ rentRouter.post('/xacnhan', (req, res)=>{
                     if(err) console.error(err)
                     else {
                         if (result.rows.length == 0) {
-                            console.log("quet sai ma roi");
                             // thong bao quet sai va cho quet lai
                             res.send('quet_sai');
                         }

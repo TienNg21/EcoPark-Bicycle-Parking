@@ -78,7 +78,7 @@
             if (decodedText !== lastResult) {
                 ++countResults;
                 lastResult = decodedText;
-                console.log(`Scan result = ${decodedText}`, decodedResult);
+                // console.log(`Scan result = ${decodedText}`, decodedResult);
     
                 // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
                 
@@ -143,12 +143,6 @@
                 }
                 let id_bai = '<%= id_bai %>'
                 xhr.send(`idbai=${id_bai}&qrcode=${decodedText}`);
-                // xhr.send(new Int8Array());
-                // xhr.send(document);
-
-                // window.location.href += '/scan';
-                console.log('post xac nhan');
-
             }
         }
         
