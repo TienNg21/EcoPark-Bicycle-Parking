@@ -16,13 +16,14 @@ adminRouter.get('/', async (req,res) => {
         const khachhang = await pool.query('SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN]);
         const lsu = await pool.query('SELECT * FROM lich_su_thue_xe');
         const price = await pool.query('SELECT * FROM gia_thue_xe');
-
+        const souser = await pool.query('SELECT COUNT(id_user) as tong FROM khach_hang');
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,
             khachhang: khachhang.rows,
             lsu: lsu.rows,
             price: price.rows[0],
+            souser: souser.rows[0].tong,
             message: message,
             error: error
         });
