@@ -1,1 +1,86 @@
-<h1>oke</h1>
+<%- include('header') %>
+    <style>
+
+      
+      .title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        margin-top: 15px;
+        margin-bottom: 40px;
+      }
+
+      .cal_price {
+        margin: auto;
+        width: 350px;
+      }
+
+      .price_info {
+        box-sizing: border-box;
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        margin: 0 0 1rem;
+      }
+      #total {
+        font-weight: 700;
+        font-size: larger;
+      }
+
+      .bill {
+        margin: auto;
+        max-width: 350px;
+      }
+      .bill_info {
+        font-weight: 600;
+      }
+
+      .btn {
+        margin: auto;
+        display: block;
+        max-width: 120px;
+      }
+    </style>
+
+</head>
+
+<%- include('navbar', {page: "Hóa đơn"}) %>
+
+  <body>
+    
+    <div class="title">Thanks for using our service</div>
+    
+    <div class="bill">
+      <div>Mã giao dịch: <span class="bill_info">#1123</span></div>
+      <div>Ngày: <span class="bill_info">01/01/2022</span></div>
+      <div>Tên khách hàng: <span class="bill_info">Vũ Quang Tùng</span></div>
+      <div>Thuê: <span class="bill_info">3 giờ</span></div>
+      <div>Thuê xe lúc: <span class="bill_info">09:00:00 am</span></div>
+      <div>Trả xe lúc: <span class="bill_info">12:25:00 pm</span></div>
+      <div>Trả xe muộn: <span class="bill_info">25 phút</span></div>
+    </div>
+
+    <div class="cal_price">
+      <hr/>
+      <div class="price_info">
+        <p>Tạm tính</p>
+        <p>100.000đ</p>
+      </div>
+      <div class="price_info">
+        <p>Giảm giá</p>
+        <p>-40.000đ</p>
+      </div>
+      <div class="price_info">
+        <p>Phí trả xe trễ</p>
+        <p>30.000đ</p>
+      </div>
+      <hr/>
+      <div class="price_info">
+        <p>Tổng số tiền</p>
+        <p id="total">90.000đ</p>
+      </div>
+    </div>
+
+    <a href="/" class="btn btn-primary">Xác nhận</a>
+  </body>
+
