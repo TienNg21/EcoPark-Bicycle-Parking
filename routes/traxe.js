@@ -4,19 +4,20 @@ const { pool } = require('../dbConfig');
 
 traxeRouter.get('/', (req,res, next)=>{
     if(req.user == null) res.redirect('../login')
-    pool.query("select trang_thai, id_user from xe where id_user = $1 and trang_thai = 'active'", [req.user.id_user], (err, result)=>{
-        if(err) console.error(err);
-        else
-            {if(result.rows.length == 0){
-                req.flash('message', 'Bạn cần thuê xe trước để có thể trả xe!')
-                res.redirect('/')
-            }
-            else{
-                res.render('scan_traxe.ejs')
-            }
-         }  
-    })
-    // res.render('scan_traxe.ejs')
+    else{
+        pool.query("select trang_thai, id_user from xe where id_user = $1 and trang_thai = 'active'", [req.user.id_user], (err, result)=>{
+            if(err) console.error(err);
+            else
+                {if(result.rows.length == 0){
+                    req.flash('message', 'Bạn cần thuê xe trước để có thể trả xe!')
+                    res.redirect('/')
+                }
+                else{
+                    res.render('scan_traxe.ejs')
+                }
+            }  
+        })
+    }
 })
 
 traxeRouter.post('/xacnhan', (req,res)=>{
@@ -34,25 +35,20 @@ traxeRouter.post('/xacnhan', (req,res)=>{
             let qr_code = makeRandom(40);
             await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [qr_code, result.rows[0].id_bai_xe]);
             console.log('update bai xe xong');
-
             // tìm cuốc xe hiện tại để trả xe
             pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null order by id desc limit 1", [req.user.id_user], (err, results)=>{
                 // update bang lich su thue xe, tinh tien... 
-                pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh' where id = $1", [results.rows[0].id])
+                pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh', id_bai_xe_tra = $1 where id = $2", [result.rows[0].id_bai_xe, results.rows[0].id]);
     
                 // send text sang hàm onreadystatechange trong file scan_traxe.ejs 
                 res.send('true')
     
-                
             })
 
         }
     })
 })
 
-// traxeRouter.get('/oke', (req, res)=>{
-//     res.render('oke.ejs')
-// })
 
 function makeRandom(length) {
     var result           = '';
@@ -63,7 +59,8 @@ function makeRandom(length) {
   charactersLength));
    }
    return result;
-  }
+}
+
 module.exports = traxeRouter;
 
 

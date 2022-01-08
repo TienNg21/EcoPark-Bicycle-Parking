@@ -1,13 +1,45 @@
 <html>
   <head>
+    <%- include('header') %>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        body {
+            background-color: #E5E5E5;
+        }
+        #qr-reader {
+            margin: 40px auto;
+            width: 75vw;
+        }
+
+        #qr-reader-results {
+            margin-top: 20px;
+        }
+
+        h2, h1 {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        button {
+            border-radius: 10px;
+        }
+    </style>
+
     <title>Html-Qrcode Demo</title>
-  <body>
-    <h2>Scan tra xe</h2>
-    <div id="qr-reader" style="width:500px"></div>
-    <div id="qr-reader-results"></div>
-    <div><a id="back" class="btn btn-primary" style="text-decoration: none" href="/rent">Back</a></div>
+
+  <body class="text-center">
+    <%- include('navbar', {page: "Scan QR Code"}) %>
+    <br>
+    <h2>Quét mã trả xe</h2>
+    <div id="qr-reader"></div>
+    <br>
+    <!-- <div id="qr-reader-results"></div> -->
+    <a href="https://ecopark-bicycle-parking.herokuapp.com/admin/qrpage" style="margin-bottom: 20px; display: block;" target="_blank">Xem bản đồ để lấy mã QR</a>
+    <a href="/rent" class="btn btn-secondary">Trở lại</a>
   </body>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -24,7 +56,7 @@
     } 
 
     docReady(function() {
-        var resultContainer = document.getElementById('qr-reader-results');
+        // var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
         
         var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -36,7 +68,7 @@
                 lastResult = decodedText;
                 console.log(`Scan result = ${decodedText}`, decodedResult);
     
-                resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+                // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
                 
                 // Optional: To close the QR code scannign after the result is found
                 // html5QrcodeScanner.clear();

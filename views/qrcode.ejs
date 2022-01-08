@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<%- include('header.ejs') %> 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +7,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-  <link rel="icon" href="img/logo.png">
+  
   <!-- Bootstrap core CSS -->
   <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
@@ -23,17 +21,21 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
   <style>
+    body {
+      background-color: white;
+      text-align: center;
+    }
     .row {
       height: 100%;
     }
     #qrthue,
     #qrtra {
-      padding: 5%;
       text-align: center;
+      margin-bottom: 20px;
     }
     h1 {
       padding-top: 20px;
-      margin: 0;
+      margin: 0 0 20px;
       text-align: center;
     }
   </style>
@@ -41,22 +43,25 @@
 <body>
   <h1>Mã QR <%= dataa.ten_bai %> </h1>
   <div class="row">
-    <div id='qrthue' class="col-6">
+    <div id='qrthue' class="col-lg-6 col-md-12">
+      <div id="noti_thue"></div>
       <canvas id="canvas_thue"></canvas>
       <!-- <div id="show_thue"></div> -->
-      <div id="noti_thue"></div>
     </div>
     
-    <div id="qrtra" class="col-6">
+    <div id="qrtra" class="col-lg-6 col-md-12">
+      <div id="noti_tra"></div>
       <canvas id="canvas_tra"></canvas>
       <!-- <div id="show_tra"></div> -->
-      <div id="noti_tra"></div>
     </div>
   </div>
   
   <script type='text/javascript' src="/javascripts/qrcode/build/qrcode.js"></script>
   <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
-  
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
   <script>
       
       var pusher = new Pusher('21a133a5939937831c0f', {
@@ -92,40 +97,70 @@
       else noti_tra.textContent = 'Quét để trả xe'
       // console.log('success!');
       })
-  
+      
+      let qrcontent_thue = firstQR_thue
+      let qrcontent_tra = firstQR_tra
       var channel = pusher.subscribe('watch_realtime_bai_xe');
       channel.bind('update-qr', function(data) {
-          // var show_thue = document.querySelector('#show_thue')
-          // show_thue.textContent = JSON.stringify(data['qr_thue_xe'])
-          // alert(JSON.stringify(data));
-          var canvas_thue = document.getElementById('canvas_thue');
-          var noti_thue = document.querySelector('#noti_thue')
-          var qrcontent_thue = data['qr_thue_xe']
-          console.log(qrcontent_thue)
-          
-          QRCode.toCanvas(canvas_thue, qrcontent_thue, {
-            width: 500,
-            height: 500
-          },  function (error) {
-          if (error) console.error(error)
-          else noti_thue.textContent = 'Quét để thuê xe'})
-          // console.log('success!');
-  
-          // var show_tra = document.querySelector('#show_tra')
-          // show_tra.textContent = JSON.stringify(data['qr_tra_xe'])
-          // alert(JSON.stringify(data));
-          var canvas_tra = document.getElementById('canvas_tra');
-          var noti_tra = document.querySelector('#noti_tra')
-          var qrcontent_tra = data['qr_tra_xe']
-          console.log(qrcontent_tra)
-          
-          QRCode.toCanvas(canvas_tra, qrcontent_tra,  {
-            width: 500,
-            height: 500
-          }, function (error) {
-          if (error) console.error(error)
-          else noti_tra.textContent = 'Quét để trả xe'
-          })
+
+        // console.log(data);
+        // console.log(data.qr_thue_xe);
+        if(data.qr_thue_xe !== undefined){
+          var str = window.location.href;
+          var n = str.lastIndexOf('/');
+          var result = str.substring(n + 1);
+          // console.log(result);
+          if(data.id_bai_xe == result){
+            // console.log('bat dau doi qr');
+            if(qrcontent_thue != data['qr_thue_xe']){
+              Toastify({
+                text: 'Thuê xe thành công!',
+                position: "center",
+                style: {
+                    background: "#198754"
+                },
+                duration: 5000
+              }).showToast();
+            }
+
+            if(qrcontent_tra != data['qr_tra_xe']){
+              Toastify({
+                text: 'Trả xe thành công!',
+                position: "center",
+                style: {
+                    background: "#198754"
+                },
+                duration: 5000
+              }).showToast();
+            }
+
+            var canvas_thue = document.getElementById('canvas_thue');
+            var noti_thue = document.querySelector('#noti_thue')
+            qrcontent_thue = data['qr_thue_xe']
+            // console.log(qrcontent_thue)
+            
+            QRCode.toCanvas(canvas_thue, qrcontent_thue, {
+              width: 500,
+              height: 500
+            },  function (error) {
+            if (error) console.error(error)
+            else noti_thue.textContent = 'Quét để thuê xe'})
+            
+            var canvas_tra = document.getElementById('canvas_tra');
+            var noti_tra = document.querySelector('#noti_tra')
+            qrcontent_tra = data['qr_tra_xe']
+            // console.log(qrcontent_tra)
+            
+            QRCode.toCanvas(canvas_tra, qrcontent_tra,  {
+              width: 500,
+              height: 500
+            }, function (error) {
+            if (error) console.error(error)
+            else noti_tra.textContent = 'Quét để trả xe'
+            })
+
+          }
+        }
         }
       )
   </script>
