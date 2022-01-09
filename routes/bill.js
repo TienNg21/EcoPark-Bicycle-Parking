@@ -54,7 +54,9 @@ billRouter.get('/', async (req, res)=>{
         thoigiandukien: time,
         batdau: batdau,
         ketthuc: ketthuc,   
-        muon: muon,     
+        muon: muon, 
+        tienphat: tienphat,
+        giamgia: giamgia,    
         tienPhaiTra: tien
     });}
 })

@@ -52,32 +52,32 @@
     
     <div class="bill">
       <div>Mã giao dịch: <span class="bill_info">#1123</span></div>
-      <div>Ngày: <span class="bill_info">01/01/2022</span></div>
-      <div>Tên khách hàng: <span class="bill_info">Vũ Quang Tùng</span></div>
-      <div>Thuê: <span class="bill_info">3 giờ</span></div>
-      <div>Thuê xe lúc: <span class="bill_info">09:00:00 am</span></div>
-      <div>Trả xe lúc: <span class="bill_info">12:25:00 pm</span></div>
-      <div>Trả xe muộn: <span class="bill_info">25 phút</span></div>
+      <div>Ngày: <span class="bill_info"></span><%= ngay %> </div>
+      <div>Tên khách hàng: <span class="bill_info"><%= tenkh%></span></div>
+      <div>Thuê : <span class="bill_info"><%= thoigiandukien%> giờ</span></div>
+      <div>Thuê xe lúc: <span class="bill_info"><%= batdau%></span></div>
+      <div>Trả xe lúc: <span class="bill_info"><%= ketthuc%></span></div>
+      <div>Trả xe muộn: <span class="bill_info"><%= muon%> phút</span></div>
     </div>
 
     <div class="cal_price">
       <hr/>
       <div class="price_info">
         <p>Tạm tính</p>
-        <p>100.000đ</p>
+        <p><%= tienPhaiTra%></p>
       </div>
       <div class="price_info">
         <p>Giảm giá</p>
-        <p>-40.000đ</p>
+        <p><%= giamgia%></p>
       </div>
       <div class="price_info">
         <p>Phí trả xe trễ</p>
-        <p>30.000đ</p>
+        <p><%= tienphat%></p>
       </div>
       <hr/>
       <div class="price_info">
         <p>Tổng số tiền</p>
-        <p id="total">90.000đ</p>
+        <p id="total"><%= tienPhaiTra%></p>
       </div>
     </div>
 
