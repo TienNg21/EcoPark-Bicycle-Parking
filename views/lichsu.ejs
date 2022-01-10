@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Website Layout</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<%- include('header') %>
+
+<style>
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: #478640;
+  padding: 20px;
+  text-align: center;
+  color:#ffff;
+}
+
+.logo {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+ .header h1 {
+  font-size: 30px;
+}
+
+
+
+.column {
+  padding-top: 60px;
+  float: left;
+  width: 100%;
+  background-color: #f1f1f1;
+  padding-left: 30px;  
+}
+
+.card {
+  background-color: white;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+</style>
+
+
+</head>
+
+<%- include('navbar', {page: "Lịch sử thuê xe"}) %>
+<body>
+
+<div class="header">
+  <h1>Lịch sử thuê xe</h1>
+</div>
+
+<div class="logo">
+  <img src="https://muabanecopark.com/wp-content/uploads/2019/06/logo-icon-2019.png" width="60px" height="60px"  >
+</div>
+
+
+<div class="row">
+  <div class="column">
+  
+    <div class="card">
+        <h1 style="color:#478640">Ngày 20/10/2021</h1>
+        <p>Thời gian thuê: 15:30 - Thời gian trả: 17:20</p>
+        <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Đảo cọ 5</p>
+        <p>ID xe: 19 - Loại xe: Asama</p>
+        <h3>Tổng tiền: 70.000 VNĐ</h3>
+    </div>
+    <div class="card">
+      <h1 style="color:#478640">Ngày 19/10/2021</h1>
+        <p>Thời gian thuê: 16:30 - Thời gian trả: 17:25</p>
+        <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Rừng cọ</p>
+        <p>ID xe: 15 - Loại xe: Asama mini</p>
+        <h3>Tổng tiền: 50.000 VNĐ</h3>
+    </div>
+    <div class="card">
+      <h1 style="color:#478640">Ngày 18/10/2021</h1>
+        <p>Thời gian thuê: 15:00 - Thời gian trả: 17:40</p>
+        <p>Bãi thuê: Rừng cọ - Bãi trả: Đảo cọ 5</p>
+        <p>ID xe: 9 - Loại xe: Thống nhất MTB 20</p>
+        <h3>Tổng tiền: 100.000 VNĐ</h3>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+
