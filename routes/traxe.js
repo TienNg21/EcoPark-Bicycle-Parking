@@ -38,7 +38,7 @@ traxeRouter.post('/xacnhan', (req,res)=>{
             // tìm cuốc xe hiện tại để trả xe
             pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null order by id desc limit 1", [req.user.id_user], (err, results)=>{
                 // update bang lich su thue xe, tinh tien... 
-                pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh' where id = $1", [results.rows[0].id])
+                pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh', id_bai_xe_tra = $1 where id = $2", [result.rows[0].id_bai_xe, results.rows[0].id]);
     
                 // send text sang hàm onreadystatechange trong file scan_traxe.ejs 
                 res.send('true')

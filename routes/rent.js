@@ -51,7 +51,10 @@ rentRouter.post('/chonbai', (req, res)=>{
 
 rentRouter.post("/scan", async (req, res)=>{
     console.log(req.body);
+    console.log(req.user);
     // console.log(req.user);
+    //tao 1 lichsuthuexe moi
+    pool.query("insert into lich_su_thue_xe (id_user, id_xe, id_bai_xe_thue, gia_thue_du_kien) values ($1, $2, $3, $4)", [req.user.id_user, req.body.xe, req.body.bai, req.body.gio]);
     pool.query("select * from xe where id_user = $1 and (trang_thai = 'active' or trang_thai = 'pending')", [req.user.id_user], (err, result)=>{
         if(result.rows.length > 0){
             // user đã thuê xe hoặc đã chọn xe rồi nhưng chưa quét, không cho thuê nữa
@@ -190,10 +193,12 @@ rentRouter.post('/xacnhan', (req, res)=>{
                             pool.query("update bai_xe set qr_thue_xe = $1 where id_bai_xe = $2", [random, req.body.idbai]);
                             // console.log("set lai qr_thue thanh cong")
                             // cap nhat bang lichsuthuexe
-                            pool.query("insert into lich_su_thue_xe (ngay_thue, bat_dau, id_user, id_xe) values (current_date at time zone 'Asia/Ho_Chi_Minh', localtime at time zone 'Asia/Ho_Chi_Minh', $1, $2)", [req.user.id_user, id_xe]);
-                            // thong bao thue xe thanh cong
-                            // chuyen ve dashboard '/'
-                            res.send('thue_xe_thanh_cong');
+                            pool.query("select id from lich_su_thue_xe where id_user = $1 and bat_dau is null order by id desc limit 1", [req.user.id_user], (err1, result1)=>{
+                                pool.query("update lich_su_thue_xe set ngay_thue = current_date at time zone 'Asia/Ho_Chi_Minh', bat_dau = localtime at time zone 'Asia/Ho_Chi_Minh' where id = $1", [result1.rows[0].id]);
+                                // thong bao thue xe thanh cong
+                                // chuyen ve dashboard '/'
+                                res.send('thue_xe_thanh_cong');
+                            })
                         }
                     }
                 });
