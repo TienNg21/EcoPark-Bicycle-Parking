@@ -40,7 +40,6 @@ adminRouter.get('/', async (req,res) => {
         message = "";
         error = "";
     }
-    
 })
 
 adminRouter.post('/xe', async (req, res) => {

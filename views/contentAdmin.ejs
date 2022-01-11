@@ -46,7 +46,9 @@
     }
 
     #themxe input,
-    #price input {
+    #price input,
+    #date_begin,
+    #date_end {
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
         font-weight: 400;
@@ -175,10 +177,10 @@
 
                 <div class="card-body">
                     <label for="date_begin">Ngày bắt đầu</label>
-                        <input type="date" name="date_begin" id="date_begin">
+                        <input type="date" name="date_begin" class = "form-control mb-2" style = "width: auto; display: inline-block;" id="date_begin">
                     <label for="date_end">Ngày kết thúc</label>
-                        <input type="date" name="date_end" id="date_end">
-                    <button class="btn btn-primary" id = "loc"type="submit"> Lọc </button>
+                        <input type="date" name="date_end" class="form-control mb-2" style= "width: auto; display: inline-block;" id="date_end">
+                    <button class="btn btn-primary" id = "loc"type="submit" style="width: auto;"> Lọc </button>
                     <% if(lsu.length === 0) { %>
                         <p>Không có lịch sử thuê xe</p>
                     <% }else { %>
