@@ -22,8 +22,8 @@ adminRouter.get('/', async (req,res) => {
              return { 
                 ngay_thue: (JSON.stringify(dthu.ngay_thue)).substring(1,11),
                 doanh_thu: dthu.doanh_thu 
-            } 
-        }
+            }; 
+        };
         const doanhthu = dthutheongay.rows.map(dthuHandler); 
         console.log(doanhthu); 
         res.render('admintest.ejs', {
