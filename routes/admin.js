@@ -18,13 +18,20 @@ adminRouter.get('/', async (req,res) => {
         const price = await pool.query('SELECT * FROM gia_thue_xe');
         const souser = await pool.query('SELECT COUNT(id_user) as tong FROM khach_hang');
         const dthutheongay = await pool.query('select  lstx.ngay_thue, sum(lstx.thanh_tien) as doanh_thu from lich_su_thue_xe lstx group by lstx.ngay_thue order by lstx.ngay_thue asc');
-        console.log(dthutheongay.rows);
+        function dthuHandler(dthu, index) { 
+             return { 
+                ngay_thue: (JSON.stringify(dthu.ngay_thue)).substring(1,11),
+                doanh_thu: dthu.doanh_thu 
+            } 
+        }
+        const doanhthu = dthutheongay.rows.map(dthuHandler); 
+        console.log(doanhthu); 
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,
             khachhang: khachhang.rows,
             lsu: lsu.rows,
-            dthutheongay: dthutheongay.rows,
+            dthutheongay: doanhthu,
             price: price.rows[0],
             souser: souser.rows[0].tong,
             message: message,
