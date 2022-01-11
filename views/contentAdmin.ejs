@@ -158,14 +158,156 @@
                     Doanh số thuê xe
                 </div>
                 <div class="card-body">
-                    <em>Đang phát triển</em>
+                    <label for="begin-date">Ngày bắt đầu:</label>
+                    <input type="date" name="begin-date" id="begin-date">
+                    <label for="end-date">Ngày kết thúc:</label>
+                    <input type="date" name="end-date" id="end-date">
+                    <button class="btn" id="select-date">Chọn</button>
 
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <script>
 
+        <script type='text/javascript'>
+            const begin_date = document.querySelector("#begin-date");
+            const end_date = document.querySelector("#end-date");
+            const select_date = document.querySelector("#select-date");
+
+            //ngay ket thuc
+            const cur_date = new Date();
+            end_date.value = cur_date.getFullYear() + ((cur_date.getMonth() + 1 >= 10) ? '-' : '-0') + (cur_date.getMonth() +1) + ((cur_date.getDate() >= 10) ? '-' : '-0') + cur_date.getDate();
+
+            //ngay bat dau
+            const prev_date = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+            begin_date.value = prev_date.getFullYear() + ((prev_date.getMonth() + 1 >= 10) ? '-' : '-0') + (prev_date.getMonth() +1) + ((prev_date.getDate() >= 10) ? '-' : '-0') + prev_date.getDate();
+
+            var doanhthu =<%-JSON.stringify(dthutheongay)%>;
+
+            
+            // console.log(doanhthu);
+            let dayArray = [];
+            let index = [];
+            
+            const runWhenSelectDate = function() {
+                let tempBegin = new Date(begin_date.value);
+                let tempEnd = new Date(end_date.value);
+
+                dayArray = []; 
+                index = [];
+                
+                if(tempBegin > tempEnd) {
+                    Toastify({
+                        text: "Ngày bắt đầu phải trước ngày kết thúc",
+                        position: "center",
+                        style: {
+                            background: "#198754"
+                        },
+                        duration: 5000,
+                        close: true
+                    }).showToast();
+                    return;
+                }
+                let temp = [];
+                for(let i = 0; i < doanhthu.length; i++) {
+                    temp.push(doanhthu[i].ngay_thue);
+                }
+                // console.log(temp);
+                for(let d = tempBegin; d <= tempEnd; d.setDate(d.getDate() + 1)) {
+                    
+                    let d_string = d.getFullYear() + ((d.getMonth() + 1 >= 10) ? '-' : '-0') + (d.getMonth() +1) + ((d.getDate() >= 10) ? '-' : '-0') + d.getDate();
+                    index.push(Number(d.getDate()));
+                    
+                    if(temp.includes(d_string)) {
+                        dayArray.push(Number(doanhthu[temp.indexOf(d_string)].doanh_thu));
+                    } else {
+                        dayArray.push(0);
+                    }
+                }
+                console.log("Mảng lưu doanh số",dayArray);
+                console.log("Mảng lưu ngày", index);
+
+                myChart = new Chart("myChart", {
+                type: 'bar',
+                data: {
+                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: index,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: dayArray,
+                        // backgroundColor: [
+                        //     'rgba(255, 99, 132, 0.2)',
+                        //     'rgba(54, 162, 235, 0.2)',
+                        //     'rgba(255, 206, 86, 0.2)',
+                        //     'rgba(75, 192, 192, 0.2)',
+                        //     'rgba(153, 102, 255, 0.2)',
+                        //     'rgba(255, 159, 64, 0.2)'
+                        // ],
+                        backgroundColor: 'rgb(25, 111, 61, 0.2)',
+                        // borderColor: [
+                        //     'rgba(255, 99, 132, 1)',
+                        //     'rgba(54, 162, 235, 1)',
+                        //     'rgba(255, 206, 86, 1)',
+                        //     'rgba(75, 192, 192, 1)',
+                        //     'rgba(153, 102, 255, 1)',
+                        //     'rgba(255, 159, 64, 1)'
+                        // ],
+                        borderColor: 'rgb(25, 111, 61, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            }
+            
+            //Gọi 1 lần khi load trang
+            runWhenSelectDate();
+            
+            var myChart = new Chart("myChart", {
+                type: 'bar',
+                data: {
+                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: index,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: dayArray,
+                        // backgroundColor: [
+                        //     'rgba(255, 99, 132, 0.2)',
+                        //     'rgba(54, 162, 235, 0.2)',
+                        //     'rgba(255, 206, 86, 0.2)',
+                        //     'rgba(75, 192, 192, 0.2)',
+                        //     'rgba(153, 102, 255, 0.2)',
+                        //     'rgba(255, 159, 64, 0.2)'
+                        // ],
+                        backgroundColor: 'rgba(25, 111, 61 , 0.2)',
+                        // borderColor: [
+                        //     'rgba(255, 99, 132, 1)',
+                        //     'rgba(54, 162, 235, 1)',
+                        //     'rgba(255, 206, 86, 1)',
+                        //     'rgba(75, 192, 192, 1)',
+                        //     'rgba(153, 102, 255, 1)',
+                        //     'rgba(255, 159, 64, 1)'
+                        // ],
+                        borderColor: 'rgba(25, 111, 61, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            select_date.addEventListener('click', runWhenSelectDate);
         </script>
 
         <!-- Lịch sử thuê xe  -->

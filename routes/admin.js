@@ -25,7 +25,7 @@ adminRouter.get('/', async (req,res) => {
             }; 
         };
         const doanhthu = dthutheongay.rows.map(dthuHandler); 
-        console.log(doanhthu); 
+        // console.log(doanhthu); 
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,
