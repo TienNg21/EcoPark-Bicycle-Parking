@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>CSS Website Layout</title>
+<title>Lịch sử thuê xe</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -89,6 +89,22 @@ body {
         <p>ID xe: 9 - Loại xe: Thống nhất MTB 20</p>
         <h3>Tổng tiền: 100.000 VNĐ</h3>
     </div>
+
+    <% if (!lsu) { %>
+      <div class="card">
+        <h1 style="color:#478640">Không có lịch sử thuê xe</h1>
+      </div>
+    <% } else { %>
+      <% for( let index = 0; index < lsu.length; index++ ) { %>
+        <div class="card">
+          <h1 style="color:#478640">Ngày <%= lsu[index].ngay %>/<%= lsu[index].thang %>/<%= lsu[index].nam %>   </h1>
+            <p>Thời gian thuê: <%= lsu[index].gio_bat_dau %>:<%= lsu[index].phut_bat_dau %>  - Thời gian trả: <%= lsu[index].gio_ket_thuc %>:<%= lsu[index].phut_ket_thuc %> </p>
+            <p>Bãi thuê: <%= lsu[index].baithue %>  - Bãi trả: <%= lsu[index].baitra %> </p>
+            <p>ID xe: <%= lsu[index].id_xe %>  - Loại xe: <%= lsu[index].loai_xe %> </p>
+            <h3>Tổng tiền: <%= lsu[index].thanh_tien %>  VNĐ</h3>
+        </div>
+      <% } %>
+    <% } %>
   </div>
 </div>
 
