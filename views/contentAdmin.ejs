@@ -207,7 +207,24 @@
                                                     <td><input type="text" id="id_user" value="<%= xe[index].id_user %>" readonly></td>
                                                     <td><input type="text" id="id_xe" name="id_xe" value="<%= xe[index].id_xe %>" readonly></td>
                                                     <td><input type="text" id="loai_xe" style="width:max-content" name="loai_xe" class="form-control" value="<%= xe[index].loai_xe %>"></td>
-                                                    <td><input type="text" id="trang_thai" name="trang_thai" class="form-control" value="<%= xe[index].trang_thai %>"></td>
+                                                    <!-- <td><input type="text" id="trang_thai" name="trang_thai" class="form-control" value="<%= xe[index].trang_thai %>"></td> -->
+                                                    <td>
+                                                        <select name="trang_thai" style="background-color: transparent; border: none; padding: 8px 0px;" id="trang_thai">
+                                                            <% if (xe[index].trang_thai === "available") { %>
+                                                                <option value="available" selected>available</option>
+                                                                <option value="pending">pending</option>
+                                                                <option value="active">active</option>
+                                                            <% } else if (xe[index].trang_thai === "pending") {%>
+                                                                <option value="available">available</option>
+                                                                <option value="pending" selected>pending</option>
+                                                                <option value="active">active</option>
+                                                            <% } else if (xe[index].trang_thai === "active") { %>
+                                                                <option value="available">available</option>
+                                                                <option value="pending">pending</option>
+                                                                <option value="active" selected>active</option>
+                                                            <% } %>
+                                                        </select>
+                                                    </td>
                                                     <td><button type="submit" name="action" class="btn btn-primary" class="form-control" value="update"><span class="text-gradient"><i class="fas fa-pencil-alt"></i></span></button></td>
                                                     <td><button type="submit" name="action" class="btn btn-danger" class="form-control" value="delete"><span class="text-gradient"><i class="fas fa-times"></i></span></button></td>
                                                 </form>
