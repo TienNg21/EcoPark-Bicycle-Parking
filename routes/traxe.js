@@ -36,7 +36,7 @@ traxeRouter.post('/xacnhan', (req,res)=>{
             await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [qr_code, result.rows[0].id_bai_xe]);
             console.log('update bai xe xong');
             // tìm cuốc xe hiện tại để trả xe
-            pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null order by id desc limit 1", [req.user.id_user], (err, results)=>{
+            pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null and bat_dau is not null order by id desc limit 1", [req.user.id_user], (err, results)=>{
                 // update bang lich su thue xe, tinh tien... 
                 pool.query("update lich_su_thue_xe set ket_thuc = localtime at time zone 'Asia/Ho_Chi_Minh', id_bai_xe_tra = $1 where id = $2", [result.rows[0].id_bai_xe, results.rows[0].id]);
     
