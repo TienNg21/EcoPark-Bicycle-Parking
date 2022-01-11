@@ -4,7 +4,8 @@
         height: 1.1cm;
     }
     #xe input,
-    #baixe input {
+    #baixe input,
+    #lsu input{
         text-align: center;
         border-color: transparent;
         background-color: transparent !important;
@@ -156,9 +157,15 @@
                 </div>
                 <div class="card-body">
                     <em>Đang phát triển</em>
+                    <% const doanhthutheongay = JSON.stringify(dthutheongay)%>
+
                 </div>
             </div>
         </div>
+
+        <script>
+
+        </script>
 
         <!-- Lịch sử thuê xe  -->
         <div class="col-12 mb-4" id="lsu">
@@ -166,12 +173,91 @@
                 <div class="card-header">
                     Lịch sử thuê xe
                 </div>
+
                 <div class="card-body">
-                    <div id="xethue" style="display: inline;"></div>
-                    <em>Đang phát triển</em>
-                </div>
+                    <label for="date_begin">Ngày bắt đầu</label>
+                        <input type="date" name="date_begin" id="date_begin">
+                    <label for="date_end">Ngày kết thúc</label>
+                        <input type="date" name="date_end" id="date_end">
+                    <button class="btn btn-primary" id = "loc"type="submit"> Lọc </button>
+                    <% if(lsu.length === 0) { %>
+                        <p>Không có lịch sử thuê xe</p>
+                    <% }else { %>
+                        <div class = "admin-subcontent table-responsive">
+                            <table class = "table table-striped table-sm" id="table-lsu">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID người thuê</th>
+                                        <th scope="col">ID xe</th>
+                                        <th scope="col">ID bãi xe thuê</th>
+                                        <th scope="col">ID bãi xe trả</th>
+                                        <th scope="col">Giá thuê dự kiến</th>
+                                        <th scope="col">Giờ thuê dự kiến</th>
+                                        <th scope="col">Ngày thuê</th>
+                                        <th scope="col">Thời gian bắt đầu</th>
+                                        <th scope="col">Thời gian kết thúc</th>
+                                        <th scope="col">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% var doanhso = 0 %>
+                                    <% for(let index = 0; index<lsu.length; index++) { %>
+                                        <% let ngay_thue = (JSON.stringify(lsu[index].ngay_thue)).substring(1,11) %>
+                                        <% let bat_dau = (JSON.stringify(lsu[index].bat_dau)).substring(1,9) %>
+                                        <% let ket_thuc = (JSON.stringify(lsu[index].ket_thuc)).substring(1,9) %>
+                                        <% let tmp = JSON.stringify(lsu[index].thanh_tien)%>
+                                        <% if(tmp!='null') tmp = tmp.substring(1,tmp.length-1)%>
+                                        <% if(tmp!=='null') doanhso += Number.parseInt(tmp) %>
+                                        <tr>
+                                                <td><input type="text" id="id_user" name="id_user" style ="width:150px"value="<%= lsu[index].id_user %>" readonly></td>
+                                                <td><input type="text" id="id_xe" name="id_xe" style="width: 50px;"value="<%= lsu[index].id_xe %>" readonly></td>
+                                                <td><input type="text" id="id_bai_xe_thue" name="id_bai_xe_thue" style ="width:130px"value="<%= lsu[index].id_bai_xe_thue %>" readonly></td>
+                                                <td><input type="text" id="id_bai_xe_tra" name="id_bai_xe_tra" style ="width:130px"value="<%= lsu[index].id_bai_xe_tra %>" readonly></td>
+                                                <td><input type="text" id="gia_thue_du_kien" name="gia_thue_du_kien" style ="width:130px" value="<%= lsu[index].gia_thue_du_kien %>" readonly></td>
+                                                <td><input type="text" id="gio_thue_du_kien" name="gio_thue_du_kien" style ="width:130px" value="<%= lsu[index].gio_thue_du_kien %>" readonly></td>
+                                                <td><input type="text" id="ngay_thue" name="ngay_thue" style ="width:150px" value="<%= ngay_thue %>" readonly></td>
+                                                <td><input type="text" id="bat_dau" name="bat_dau" style ="width:150px"value="<%= bat_dau %>" readonly></td>
+                                                <td><input type="text" id="ket_thuc" name="ket_thuc"style ="width:150px" value="<%= ket_thuc %>" readonly></td>
+                                                <td><input type="text" id="thanh_tien" name="thanh_tien"style ="width:150px" value="<%= lsu[index].thanh_tien %>" readonly></td>
+                                        </tr>
+                                    <% } %>
+                                    <% console.log(doanhso) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                </div> 
             </div>
         </div>
+
+        <script>
+            const date_begin = document.querySelector("#date_begin");
+            const date_end = document.querySelector("#date_end");
+            const btn_loc = document.querySelector("#loc");
+
+            const table_lsu = document.querySelector("#table-lsu");
+            const tr_lsu = document.querySelectorAll("#table-lsu tbody tr");
+
+            btn_loc.addEventListener('click', function() {
+                if (!date_begin.value || !date_end.value) {
+                    return;
+                }
+                const begin = new Date(date_begin.value);
+                const end = new Date(date_end.value);
+                if(begin>end) return;
+                console.log(begin, end);
+                for (let i = 0; i< tr_lsu.length; i++) {
+                    let td = new Date(tr_lsu[i].querySelector("#ngay_thue").value);
+                    console.log(td);
+                    if(td>= begin && td<= end) {
+                        table_lsu.style.display = "table";
+                        tr_lsu[i].style.display = "";
+                    } else {
+                        tr_lsu[i].style.display = "none";
+                    }
+                }
+            })
+        </script>
 
         <!-- Danh sách các xe  -->
         <div class="col-12 mb-4" id="xe">
