@@ -14,14 +14,24 @@ adminRouter.get('/', async (req,res) => {
         const xe = await pool.query('SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe ORDER BY bai_xe.ten_bai ASC');
         const baixe = await pool.query('SELECT bx.id_bai_xe , bx.ten_bai , bx.pos_x, bx.pos_y , (SELECT COUNT(*) FROM xe WHERE xe.id_bai_xe = bx.id_bai_xe) AS so_luong_xe FROM bai_xe bx ORDER BY bx.ten_bai ASC;');
         const khachhang = await pool.query('SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN]);
-        const lsu = await pool.query('SELECT * FROM lich_su_thue_xe');
+        const lsu = await pool.query('select *from lich_su_thue_xe lstx order by lstx.ngay_thue asc ');
         const price = await pool.query('SELECT * FROM gia_thue_xe');
         const souser = await pool.query('SELECT COUNT(id_user) as tong FROM khach_hang');
+        const dthutheongay = await pool.query('select  lstx.ngay_thue, sum(lstx.thanh_tien) as doanh_thu from lich_su_thue_xe lstx group by lstx.ngay_thue order by lstx.ngay_thue asc');
+        function dthuHandler(dthu, index) { 
+             return { 
+                ngay_thue: (JSON.stringify(dthu.ngay_thue)).substring(1,11),
+                doanh_thu: dthu.doanh_thu 
+            }; 
+        };
+        const doanhthu = dthutheongay.rows.map(dthuHandler); 
+        console.log(doanhthu); 
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,
             khachhang: khachhang.rows,
             lsu: lsu.rows,
+            dthutheongay: doanhthu,
             price: price.rows[0],
             souser: souser.rows[0].tong,
             message: message,
@@ -30,7 +40,6 @@ adminRouter.get('/', async (req,res) => {
         message = "";
         error = "";
     }
-    
 })
 
 adminRouter.post('/xe', async (req, res) => {
@@ -257,7 +266,9 @@ adminRouter.get('/qrpage', async (req, res) => {
         }
     )
 })
-
+adminRouter.post('/lsu', async(req, res) => {
+    
+})
 adminRouter.get('/qrpage/:id', async (req, res)=>{
     // if (req.user == null || req.user.email !== process.env.EMAIL_ADMIN){
     //     res.redirect('/login');
