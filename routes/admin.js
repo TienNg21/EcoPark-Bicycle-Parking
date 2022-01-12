@@ -19,13 +19,15 @@ adminRouter.get('/', async (req,res) => {
         const souser = await pool.query('SELECT COUNT(id_user) as tong FROM khach_hang');
         const dthutheongay = await pool.query('select  lstx.ngay_thue as ngay_thue, sum(lstx.thanh_tien) as doanh_thu from lich_su_thue_xe lstx group by lstx.ngay_thue order by lstx.ngay_thue asc');
         function dthuHandler(dthu, index) { 
-             return { 
-                ngay_thue: (JSON.stringify(dthu.ngay_thue)).substring(1,11),
+            let d = new Date(dthu.ngay_thue);
+            return { 
+                
+                ngay_thue: d.getFullYear() + ((d.getMonth() + 1 >= 10) ? ('-' + (d.getMonth() + 1)) : ('-0' + (d.getMonth() + 1))) + ((d.getDate() >= 10) ? ('-' + d.getDate()) : ('-0' + d.getDate())) ,
                 doanh_thu: dthu.doanh_thu 
             }; 
         };
         const doanhthu = dthutheongay.rows.map(dthuHandler); 
-        // console.log(dthutheongay); 
+        console.log(doanhthu); 
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,

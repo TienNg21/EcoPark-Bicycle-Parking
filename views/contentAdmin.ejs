@@ -366,10 +366,11 @@
                     return date1+'-'+month+'-'+year;
                 }
                 for(let i = 0; i < lichsu.length; i++) {
-                    let tempDate = new Date(lichsu[i].ngay_thue.substring(0, 10));
+                    let d = new Date(lichsu[i].ngay_thue);
+
+                    let tempDate = new Date(d.getFullYear() + ((d.getMonth() + 1 >= 10) ? ('-' + (d.getMonth() + 1)) : ('-0' + (d.getMonth() + 1))) + ((d.getDate() >= 10) ? ('-' + d.getDate()) : ('-0' + d.getDate())));
                     let tmp = convertDate(tempDate);
                     if(tempDate >= tempBegin && tempDate <= tempEnd) {
-                        console.log(lichsu[i].ngay_thue.substring(0, 10));
                         contentHistory += `<tr>
                                             <td><input type="text" id="id_user" name="id_user" style ="width:150px"value="${lichsu[i].id_user}" readonly></td>
                                             <td><input type="text" id="id_xe" name="id_xe" style="width: 50px;"value="${lichsu[i].id_xe}" readonly></td>
@@ -385,7 +386,7 @@
                 }
 
                 body_lsu.innerHTML = contentHistory;
-                console.log(contentHistory);
+                // console.log(contentHistory);
 
             }
             selectDateHistory();
