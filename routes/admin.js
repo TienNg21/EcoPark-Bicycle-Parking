@@ -14,18 +14,20 @@ adminRouter.get('/', async (req,res) => {
         const xe = await pool.query('SELECT xe.id_xe, xe.id_user, bai_xe.ten_bai, bai_xe.id_bai_xe, xe.loai_xe, xe.trang_thai FROM xe, bai_xe WHERE xe.id_bai_xe = bai_xe.id_bai_xe ORDER BY bai_xe.ten_bai ASC');
         const baixe = await pool.query('SELECT bx.id_bai_xe , bx.ten_bai , bx.pos_x, bx.pos_y , (SELECT COUNT(*) FROM xe WHERE xe.id_bai_xe = bx.id_bai_xe) AS so_luong_xe FROM bai_xe bx ORDER BY bx.ten_bai ASC;');
         const khachhang = await pool.query('SELECT * FROM khach_hang WHERE email != $1 ORDER BY khach_hang.ten ASC', [process.env.EMAIL_ADMIN]);
-        const lsu = await pool.query('select id, ngay_thue + 1 as ngay_thue, bat_dau, ket_thuc, id_user, id_xe, id_bai_xe_thue, id_bai_xe_tra, thanh_tien from lich_su_thue_xe lstx order by lstx.ngay_thue asc ');
+        const lsu = await pool.query('select id, ngay_thue as ngay_thue, bat_dau, ket_thuc, id_user, id_xe, id_bai_xe_thue, id_bai_xe_tra, thanh_tien from lich_su_thue_xe lstx where ket_thuc is not null order by lstx.ngay_thue asc ');
         const price = await pool.query('SELECT * FROM gia_thue_xe');
         const souser = await pool.query('SELECT COUNT(id_user) as tong FROM khach_hang');
-        const dthutheongay = await pool.query('select  lstx.ngay_thue + 1 as ngay_thue, sum(lstx.thanh_tien) as doanh_thu from lich_su_thue_xe lstx group by lstx.ngay_thue order by lstx.ngay_thue asc');
+        const dthutheongay = await pool.query('select lstx.ngay_thue as ngay_thue, sum(lstx.thanh_tien) as doanh_thu from lich_su_thue_xe lstx where ket_thuc is not null group by lstx.ngay_thue order by lstx.ngay_thue asc');
         function dthuHandler(dthu, index) { 
-             return { 
-                ngay_thue: (JSON.stringify(dthu.ngay_thue)).substring(1,11),
+            let d = new Date(dthu.ngay_thue);
+            return { 
+                
+                ngay_thue: d.getFullYear() + ((d.getMonth() + 1 >= 10) ? ('-' + (d.getMonth() + 1)) : ('-0' + (d.getMonth() + 1))) + ((d.getDate() >= 10) ? ('-' + d.getDate()) : ('-0' + d.getDate())) ,
                 doanh_thu: dthu.doanh_thu 
             }; 
         };
         const doanhthu = dthutheongay.rows.map(dthuHandler); 
-        // console.log(dthutheongay); 
+        console.log(doanhthu); 
         res.render('admintest.ejs', {
             xe: xe.rows,
             baixe: baixe.rows,
