@@ -1,86 +1,109 @@
 <%- include('header') %>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
 <style>
-  body {
-      /* padding-top: 0; */
-      padding-bottom: 0;
-  }
+body {
+  display: block;
+}
+.container {
+    margin-top: 40px;
+}
+.body {
+    display: block;
+}
+.logo {
+    max-width: 200px;
+}
+.brand-name {
+    margin: 5%;
+    max-width: 200px;
+}
 
-  .logo {
-    padding: 20px;
-    text-align: center;
-  }
-
-  .column {
-    padding: 30px;
-    float: left;
-    width: 100%;
-    background-color: #E5E5E5;
-  }
-
-  .card {
-    background-color: white;
-    padding: 30px;
-    margin-top: 30px;
-  }
+.card {
+  background-color: white;
+  padding: 30px;
+  margin-top: 30px;
+}
 
 </style>
+
+</head>
 <body>
   <%- include('navbar', {page: "Lịch sử thuê xe"}) %>
-  
-  <main>
-    <div class="logo">
-      <img src="img/logo.png" width="60px" height="60px"  >
-    </div>
-    <div class="row">
-      <div class="column">
-      
-        <!-- <div class="card">
-            <h1 style="color:#478640">Ngày 20/10/2021</h1>
-            <p>Thời gian thuê: 15:30 - Thời gian trả: 17:20</p>
-            <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Đảo cọ 5</p>
-            <p>ID xe: 19 - Loại xe: Asama</p>
-            <h3>Tổng tiền: 70.000 VNĐ</h3>
-        </div>
-        <div class="card">
-          <h1 style="color:#478640">Ngày 19/10/2021</h1>
-            <p>Thời gian thuê: 16:30 - Thời gian trả: 17:25</p>
-            <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Rừng cọ</p>
-            <p>ID xe: 15 - Loại xe: Asama mini</p>
-            <h3>Tổng tiền: 50.000 VNĐ</h3>
-        </div>
-        <div class="card">
-          <h1 style="color:#478640">Ngày 18/10/2021</h1>
-            <p>Thời gian thuê: 15:00 - Thời gian trả: 17:40</p>
-            <p>Bãi thuê: Rừng cọ - Bãi trả: Đảo cọ 5</p>
-            <p>ID xe: 9 - Loại xe: Thống nhất MTB 20</p>
-            <h3>Tổng tiền: 100.000 VNĐ</h3>
-        </div> -->
-    
-        <% if (lsu.length === 0) { %>
-          <div class="card">
-            <h1 style="color:#478640">Không có lịch sử thuê xe</h1>
+  <div class="container text-center">
+      <div class="row">
+          <div class="col col-12">
+              <img class="mb-4 logo" src="/img/logo.png" alt="logo" width="30%">
           </div>
-        <% } else { %>
-          <% for( let index = lsu.length - 1; index >= 0; index--) { %>
-            <div class="card">
-              <% let phutbd = (lsu[index].phut_bat_dau < 10) ? ('0' + lsu[index].phut_bat_dau) : lsu[index].phut_bat_dau %> 
-              <% let giobd = (lsu[index].gio_bat_dau < 10) ? ('0' + lsu[index].gio_bat_dau) : lsu[index].gio_bat_dau %> 
-              <% let phutkt = (lsu[index].phut_ket_thuc < 10) ? ('0' + lsu[index].phut_ket_thuc) : lsu[index].phut_ket_thuc %> 
-              <% let giokt = (lsu[index].gio_ket_thuc < 10) ? ('0' + lsu[index].gio_ket_thuc) : lsu[index].gio_ket_thuc %> 
-    
-              <h1 style="color:#478640">Ngày <%= lsu[index].ngay %>/<%= lsu[index].thang %>/<%= lsu[index].nam %>   </h1>
-                <p>Thời gian thuê: <%= giobd %>:<%= phutbd %><br>Thời gian trả: <%= giokt %>:<%= phutkt %> </p>
-                <p>Bãi thuê: <%= lsu[index].baithue %><br>Bãi trả: <%= lsu[index].baitra %> </p>
-                <p>ID xe: <%= lsu[index].id_xe %><br>Loại xe: <%= lsu[index].loai_xe %> </p>
-                <h3>Tổng tiền: <%= lsu[index].thanh_tien %>  VNĐ</h3>
-            </div>
-          <% } %>
-        <% } %>
+          
+          <div class="col col-12">
+              <img class="brand-name" src="/img/ecopark.png" width="80%" alt="logo">
+              
+          </div>
       </div>
-    </div>
-  </main>
-
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col col-12">
+          <!--
+                        <div class="card">
+                <div class="card-body">
+                  <h1 style="color:#478640">Ngày 20/10/2021</h1>
+                  <p>Thời gian thuê: 15:30 - Thời gian trả: 17:20</p>
+                  <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Đảo cọ 5</p>
+                  <p>ID xe: 19 - Loại xe: Asama</p>
+                  <h3>Tổng tiền: 70.000 VNĐ</h3>
+                </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h1 style="color:#478640">Ngày 20/10/2021</h1>
+                <p>Thời gian thuê: 15:30 - Thời gian trả: 17:20</p>
+                <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Đảo cọ 5</p>
+                <p>ID xe: 19 - Loại xe: Asama</p>
+                <h3>Tổng tiền: 70.000 VNĐ</h3>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h1 style="color:#478640">Ngày 20/10/2021</h1>
+                <p>Thời gian thuê: 15:30 - Thời gian trả: 17:20</p>
+                <p>Bãi thuê: Đảo cọ 2 - Bãi trả: Đảo cọ 5</p>
+                <p>ID xe: 19 - Loại xe: Asama</p>
+                <h3>Tổng tiền: 70.000 VNĐ</h3>
+              </div>
+            </div>
+          -->
+            <% if (lsu.length === 0) { %>
+              <div class="card">
+                <div class="card-body">
+                  <h1 style="color:#478640">Không có lịch sử thuê xe</h1>
+                </div>
+              </div>
+            <% } else { %>
+              <% for( let index = lsu.length - 1; index >= 0; index--) { %>
+                <div class="card">
+                  <div class="card-body">
+                    <% let phutbd = (lsu[index].phut_bat_dau < 10) ? ('0' + lsu[index].phut_bat_dau) : lsu[index].phut_bat_dau %> 
+                    <% let giobd = (lsu[index].gio_bat_dau < 10) ? ('0' + lsu[index].gio_bat_dau) : lsu[index].gio_bat_dau %> 
+                    <% let phutkt = (lsu[index].phut_ket_thuc < 10) ? ('0' + lsu[index].phut_ket_thuc) : lsu[index].phut_ket_thuc %> 
+                    <% let giokt = (lsu[index].gio_ket_thuc < 10) ? ('0' + lsu[index].gio_ket_thuc) : lsu[index].gio_ket_thuc %> 
+          
+                    <h1 style="color:#478640">Ngày <%= lsu[index].ngay %>/<%= lsu[index].thang %>/<%= lsu[index].nam %>   </h1>
+                      <p>Thời gian thuê: <%= giobd %>:<%= phutbd %><br>Thời gian trả: <%= giokt %>:<%= phutkt %> </p>
+                      <p>Bãi thuê: <%= lsu[index].baithue %><br>Bãi trả: <%= lsu[index].baitra %> </p>
+                      <p>ID xe: <%= lsu[index].id_xe %><br>Loại xe: <%= lsu[index].loai_xe %> </p>
+                      <h3>Tổng tiền: <%= lsu[index].thanh_tien %>  VNĐ</h3>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+</div>
 </body>
-</html>
+<%- include('footer') %>
 
 
