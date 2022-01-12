@@ -19,7 +19,7 @@ historyRouter.get('/', async (req, res) => {
             AND xe.id_xe = ls.id_xe`,
             (err, result) => {
                 // const ls = result;
-                console.log(result.rows);
+                // console.log(result.rows);
                 res.render('lichsu.ejs', {
                     lsu: result.rows
                 });
