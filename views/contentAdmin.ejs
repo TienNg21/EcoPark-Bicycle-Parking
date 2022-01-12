@@ -158,13 +158,13 @@
                     Doanh số thuê xe
                 </div>
                 <div class="card-body">
-                    <label for="begin-date">Ngày bắt đầu:</label>
-                    <input type="date" name="begin-date" id="begin-date">
-                    <label for="end-date">Ngày kết thúc:</label>
-                    <input type="date" name="end-date" id="end-date">
-                    <button class="btn" id="select-date">Chọn</button>
+                    <label for="begin-date" style="margin-left: 2rem;">Từ ngày:</label>
+                    <input type="date" name="begin-date" id="begin-date" onchange="runWhenSelectDate()">
+                    <label for="end-date" style="margin-left: 10rem;">Đến ngày:</label>
+                    <input type="date" name="end-date" id="end-date" onchange="runWhenSelectDate()">
+                    <!-- <button class="btn btn-success" id="select-date" style="margin-left: 8rem">Chọn</button> -->
 
-                    <canvas id="myChart"></canvas>
+                    <canvas id="myChart" style="padding: 2rem 0;"></canvas>
                 </div>
             </div>
         </div>
@@ -173,7 +173,7 @@
         <script type='text/javascript'>
             const begin_date = document.querySelector("#begin-date");
             const end_date = document.querySelector("#end-date");
-            const select_date = document.querySelector("#select-date");
+            // const select_date = document.querySelector("#select-date");
 
             //ngay ket thuc
             const cur_date = new Date();
@@ -190,6 +190,50 @@
             let dayArray = [];
             let index = [];
             
+            let myChart = new Chart("myChart", {
+                type: 'bar',
+                data: {
+                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: index,
+                    datasets: [{
+                        label: 'Doanh số thuê xe',
+                        data: dayArray,
+                        // backgroundColor: [
+                        //     'rgba(255, 99, 132, 0.2)',
+                        //     'rgba(54, 162, 235, 0.2)',
+                        //     'rgba(255, 206, 86, 0.2)',
+                        //     'rgba(75, 192, 192, 0.2)',
+                        //     'rgba(153, 102, 255, 0.2)',
+                        //     'rgba(255, 159, 64, 0.2)'
+                        // ],
+                        backgroundColor: 'rgba(25, 111, 61 , 0.5)',
+                        // borderColor: [
+                        //     'rgba(255, 99, 132, 1)',
+                        //     'rgba(54, 162, 235, 1)',
+                        //     'rgba(255, 206, 86, 1)',
+                        //     'rgba(75, 192, 192, 1)',
+                        //     'rgba(153, 102, 255, 1)',
+                        //     'rgba(255, 159, 64, 1)'
+                        // ],
+                        borderColor: 'rgba(25, 111, 61, 0.5)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'VNĐ'
+                            },
+                            beginAtZero: true
+                        }]
+                    }
+                    
+                }
+            });
+
             const runWhenSelectDate = function() {
                 let tempBegin = new Date(begin_date.value);
                 let tempEnd = new Date(end_date.value);
@@ -217,7 +261,7 @@
                 for(let d = tempBegin; d <= tempEnd; d.setDate(d.getDate() + 1)) {
                     
                     let d_string = d.getFullYear() + ((d.getMonth() + 1 >= 10) ? '-' : '-0') + (d.getMonth() +1) + ((d.getDate() >= 10) ? '-' : '-0') + d.getDate();
-                    index.push(Number(d.getDate()));
+                    index.push(((d.getDate() >= 10) ? '' : '0') + d.getDate() + ((d.getMonth() + 1 >= 10) ? '-' : '-0') + (d.getMonth() +1) + '-' + d.getFullYear());
                     
                     if(temp.includes(d_string)) {
                         dayArray.push(Number(doanhthu[temp.indexOf(d_string)].doanh_thu));
@@ -228,86 +272,18 @@
                 console.log("Mảng lưu doanh số",dayArray);
                 console.log("Mảng lưu ngày", index);
 
-                myChart = new Chart("myChart", {
-                type: 'bar',
-                data: {
-                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    labels: index,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: dayArray,
-                        // backgroundColor: [
-                        //     'rgba(255, 99, 132, 0.2)',
-                        //     'rgba(54, 162, 235, 0.2)',
-                        //     'rgba(255, 206, 86, 0.2)',
-                        //     'rgba(75, 192, 192, 0.2)',
-                        //     'rgba(153, 102, 255, 0.2)',
-                        //     'rgba(255, 159, 64, 0.2)'
-                        // ],
-                        backgroundColor: 'rgb(25, 111, 61, 0.2)',
-                        // borderColor: [
-                        //     'rgba(255, 99, 132, 1)',
-                        //     'rgba(54, 162, 235, 1)',
-                        //     'rgba(255, 206, 86, 1)',
-                        //     'rgba(75, 192, 192, 1)',
-                        //     'rgba(153, 102, 255, 1)',
-                        //     'rgba(255, 159, 64, 1)'
-                        // ],
-                        borderColor: 'rgb(25, 111, 61, 0.2)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+                myChart.data.labels = index;
+                myChart.data.datasets[0].data = dayArray;
+
+                myChart.update();
+
+                
             }
             
             //Gọi 1 lần khi load trang
             runWhenSelectDate();
-            
-            var myChart = new Chart("myChart", {
-                type: 'bar',
-                data: {
-                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    labels: index,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: dayArray,
-                        // backgroundColor: [
-                        //     'rgba(255, 99, 132, 0.2)',
-                        //     'rgba(54, 162, 235, 0.2)',
-                        //     'rgba(255, 206, 86, 0.2)',
-                        //     'rgba(75, 192, 192, 0.2)',
-                        //     'rgba(153, 102, 255, 0.2)',
-                        //     'rgba(255, 159, 64, 0.2)'
-                        // ],
-                        backgroundColor: 'rgba(25, 111, 61 , 0.2)',
-                        // borderColor: [
-                        //     'rgba(255, 99, 132, 1)',
-                        //     'rgba(54, 162, 235, 1)',
-                        //     'rgba(255, 206, 86, 1)',
-                        //     'rgba(75, 192, 192, 1)',
-                        //     'rgba(153, 102, 255, 1)',
-                        //     'rgba(255, 159, 64, 1)'
-                        // ],
-                        borderColor: 'rgba(25, 111, 61, 0.2)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-            select_date.addEventListener('click', runWhenSelectDate);
+
+            // select_date.addEventListener('click', runWhenSelectDate);
         </script>
 
         <!-- Lịch sử thuê xe  -->
