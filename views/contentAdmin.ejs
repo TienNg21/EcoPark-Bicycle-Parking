@@ -159,9 +159,9 @@
                 </div>
                 <div class="card-body">
                     <label for="begin-date" style="margin-left: 2rem;">Từ ngày:</label>
-                    <input type="date" name="begin-date" id="begin-date" onchange="runWhenSelectDate()">
+                    <input type="date" name="begin-date" style="text-align: center;" id="begin-date" onchange="runWhenSelectDate()">
                     <label for="end-date" style="margin-left: 10rem;">Đến ngày:</label>
-                    <input type="date" name="end-date" id="end-date" onchange="runWhenSelectDate()">
+                    <input type="date" name="end-date" style="text-align: center;" id="end-date" onchange="runWhenSelectDate()">
                     <!-- <button class="btn btn-success" id="select-date" style="margin-left: 8rem">Chọn</button> -->
 
                     <canvas id="myChart" style="padding: 2rem 0;"></canvas>
@@ -269,8 +269,8 @@
                         dayArray.push(0);
                     }
                 }
-                console.log("Mảng lưu doanh số",dayArray);
-                console.log("Mảng lưu ngày", index);
+                // console.log("Mảng lưu doanh số",dayArray);
+                // console.log("Mảng lưu ngày", index);
 
                 myChart.data.labels = index;
                 myChart.data.datasets[0].data = dayArray;
@@ -294,53 +294,28 @@
                 </div>
 
                 <div class="card-body">
-                    <label for="date_begin">Ngày bắt đầu</label>
-                        <input type="date" name="date_begin" class = "form-control mb-2" style = "width: auto; display: inline-block;" id="date_begin">
-                    <label for="date_end">Ngày kết thúc</label>
-                        <input type="date" name="date_end" class="form-control mb-2" style= "width: auto; display: inline-block;" id="date_end">
-                    <button class="btn btn-primary" id = "loc"type="submit" style="width: auto;"> Lọc </button>
-                    <% if(lsu.length === 0) { %>
-                        <p>Không có lịch sử thuê xe</p>
-                    <% }else { %>
-                        <div class = "admin-subcontent table-responsive">
-                            <table class = "table table-striped table-sm" id="table-lsu">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID người thuê</th>
-                                        <th scope="col">ID xe</th>
-                                        <th scope="col">ID bãi xe thuê</th>
-                                        <th scope="col">ID bãi xe trả</th>
-                                        <th scope="col">Giá thuê dự kiến</th>
-                                        <th scope="col">Giờ thuê dự kiến</th>
-                                        <th scope="col">Ngày thuê</th>
-                                        <th scope="col">Thời gian bắt đầu</th>
-                                        <th scope="col">Thời gian kết thúc</th>
-                                        <th scope="col">Thành tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% var doanhso = 0 %>
-                                    <% for(let index = 0; index<lsu.length; index++) { %>
-                                        <% let ngay_thue = (JSON.stringify(lsu[index].ngay_thue)).substring(1,11) %>
-                                        <% let bat_dau = (JSON.stringify(lsu[index].bat_dau)).substring(1,9) %>
-                                        <% let ket_thuc = (JSON.stringify(lsu[index].ket_thuc)).substring(1,9) %>
-                                        <tr>
-                                                <td><input type="text" id="id_user" name="id_user" style ="width:150px"value="<%= lsu[index].id_user %>" readonly></td>
-                                                <td><input type="text" id="id_xe" name="id_xe" style="width: 50px;"value="<%= lsu[index].id_xe %>" readonly></td>
-                                                <td><input type="text" id="id_bai_xe_thue" name="id_bai_xe_thue" style ="width:130px"value="<%= lsu[index].id_bai_xe_thue %>" readonly></td>
-                                                <td><input type="text" id="id_bai_xe_tra" name="id_bai_xe_tra" style ="width:130px"value="<%= lsu[index].id_bai_xe_tra %>" readonly></td>
-                                                <td><input type="text" id="gia_thue_du_kien" name="gia_thue_du_kien" style ="width:130px" value="<%= lsu[index].gia_thue_du_kien %>" readonly></td>
-                                                <td><input type="text" id="gio_thue_du_kien" name="gio_thue_du_kien" style ="width:130px" value="<%= lsu[index].gio_thue_du_kien %>" readonly></td>
-                                                <td><input type="text" id="ngay_thue" name="ngay_thue" style ="width:150px" value="<%= ngay_thue %>" readonly></td>
-                                                <td><input type="text" id="bat_dau" name="bat_dau" style ="width:150px"value="<%= bat_dau %>" readonly></td>
-                                                <td><input type="text" id="ket_thuc" name="ket_thuc"style ="width:150px" value="<%= ket_thuc %>" readonly></td>
-                                                <td><input type="text" id="thanh_tien" name="thanh_tien"style ="width:150px" value="<%= lsu[index].thanh_tien %>" readonly></td>
-                                        </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    <% } %>
+                    <label for="date_begin" style="margin-left: 2rem;">Từ ngày:</label>
+                    <input type="date" name="date_begin" onchange="selectDateHistory()" style="border-color: black; border-width: 2px; padding: 0;" id="date_begin">
+                    <label for="date_end" style="margin-left: 10rem;">Đến ngày:</label>
+                    <input type="date" name="date_end" onchange="selectDateHistory()" style="border-color: black;border-width: 2px; padding: 0;" id="date_end">
+                    <div class = "admin-subcontent table-responsive">
+                        <table class = "table table-striped table-sm" id="table-lsu">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID người thuê</th>
+                                    <th scope="col">ID xe</th>
+                                    <th scope="col">ID bãi xe thuê</th>
+                                    <th scope="col">ID bãi xe trả</th>
+                                    <th scope="col">Ngày thuê</th>
+                                    <th scope="col">Thời gian bắt đầu</th>
+                                    <th scope="col">Thời gian kết thúc</th>
+                                    <th scope="col">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body">
+                            </tbody>
+                        </table>
+                    </div>
                 </div> 
             </div>
         </div>
@@ -348,30 +323,59 @@
         <script>
             const date_begin = document.querySelector("#date_begin");
             const date_end = document.querySelector("#date_end");
-            const btn_loc = document.querySelector("#loc");
+            // const btn_loc = document.querySelector("#loc");
 
             const table_lsu = document.querySelector("#table-lsu");
-            const tr_lsu = document.querySelectorAll("#table-lsu tbody tr");
+            const body_lsu = document.querySelector("#history-body");
 
-            btn_loc.addEventListener('click', function() {
-                if (!date_begin.value || !date_end.value) {
+            date_end.value = cur_date.getFullYear() + ((cur_date.getMonth() + 1 >= 10) ? '-' : '-0') + (cur_date.getMonth() +1) + ((cur_date.getDate() >= 10) ? '-' : '-0') + cur_date.getDate();
+
+            date_begin.value = prev_date.getFullYear() + ((prev_date.getMonth() + 1 >= 10) ? '-' : '-0') + (prev_date.getMonth() +1) + ((prev_date.getDate() >= 10) ? '-' : '-0') + prev_date.getDate();
+
+            var lichsu =<%-JSON.stringify(lsu)%>;
+
+            const selectDateHistory = function () {
+                let tempBegin = new Date(date_begin.value);
+                let tempEnd = new Date(date_end.value);
+
+                if(tempBegin > tempEnd) {
+                    Toastify({
+                        text: "Ngày bắt đầu phải trước ngày kết thúc",
+                        position: "center",
+                        style: {
+                            background: "#198754"
+                        },
+                        duration: 5000,
+                        close: true
+                    }).showToast();
                     return;
                 }
-                const begin = new Date(date_begin.value);
-                const end = new Date(date_end.value);
-                if(begin>end) return;
-                console.log(begin, end);
-                for (let i = 0; i< tr_lsu.length; i++) {
-                    let td = new Date(tr_lsu[i].querySelector("#ngay_thue").value);
-                    console.log(td);
-                    if(td>= begin && td<= end) {
-                        table_lsu.style.display = "table";
-                        tr_lsu[i].style.display = "";
-                    } else {
-                        tr_lsu[i].style.display = "none";
+
+                let contentHistory = ""
+
+                for(let i = 0; i < lichsu.length; i++) {
+                    let tempDate = new Date(lichsu[i].ngay_thue.substring(0, 10));
+                    if(tempDate >= tempBegin && tempDate <= tempEnd) {
+                        // console.log(lichsu[i].ngay_thue.substring(0, 10));
+                        contentHistory += `<tr>
+                                            <td><input type="text" id="id_user" name="id_user" style ="width:150px"value="${lichsu[i].id_user}" readonly></td>
+                                            <td><input type="text" id="id_xe" name="id_xe" style="width: 50px;"value="${lichsu[i].id_xe}" readonly></td>
+                                            <td><input type="text" id="id_bai_xe_thue" name="id_bai_xe_thue" style ="width:130px"value="${lichsu[i].id_bai_xe_thue}" readonly></td>
+                                            <td><input type="text" id="id_bai_xe_tra" name="id_bai_xe_tra" style ="width:130px"value="${lichsu[i].id_bai_xe_tra}" readonly></td>
+                                            <td><input type="text" id="ngay_thue" name="ngay_thue" style ="width:150px" value="${lichsu[i].ngay_thue.substring(0, 10)}" readonly></td>
+                                            <td><input type="text" id="bat_dau" name="bat_dau" style ="width:150px"value="${lichsu[i].bat_dau.substring(0, 5)}" readonly></td>
+                                            <td><input type="text" id="ket_thuc" name="ket_thuc"style ="width:150px" value="${lichsu[i].ket_thuc.substring(0, 5)}" readonly></td>
+                                            <td><input type="text" id="thanh_tien" name="thanh_tien"style ="width:150px" value="${lichsu[i].thanh_tien}" readonly></td>
+                                           </tr>`
                     }
+                    
                 }
-            })
+
+                body_lsu.innerHTML = contentHistory;
+                console.log(contentHistory);
+
+            }
+            selectDateHistory();
         </script>
 
         <!-- Danh sách các xe  -->
