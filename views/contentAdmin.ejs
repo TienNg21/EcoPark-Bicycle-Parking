@@ -353,16 +353,29 @@
 
                 let contentHistory = ""
 
+                function convertDate(ngaythue) {
+                    let date1 = ngaythue.getDate().toString();
+                    let month = (ngaythue.getMonth() + 1).toString();
+                    let year = ngaythue.getFullYear().toString();
+                    if(month.length===1) {
+                        month = "0" + month;
+                    }
+                    if(date1.length===1) {
+                        date1 = "0"+date1;
+                    }
+                    return date1+'-'+month+'-'+year;
+                }
                 for(let i = 0; i < lichsu.length; i++) {
                     let tempDate = new Date(lichsu[i].ngay_thue.substring(0, 10));
+                    let tmp = convertDate(tempDate);
                     if(tempDate >= tempBegin && tempDate <= tempEnd) {
-                        // console.log(lichsu[i].ngay_thue.substring(0, 10));
+                        console.log(lichsu[i].ngay_thue.substring(0, 10));
                         contentHistory += `<tr>
                                             <td><input type="text" id="id_user" name="id_user" style ="width:150px"value="${lichsu[i].id_user}" readonly></td>
                                             <td><input type="text" id="id_xe" name="id_xe" style="width: 50px;"value="${lichsu[i].id_xe}" readonly></td>
                                             <td><input type="text" id="id_bai_xe_thue" name="id_bai_xe_thue" style ="width:130px"value="${lichsu[i].id_bai_xe_thue}" readonly></td>
                                             <td><input type="text" id="id_bai_xe_tra" name="id_bai_xe_tra" style ="width:130px"value="${lichsu[i].id_bai_xe_tra}" readonly></td>
-                                            <td><input type="text" id="ngay_thue" name="ngay_thue" style ="width:150px" value="${lichsu[i].ngay_thue.substring(0, 10)}" readonly></td>
+                                            <td><input type="text" id="ngay_thue" name="ngay_thue" style ="width:150px" value="${tmp}" readonly></td>
                                             <td><input type="text" id="bat_dau" name="bat_dau" style ="width:150px"value="${lichsu[i].bat_dau.substring(0, 5)}" readonly></td>
                                             <td><input type="text" id="ket_thuc" name="ket_thuc"style ="width:150px" value="${lichsu[i].ket_thuc.substring(0, 5)}" readonly></td>
                                             <td><input type="text" id="thanh_tien" name="thanh_tien"style ="width:150px" value="${lichsu[i].thanh_tien}" readonly></td>
