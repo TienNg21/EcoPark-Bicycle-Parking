@@ -66,6 +66,7 @@ const map = require('./routes/map');
 const infor = require('./routes/infor');
 const rent = require('./routes/rent');
 const traxe = require('./routes/traxe');
+const history = require('./routes/history');
 
 const admin = require('./routes/admin');
 const bill = require('./routes/bill');
@@ -78,7 +79,7 @@ app.use('/infor', infor); //Thông tin tài khoản
 app.use('/rent', rent);
 app.use('/traxe', traxe);
 app.use('/bill', bill);
-// app.use('/history', history);
+app.use('/history', history);
 
 
 //admin
