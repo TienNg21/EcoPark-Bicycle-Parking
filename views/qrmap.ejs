@@ -25,34 +25,16 @@
             max-width: 200px;
         }
         #map { 
-            height: 80%;
+            height: 90%;
             width: 80%;
             margin: auto;
-        }
-        .container {
-            margin-top: 50px;
         }
     </style>
 </head>
 <body class="text-center">
-    <%- include('navbar', {page: "Bản đồ"}) %>
-    <div class="container">
-        <div class="row">
-
-            <div class="col col-12">
-                <img class="mb-4" src="img/logo.png" alt="logo" width="30%">
-            </div>
-            <div class="col col-12">
-                <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
-            </div>
-            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 infor btn">
-                <img class="mb-4" src="img/picbando.jpg" alt="picbando" width="80%">
-            </div>
-            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 infor btn">
-                <img class="brand-name" src="img/bandotext.png" width="80%" alt="logo">
-            </div>
-        </div>
-    </div>
+    <h1>Bản đồ các bãi xe</h1>
+    <em>Trang này tồn tại để cho các bạn test dễ hơn, thực tế phải đến bãi xe mới quét đc mã này</em>
+    <em style="margin-bottom: 20px; display: block;">Nhấn vào từng bãi để lấy QR</em>
     <div id="map"></div>
    <br>
     <!-- SCRIPT  -->
@@ -106,9 +88,9 @@
             baitemp.bindTooltip("<h3>"+ baixe[index].ten_bai + "</h3>", {permanent: true, direction: 'top', offset: L.point(-14,0)})
             baitemp.on('click', (err) => {
                 if(window.location.href.includes('localhost'))
-                    window.location.href = "http://localhost:3000/rent/" + baixe[index].id_bai_xe;
+                    window.location.href = "http://localhost:3000/admin/qrpage/" + baixe[index].id_bai_xe;
                 else if(window.location.href.includes('ecopark-bicycle-parking'))
-                    window.location.href = "https://ecopark-bicycle-parking.herokuapp.com/rent/" + baixe[index].id_bai_xe
+                    window.location.href = "https://ecopark-bicycle-parking.herokuapp.com/admin/qrpage/" + baixe[index].id_bai_xe;
             })
         }       
                 

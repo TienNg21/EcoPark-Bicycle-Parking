@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <%- include('header') %>
+    <title>Html-Qrcode Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  </head>
+
+    <style>
+        body {
+            background-color: #E5E5E5;
+            width: 100%;
+            position: relative;
+        }
+        #qr-reader {
+            margin: 40px auto;
+            width: 75vw;
+        }
+
+        #qr-reader-results {
+            margin-top: 20px;
+        }
+
+        h2, h1 {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        button {
+            border-radius: 10px;
+        }
+
+    </style>
+
+  <body class="text-center">
+
+    <nav class="navbar" style="color: aliceblue; background-color: #478640; position: fixed; width: 100%; height: 8%; min-height: 50px; top: 0; z-index: 5;">
+        <ul class="nav justify-content-center" style="width: 100%">
+            <li class="nav-item" style="width: 100%" >
+              <div class="nav-link" style="color: aliceblue; font-family: 'Quicksand'; font-size: 1.2rem; text-align: center;">Quét mã QR</div>
+            </li>
+          </ul>
+    </nav>
+    <br>
+    
+    <h2>Quét mã cho</h2><h1 id='bai'><%= ten_bai%></h1>
+    <div id="qr-reader"></div>
+    <!-- <div id="qr-reader-results"></div> -->
+    <a href="https://ecopark-bicycle-parking.herokuapp.com/admin/qrpage" style="margin-bottom: 20px; display: block;" target="_blank">Xem bản đồ để lấy mã QR</a>
+    <a href="/rent" class="btn btn-secondary">Trở lại</a>
+    <br>
+  </body>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <script>
+    const bai = document.querySelector('#bai')
+
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    } 
+
+    docReady(function() {
+        // var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+        
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // console.log(`Scan result = ${decodedText}`, decodedResult);
+    
+                // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+                
+                // Optional: To close the QR code scannign after the result is found
+                // html5QrcodeScanner.clear();
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/rent/xacnhan', true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function() { // Call a function when the state changes.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        // Request finished. Do processing here.
+                        xhr.res
+                        console.log('message when state change: ' + xhr.responseText);
+                        if(xhr.responseText == 'het_pending') {
+                            // thong bao het pending, thue lai
+                            Toastify({
+                                text: 'Hết thời gian chờ. Quý khách vui lòng chọn lại xe để thuê!',
+                                position: "center",
+                                style: {
+                                    background: "#ffc107"
+                                },
+                                callback: () => {
+                                    //redirect sang rent
+                                    if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000/rent';
+                                    else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com/rent'
+                                }
+                            }).showToast();
+                        }
+                        if(xhr.responseText == 'quet_sai') {
+                            // thong bao quet sai, yêu cầu quét lại
+                            Toastify({
+                                text: 'Mã QR không hợp lệ! Vui lòng quét đúng mã QR thuê xe tại bãi!',
+                                position: "center",
+                                style: {
+                                    background: "#ffc107"
+                                },
+                                duration: 5000
+                            }).showToast();
+                        }
+                        if(xhr.responseText == 'thue_xe_thanh_cong') {
+                            html5QrcodeScanner.clear();
+                            xhr.abort()
+                            Toastify({
+                                text: 'Thuê xe thành công! Kính chúc quý khách có một chuyến tham quan vui vẻ!',
+                                position: "center",
+                                style: {
+                                    background: "#198754"
+                                },
+                                callback: () => {
+                                    //redirect sang dashboard
+                                    if(window.location.href.includes('localhost')) window.location.href = 'http://localhost:3000';
+                                    else if(window.location.href.includes('ecopark')) window.location.href = 'https://ecopark-bicycle-parking.herokuapp.com'
+                                }
+                            }).showToast();
+                        }
+                    }
+                }
+                let id_bai = '<%= id_bai %>'
+                xhr.send(`idbai=${id_bai}&qrcode=${decodedText}`);
+            }
+        }
+        
+        // Optional callback for error, can be ignored.
+        function onScanError(qrCodeError) {
+            // This callback would be called in case of qr code scan error or setup error.
+            // You can avoid this callback completely, as it can be very verbose in nature.
+        }
+        
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+    });
+  </script>
+</html>

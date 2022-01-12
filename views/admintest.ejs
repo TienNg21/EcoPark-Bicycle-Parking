@@ -2,18 +2,19 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <style>
+        html {
+          scroll-behavior: smooth;
+        }
         body {
             display: block;
         }
 
-        .admin-content {
-            margin-top: 40px;
-        }
-
         .admin-subcontent {
             height:500px;
-            overflow-x:hidden;
+            overflow-x:auto;
             overflow-y:auto;
         }
 
@@ -30,17 +31,38 @@
                 font-size: 3.5rem;
             }
         }
+        header {
+          background-color: white;
+        }
+
+        header a {
+          color: #478640 !important;
+        }
+
+        header img {
+          width: 30px;
+        }
+
+        #sidebarMenu.nav-link {
+          color: white !important; 
+        };
     </style>
 </header>
 <body>
-    <header class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">EcoPark Bicycle Parking</a>
+    <header class="navbar fixed-top flex-md-nowrap p-2 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">
+          <img src="img/logo.png" alt="logo">
+          EcoPark Bicycle Parking
+        </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="/admin/logout">Đăng xuất</a>
+                <a class="nav-link px-3" href="/admin/logout">
+                  Đăng xuất
+                  <i class="fas fa-sign-out-alt"></i>
+                </a>
             </div>
         </div>
     </header>
@@ -51,47 +73,87 @@
                 <div class="position-fixed pt-3 ">
                     <ul class="nav flex-column ">
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin">
+                        <a class="nav-link active" style="color: white; margin-top: 20px;" aria-current="page" href="/admin">
                           <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span> Trang chủ
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#danhso">
+                        <a class="nav-link" style="color: white;" href="#doanhso">
+                          <span class="icon"><i class="fa fa-money" aria-hidden="true"></i></span>
                           Doanh số
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#price">
+                        <a class="nav-link" style="color: white;" href="#lsu">
+                          <span class="icon"><i class="fa fa-history" aria-hidden="true"></i></span>
                           Lịch sử thuê xe
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#xe">
+                        <a class="nav-link" style="color: white;" href="#xethue">
+                          <span class="icon"><i class="fa fa-bicycle" aria-hidden="true"></i></span>
                           Xe đạp
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#baixe">
+                        <a class="nav-link" style="color: white;" href="#cacbaixe">
+                          <span class="icon"><i class="fa fa-road" aria-hidden="true"></i></span>
                           Bãi xe
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#khachhang">
+                        <a class="nav-link" style="color: white;" href="#khachhangthuexe">
+                          <span class="icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                           Người dùng
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#price">
+                        <a class="nav-link" style="color: white;" href="#price">
+                          <span class="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
                           Giá thuê
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" style="color: white;" href="#">
+                          <span class="icon"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+                          Đổi mật khẩu
                         </a>
                       </li>
                     </ul>
             </nav>
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <h1>Hệ thống quản lý thuê xe ECOPARK BICYCLE PARKING</h1>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 10px;" >
+              <br>
                 <%- include('contentAdmin') %> 
+                <div style="text-align: center; padding: 40px;">
+                  <a href="https://github.com/TienNg21/EcoPark-Bicycle-Parking" style="color: #478640; text-decoration: none; " target="_blank"><i class="fab fa-github"></i> Github Repository</a>
+                  <br>
+                  Copyright <i class="far fa-copyright"></i> 2021-2022, Nhóm 12 NMCNPM.
+                </div>
             </main>
         </div>
     </div>
     
 </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+  var message =  <%-JSON.stringify(message)%>;
+  if(message !== ""){
+    Toastify({
+      text: message,
+      position: "center",
+      style: {
+        background: "#198754"
+      }
+    }).showToast();
+  }
+  var error = <%-JSON.stringify(error)%>;
+  if(error !== ""){
+    Toastify({
+      text: error,
+      position: "center",
+      style: {
+        background: "#ffc107"
+      }
+    })
+  }
+</script>

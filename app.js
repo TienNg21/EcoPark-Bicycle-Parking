@@ -41,25 +41,45 @@ const pusher = new Pusher({
     }
     pgClient = client;
     client.on('notification', function(msg) {
-      pusher.trigger('watch_realtime_bai_xe', 'update-qr', JSON.parse(msg.payload));
+      console.log(msg);
+      const events = [
+        {
+          channel: 'watch_realtime_bai_xe',
+          name: 'update-qr',
+          data: JSON.parse(msg.payload)
+        },
+        {
+          channel: 'watch_realtime_xe',
+          name: 'update_xe',
+          data: JSON.parse(msg.payload)
+        }
+      ]
+      pusher.triggerBatch(events);
     });
-    const query = client.query('LISTEN watch_realtime_bai_xe');
+    client.query('LISTEN watch_realtime_bai_xe');
+    client.query('LISTEN watch_realtime_xe');
   });
 
 
 const user = require('./routes/user');
 const map = require('./routes/map');
 const infor = require('./routes/infor');
-const history = require('./routes/history');
+const rent = require('./routes/rent');
+const traxe = require('./routes/traxe');
 
 const admin = require('./routes/admin');
+const bill = require('./routes/bill');
 
 
 //user
 app.use('/', user);
 app.use('/map', map);
 app.use('/infor', infor); //Thông tin tài khoản
-app.use('/history', history);
+app.use('/rent', rent);
+app.use('/traxe', traxe);
+app.use('/bill', bill);
+// app.use('/history', history);
+
 
 //admin
 app.use('/admin',admin);
