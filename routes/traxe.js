@@ -29,7 +29,7 @@ traxeRouter.post('/xacnhan', (req,res)=>{
         }
         else{
             console.log(result.rows);
-            await pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null where id_user = $2 and trang_thai = 'active'", 
+            await pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null, gia_thue = null where id_user = $2 and trang_thai = 'active'", 
             [result.rows[0].id_bai_xe, req.user.id_user])
             console.log('update trang thai xe xong');
             let qr_code = makeRandom(40);
