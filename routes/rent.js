@@ -54,7 +54,6 @@ rentRouter.post("/scan", async (req, res)=>{
     console.log(req.user);
     // console.log(req.user);
     //tao 1 lichsuthuexe moi
-    pool.query("insert into lich_su_thue_xe (id_user, id_xe, id_bai_xe_thue, gia_thue_du_kien) values ($1, $2, $3, $4)", [req.user.id_user, req.body.xe, req.body.bai, req.body.gio]);
     pool.query("select * from xe where id_user = $1 and (trang_thai = 'active' or trang_thai = 'pending')", [req.user.id_user], (err, result)=>{
         if(result.rows.length > 0){
             // user đã thuê xe hoặc đã chọn xe rồi nhưng chưa quét, không cho thuê nữa
@@ -80,7 +79,7 @@ rentRouter.post("/scan", async (req, res)=>{
                         res.redirect('/rent')
                     }
                     else{
-                        pool.query(`update public.xe set trang_thai = 'pending', id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
+                        pool.query(`update public.xe set trang_thai = 'pending', id_user = ${req.user.id_user}, gia_thue = ${req.body.gio} where id_xe = ${req.body.xe};`, async (err, result)=>{
                             if(err) {
                                 console.error(err)
                                 res.send('loi roi')
@@ -102,7 +101,7 @@ rentRouter.post("/scan", async (req, res)=>{
                                             // console.log(result.rows[0]['trang_thai'])
                                             // neu trang thai van la pending thi chuyen thanh available
                                             if(result.rows[0]['trang_thai'] == `pending`) {
-                                                pool.query(`update public.xe set trang_thai = 'available', id_user = null where id_xe = ${req.body.xe}`);
+                                                pool.query(`update public.xe set trang_thai = 'available', id_user = null, gia_thue = null where id_xe = ${req.body.xe}`);
                                             }
                                             //
                                             if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
@@ -165,7 +164,7 @@ rentRouter.post('/xacnhan', (req, res)=>{
     console.log(req.body);
     console.log(req.user.id_user);
     // so sanh ma qr, thong bao khi sai, dung
-    pool.query("select id_xe from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
+    pool.query("select id_xe, gia_thue from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
         // err thi thong bao xe khong con trong trang thai pending
         if(err) console.error(err);
         else {
@@ -175,10 +174,10 @@ rentRouter.post('/xacnhan', (req, res)=>{
             }
             else {
                 let id_xe = result.rows[0].id_xe;
-                pool.query("select * from bai_xe where id_bai_xe = $1 and qr_thue_xe = $2", [req.body.idbai, req.body.qrcode], (err, result) => {
+                pool.query("select * from bai_xe where id_bai_xe = $1 and qr_thue_xe = $2", [req.body.idbai, req.body.qrcode], (err, result1) => {
                     if(err) console.error(err)
                     else {
-                        if (result.rows.length == 0) {
+                        if (result1.rows.length == 0) {
                             // thong bao quet sai va cho quet lai
                             res.send('quet_sai');
                         }
@@ -193,12 +192,10 @@ rentRouter.post('/xacnhan', (req, res)=>{
                             pool.query("update bai_xe set qr_thue_xe = $1 where id_bai_xe = $2", [random, req.body.idbai]);
                             // console.log("set lai qr_thue thanh cong")
                             // cap nhat bang lichsuthuexe
-                            pool.query("select id from lich_su_thue_xe where id_user = $1 and bat_dau is null order by id desc limit 1", [req.user.id_user], (err1, result1)=>{
-                                pool.query("update lich_su_thue_xe set ngay_thue = current_date at time zone 'Asia/Ho_Chi_Minh', bat_dau = localtime at time zone 'Asia/Ho_Chi_Minh' where id = $1", [result1.rows[0].id]);
-                                // thong bao thue xe thanh cong
-                                // chuyen ve dashboard '/'
-                                res.send('thue_xe_thanh_cong');
-                            })
+                            pool.query("insert into lich_su_thue_xe(ngay_thue, bat_dau, id_user, id_xe, id_bai_xe_thue, gia_thue_du_kien) values(current_date at time zone 'Asia/Ho_Chi_Minh', localtime at time zone 'Asia/Ho_Chi_Minh', $1, $2, $3, $4)", [req.user.id_user, result.rows[0].id_xe, req.body.idbai, result.rows[0].gia_thue]);
+                            // thong bao thue xe thanh cong
+                            // chuyen ve dashboard '/'
+                            res.send('thue_xe_thanh_cong');
                         }
                     }
                 });
