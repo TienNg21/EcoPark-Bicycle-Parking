@@ -20,7 +20,7 @@ const user = {
     password2: ''
 }
 
-userRouter.get("/", (req, res) => {
+userRouter.get("/", async (req, res) => {
     if(req.user == null){
         console.log("view dashboard page, but not logged in => login page");
 
@@ -32,7 +32,17 @@ userRouter.get("/", (req, res) => {
             res.redirect("/admin");
         } else {
             console.log("view dashboard page");
-            res.render("dashboard.ejs", {message: req.flash('message')});
+            const bat_dau = await pool.query(
+                `SELECT ngay_thue, bat_dau FROM lich_su_thue_xe WHERE id_user = ${req.user.id_user} AND ket_thuc IS NULL`
+            );
+            if(bat_dau.rows.length != 0){
+                let d = new Date(bat_dau.rows[0].ngay_thue);
+                bat_dau.rows[0].ngay_thue = d.getFullYear() + ((d.getMonth() + 1 >= 10) ? ('-' + (d.getMonth() + 1)) : ('-0' + (d.getMonth() + 1))) + ((d.getDate() >= 10) ? ('-' + d.getDate()) : ('-0' + d.getDate()));
+            }
+            res.render("dashboard.ejs", {
+                message: req.flash('message'),
+                time_rent: bat_dau.rows
+            });
         }
     }
 })

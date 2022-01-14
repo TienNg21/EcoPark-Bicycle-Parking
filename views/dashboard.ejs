@@ -41,6 +41,52 @@
                 <img class="brand-name" src="img/ecopark.png" width="80%" alt="logo">
             </div>
 
+            <div class="col col-12" id="timeCount" style="display: none; color: #478640; font-family: Quicksand; border-radius: 2px; margin: 0.5rem;">Bạn đã thuê xe<br><span class="time">hh:mm:ss</span>s</div>
+
+            <script>
+                let bat_dau = <%-JSON.stringify(time_rent)%>;
+                if(bat_dau.length !== 0) {
+                    document.querySelector("#timeCount").style.display = "block";
+                    
+                    const time = document.querySelector(".time");
+                    
+                    const startTime = new Date(bat_dau[0].ngay_thue);
+                    const startHour = bat_dau[0].bat_dau.substring(0,2);
+                    const startMinute = bat_dau[0].bat_dau.substring(3,5);
+                    const startSecond = bat_dau[0].bat_dau.substring(6,8);
+                    startTime.setHours(startHour, startMinute, startSecond);
+
+                    const formatTime = function(difHour) {
+                        if(difHour == 0){
+                            return "00";
+                        }else if(difHour < 10) {
+                            return "0" + difHour;
+                        }else{
+                            return difHour;
+                        }
+                    }
+
+                    const countTime = function() {
+                        let current = new Date();
+                        let difHour = Math.floor((current - startTime)/(1000 * 60 * 60));
+                        let difMinute = Math.floor((current - startTime)/(1000 * 60)) - difHour*60;
+                        let difSecond = Math.floor((current - startTime)/1000)  - difHour*60*60 - difMinute*60;
+
+                        difHour = formatTime(difHour);
+                        difMinute = formatTime(difMinute);
+                        difSecond = formatTime(difSecond);
+
+                        let difTime = difHour + ":" + difMinute + ":" + difSecond;
+                        time.textContent = difTime; 
+                        
+                        setTimeout(function() {
+                            countTime();
+                        }, 1000);
+                    }
+                    countTime();
+                }
+            </script>
+
             <div class="col col-12 col-sm-12 col-md-6 col-lg-4 infor btn">
                 <a href="/infor"><img class="navi-img" src="img/taikhoan.png" alt="taikhoan" ></a>
             </div>
