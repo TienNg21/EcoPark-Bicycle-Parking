@@ -7,10 +7,12 @@ Thành phố xanh Ecopark hiện đã là điểm đến nghỉ dưỡng ven đ�
 
 ## Hướng dẫn sử dụng
 ### Cài đặt
-1. Cài đặt từ Github:
+**1. Cài đặt từ Github:**
+
 Bước 1: Cài đặt NodeJS trên máy
 
 Truy cập [trang download nodejs](https://nodejs.dev/download/), tải và cài đặt phiên bản phù hợp với máy tính.
+
 Sau khi cài đặt xong, kiểm tra lại phiên bản đã cài đặt bằng câu lệnh:
 ```
 node -v
@@ -42,7 +44,8 @@ node app.js
 Truy cập đường link sau bằng trình duyệt http://localhost:3000/ :tada:
 
 
-2. Trải nghiệm ngay:
+
+**2. Trải nghiệm ngay:**
 
 Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-parking.herokuapp.com)
 
