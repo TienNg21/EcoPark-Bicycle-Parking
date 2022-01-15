@@ -8,20 +8,39 @@ Thành phố xanh Ecopark hiện đã là điểm đến nghỉ dưỡng ven đ�
 ## Hướng dẫn sử dụng
 ### Cài đặt
 1. Cài đặt từ Github:
+Bước 1: Cài đặt NodeJS trên máy
 
-Bước 1: Clone project
+Truy cập [trang download nodejs](https://nodejs.dev/download/), tải và cài đặt phiên bản phù hợp với máy tính.
+Sau khi cài đặt xong, kiểm tra lại phiên bản đã cài đặt bằng câu lệnh:
+```
+node -v
+```
+
+Bước 2: Clone project
 
 ```
 git clone https://github.com/TienNg21/EcoPark-Bicycle-Parking.git
 ```
 
-Bước 2: Cài đặt NodeJS trên máy
+Bước 3:  Cài đặt các thư viện
 
-https://nodejs.org/en/download/
-
-Bước 3: Cài đặt các thư viện
+Chuyển đến thư mục chứa Project vừa clone:
+```
+cd EcoPark-Bicycle-Parking
+```
+Thực hiện cài đặt thư viện:
+```
+npm install
+```
 
 Bước 4: Chạy project local
+
+Chạy project bằng câu lệnh:
+```
+node app.js
+```
+Truy cập đường link sau bằng trình duyệt http://localhost:3000/ :tada:
+
 
 2. Trải nghiệm ngay:
 
