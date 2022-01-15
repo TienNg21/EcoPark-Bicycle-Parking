@@ -97,7 +97,7 @@
                     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                         // Request finished. Do processing here.
                         xhr.res
-                        console.log('message when state change: ' + xhr.responseText);
+                        // console.log('message when state change: ' + xhr.responseText);
                         if(xhr.responseText == 'het_pending') {
                             // thong bao het pending, thue lai
                             Toastify({

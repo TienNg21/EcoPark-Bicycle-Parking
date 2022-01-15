@@ -66,7 +66,7 @@
             if (decodedText !== lastResult) {
                 ++countResults;
                 lastResult = decodedText;
-                console.log(`Scan result = ${decodedText}`, decodedResult);
+                // console.log(`Scan result = ${decodedText}`, decodedResult);
     
                 // resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
                 
@@ -84,7 +84,7 @@
                     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                         // Request finished. Do processing here.
                         xhr.res
-                        console.log('message when state change: '+ xhr.responseText);
+                        // console.log('message when state change: '+ xhr.responseText);
                         if(xhr.responseText == 'false') {
                           // noti.textContent = 'Quet  sai roi quet lai di'
                           Toastify({
@@ -120,7 +120,7 @@
                 // xhr.send(document);
 
                 // window.location.href += '/scan';
-                console.log('post xac nhan');
+                // console.log('post xac nhan');
 
             }
         }

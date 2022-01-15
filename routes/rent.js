@@ -12,7 +12,7 @@ rentRouter.get("/", async (req, res)=>{
         // console.log(idbai);
         pool.query("select bx.id_bai_xe, bx.ten_bai, count(x.id_xe) as so_luong from bai_xe bx left join xe x on (bx.id_bai_xe = x.id_bai_xe) where x.trang_thai not in ('pending', 'active') group by bx.id_bai_xe", (err, result)=>{
             // console.log(result.rows);
-            pool.query("select one_h, two_h, three_h, disc from gia_thue_xe", (errs,results)=>{
+            pool.query("select one_h, two_h, three_h, delay_h, disc from gia_thue_xe", (errs,results)=>{
                 // console.log(results.rows)
                 pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
                     if(xe_pending.rows.length == 0){

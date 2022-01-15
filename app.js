@@ -41,7 +41,7 @@ const pusher = new Pusher({
     }
     pgClient = client;
     client.on('notification', function(msg) {
-      console.log(msg);
+      // console.log(msg);
       const events = [
         {
           channel: 'watch_realtime_bai_xe',
@@ -86,5 +86,5 @@ app.use('/history', history);
 app.use('/admin',admin);
 
 app.listen((process.env.PORT || 3000), (req, res) => {
-    console.log("Run in port 3000");
+    // console.log("Run in port 3000");
 });
