@@ -8,7 +8,17 @@ var count = 0; // đếm số lần gọi get /infor
 
 inforRouter.get('/', (req, res) => {
     if(req.user == null){
-        res.redirect('../login');
+        return res.render('infor.ejs', {
+            ten: "",
+            email: "",
+            diachi: "",
+            sdt: "",
+            cmnd: "",
+            gioitinh: "",
+            lacudan: "",
+            macudan: "",
+            errors: [{message: "Dùng để thay đổi khi mất mật khẩu admin, nếu thành công sẽ về trang login"}]
+        });
     }
     // console.log("view infor page");
     count ++;
@@ -31,7 +41,7 @@ inforRouter.get('/', (req, res) => {
 })
 
 inforRouter.post('/', async (req, res) => {
-    if(req.body.email == process.env.EMAIL_ADMIN) {
+    if(req.body.email == process.env.EMAIL_ADMIN || req.body == null) {
         return res.redirect("/infor");
     }
     var newUser = req.body;
@@ -75,7 +85,7 @@ inforRouter.post('/', async (req, res) => {
 
 inforRouter.post('/password', async (req, res)=>{
     // res.send(req.body)
-    if(req.body.email == process.env.EMAIL_ADMIN) {
+    if(req.body.email == process.env.EMAIL_ADMIN || req.body.email == "") {
         errors = [];
         count = 0;
         let {password, password1, password2} = req.body
@@ -96,12 +106,12 @@ inforRouter.post('/password', async (req, res)=>{
                 let hashedPassword = await bcrypt.hash(password1, 10);
                 pool.query(
                     'update khach_hang set password = $1 where email = $2' ,
-                    [hashedPassword, req.user.email],
+                    [hashedPassword, process.env.EMAIL_ADMIN],
                     (err, results)=>{
                         if(err) throw err;
-                        
+                        // console.log("thay ok");
                         req.flash('success_msg', "Thay đổi mật khẩu thành công.");
-                        res.redirect('/infor');
+                        res.redirect('/login');
                     }
                 )
             }
