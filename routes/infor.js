@@ -10,13 +10,13 @@ inforRouter.get('/', (req, res) => {
     if(req.user == null){
         res.redirect('../login');
     }
-    console.log("view infor page");
+    // console.log("view infor page");
     count ++;
     if(count != 1){
         errors = [];
     }
     var userInfor = req.user;
-    console.log(userInfor);
+    // console.log(userInfor);
     res.render('infor.ejs', {
         ten: userInfor.ten,
         email: userInfor.email,
@@ -31,6 +31,9 @@ inforRouter.get('/', (req, res) => {
 })
 
 inforRouter.post('/', async (req, res) => {
+    if(req.body.email == process.env.EMAIL_ADMIN) {
+        return res.redirect("/infor");
+    }
     var newUser = req.body;
     var phone = newUser.sdt;
     errors = [];
@@ -72,37 +75,71 @@ inforRouter.post('/', async (req, res) => {
 
 inforRouter.post('/password', async (req, res)=>{
     // res.send(req.body)
-    errors = [];
-    count = 0;
-    let {password, password1, password2} = req.body
-    if(password1 !== password2){
-        errors.push({message: 'Mật khẩu xác nhận không khớp.'})
-    }
-    if(password.length < 6 || password1.length < 6 || password2.length < 6){
-        errors.push({message: "Mật khẩu cần có ít nhất 6 ký tự."});
-    }
-    if(errors.length > 0){
-        res.redirect('/infor')
-    }
-    else{
-        let curPass = req.user.password
-        let check = bcrypt.compareSync(password, curPass);
-        if(!check){
-            errors.push({message: 'Mật khẩu cũ không đúng.'});
+    if(req.body.email == process.env.EMAIL_ADMIN) {
+        errors = [];
+        count = 0;
+        let {password, password1, password2} = req.body
+        if(password1 !== password2){
+            errors.push({message: 'Mật khẩu xác nhận không khớp.'})
+        }
+        if(password.length < 6 || password1.length < 6 || password2.length < 6){
+            errors.push({message: "Mật khẩu cần có ít nhất 6 ký tự."});
+        }
+        if(errors.length > 0){
+            res.redirect('/infor')
+        }
+        else{
+            if(password !== process.env.CODE_RESET_ADMIN_PASSWORD){
+                errors.push({message: 'Mật khẩu cũ không đúng.'});
+                res.redirect('/infor');
+            } else{
+                let hashedPassword = await bcrypt.hash(password1, 10);
+                pool.query(
+                    'update khach_hang set password = $1 where email = $2' ,
+                    [hashedPassword, req.user.email],
+                    (err, results)=>{
+                        if(err) throw err;
+                        
+                        req.flash('success_msg', "Thay đổi mật khẩu thành công.");
+                        res.redirect('/infor');
+                    }
+                )
+            }
+        }
+    }else {
+
+        errors = [];
+        count = 0;
+        let {password, password1, password2} = req.body
+        if(password1 !== password2){
+            errors.push({message: 'Mật khẩu xác nhận không khớp.'})
+        }
+        if(password.length < 6 || password1.length < 6 || password2.length < 6){
+            errors.push({message: "Mật khẩu cần có ít nhất 6 ký tự."});
+        }
+        if(errors.length > 0){
             res.redirect('/infor');
         }
         else{
-            let hashedPassword = await bcrypt.hash(password1, 10);
-            pool.query(
-                'update khach_hang set password = $1 where email = $2' ,
-                [hashedPassword, req.user.email],
-                (err, results)=>{
-                    if(err) throw err;
-                    
-                    req.flash('success_msg', "Thay đổi mật khẩu thành công.");
-                    res.redirect('/infor');
-                }
-            )
+            let curPass = req.user.password
+            let check = bcrypt.compareSync(password, curPass);
+            if(!check){
+                errors.push({message: 'Mật khẩu cũ không đúng.'});
+                res.redirect('/infor');
+            }
+            else{
+                let hashedPassword = await bcrypt.hash(password1, 10);
+                pool.query(
+                    'update khach_hang set password = $1 where email = $2' ,
+                    [hashedPassword, req.user.email],
+                    (err, results)=>{
+                        if(err) throw err;
+                        
+                        req.flash('success_msg', "Thay đổi mật khẩu thành công.");
+                        res.redirect('/infor');
+                    }
+                )
+            }
         }
     }
 

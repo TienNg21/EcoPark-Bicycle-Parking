@@ -99,6 +99,7 @@
     <div class="container col-lg-6 col-sm-12" style="display:none"  id="pass">
         <div class="row">
             <form  action = "/infor/password" style="margin-top: 0.5cm;" method="post">
+                <input type="hidden" name="email" id="email" value="<%= email %>" required>
                 <div class="input-group">
                     <span id="span1" class="input-group-text">Nhập mật khẩu cũ</span>
                     <input type="password" class="form-control border " name="password" id="password" required>

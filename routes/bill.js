@@ -4,14 +4,14 @@ const billRouter = express.Router();
 const { pool } = require('../dbConfig');
 
 billRouter.get('/', (req, res)=>{
-    if(req.user == null) res.redirect('../login')
+    if(req.user == null || req.user.email == process.env.EMAIL_ADMIN) res.redirect('../login')
     else{
-        console.log("view bill page");
+        // console.log("view bill page");
         pool.query("select * from gia_thue_xe", (err, result)=>{
             pool.query("select gia_thue_du_kien, id, extract(hour from bat_dau) as gio_bd, extract(minute from bat_dau) as phut_bd, extract(hour from ket_thuc) as gio_kt, extract(minute from ket_thuc) as phut_kt from lich_su_thue_xe where id_user = $1 and bat_dau is not null and ket_thuc is not null order by id desc limit 1", [req.user.id_user], (err1, result1)=>{
                 //tinh thoi gian su dung
                 let time = (result1.rows[0].gio_kt*60 + result1.rows[0].phut_kt) - (result1.rows[0].gio_bd*60 + result1.rows[0].phut_bd);
-                console.log(time);
+                // console.log(time);
                 let cost;
                 let sale = 0, time_delay = 0, cost_delay = 0;
                 

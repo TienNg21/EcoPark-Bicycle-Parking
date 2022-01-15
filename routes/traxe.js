@@ -3,7 +3,7 @@ const traxeRouter = express.Router();
 const { pool } = require('../dbConfig');
 
 traxeRouter.get('/', (req,res, next)=>{
-    if(req.user == null) res.redirect('../login')
+    if(req.user == null || req.user.email == process.env.EMAIL_ADMIN) res.redirect('../login')
     else{
         pool.query("select trang_thai, id_user from xe where id_user = $1 and trang_thai = 'active'", [req.user.id_user], (err, result)=>{
             if(err) console.error(err);
@@ -31,10 +31,10 @@ traxeRouter.post('/xacnhan', (req,res)=>{
             console.log(result.rows);
             await pool.query("update xe set id_bai_xe = $1, trang_thai = 'available', id_user = null where id_user = $2 and trang_thai = 'active'", 
             [result.rows[0].id_bai_xe, req.user.id_user])
-            console.log('update trang thai xe xong');
+            // console.log('update trang thai xe xong');
             let qr_code = makeRandom(40);
             await pool.query("update bai_xe set qr_tra_xe = $1 where id_bai_xe = $2", [qr_code, result.rows[0].id_bai_xe]);
-            console.log('update bai xe xong');
+            // console.log('update bai xe xong');
             // tìm cuốc xe hiện tại để trả xe
             pool.query("select id from lich_su_thue_xe where id_user = $1 and ket_thuc is null and bat_dau is not null order by id desc limit 1", [req.user.id_user], (err, results)=>{
                 // update bang lich su thue xe, tinh tien... 

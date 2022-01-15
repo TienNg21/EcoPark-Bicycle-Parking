@@ -84,7 +84,7 @@
                         <div class="col mr-2">
                             <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Doanh thu hôm nay</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-doanhso"><em>Đang cập nhật</em></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
@@ -93,6 +93,25 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            let doanhthu = <%-JSON.stringify(dthutheongay)%>;
+            const cur_date = new Date();
+            let cur_d_string = cur_date.getFullYear() + ((cur_date.getMonth() + 1 >= 10) ? '-' : '-0') + (cur_date.getMonth() +1) + ((cur_date.getDate() >= 10) ? '-' : '-0') + cur_date.getDate();
+            
+            let dthn = "0";
+
+            if(doanhthu.length > 0){
+                for(let i = 0; i < doanhthu.length; i++) {
+                    if(doanhthu[i].ngay_thue === cur_d_string){
+                        dthn = doanhthu[i].doanh_thu;
+                        break;
+                    }
+                }
+            }
+            document.querySelector("#card-doanhso").textContent = dthn + " VNĐ";
+        </script>
+
 
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -140,8 +159,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="news text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Bãi xe hấp dẫn nhất</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><em>Đang cập nhật</em></div>
+                                Số lượng bãi xe</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-soluongbai"><em>Đang cập nhật</em></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
@@ -176,15 +195,12 @@
             // const select_date = document.querySelector("#select-date");
 
             //ngay ket thuc
-            const cur_date = new Date();
+            // const cur_date = new Date();
             end_date.value = cur_date.getFullYear() + ((cur_date.getMonth() + 1 >= 10) ? '-' : '-0') + (cur_date.getMonth() +1) + ((cur_date.getDate() >= 10) ? '-' : '-0') + cur_date.getDate();
 
             //ngay bat dau
             const prev_date = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
             begin_date.value = prev_date.getFullYear() + ((prev_date.getMonth() + 1 >= 10) ? '-' : '-0') + (prev_date.getMonth() +1) + ((prev_date.getDate() >= 10) ? '-' : '-0') + prev_date.getDate();
-
-            var doanhthu =<%-JSON.stringify(dthutheongay)%>;
-
             
             // console.log(doanhthu);
             let dayArray = [];
@@ -673,7 +689,9 @@
                     Đổi mật khẩu
                 </div>
                 <div class="card-body">
-                    <em>Đang phát triển</em>
+                    <a href="/infor">Thay đổi mật khẩu</a>
+                    <br>
+                    <em>Lưu ý cần có mã của nhóm</em>
                 </div>
             </div>
         </div>
@@ -688,6 +706,7 @@
     <script>
         var baixe =  <%-JSON.stringify(baixe)%>;
 
+        document.querySelector("#card-soluongbai").textContent = baixe.length;
         const mapboxapi = 'pk.eyJ1IjoicXVvY2h1c3QiLCJhIjoiY2t2Z3J6NWliYzRncTJwcTZkdm5hZTE4MiJ9.sZOhK-6OEJ55JR8oLDHBLA'
 
         var mymap = L.map('map').setView([20.96200410887519, 105.93191368976271], 14);

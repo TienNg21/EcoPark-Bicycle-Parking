@@ -22,16 +22,16 @@ const user = {
 
 userRouter.get("/", async (req, res) => {
     if(req.user == null){
-        console.log("view dashboard page, but not logged in => login page");
+        // console.log("view dashboard page, but not logged in => login page");
 
         res.redirect("/login");
     }else { 
         // console.log(req.user.email);
         if (req.user.email == process.env.EMAIL_ADMIN) {
-            console.log("view admin page");
+            // console.log("view admin page");
             res.redirect("/admin");
         } else {
-            console.log("view dashboard page");
+            // console.log("view dashboard page");
             const bat_dau = await pool.query(
                 `SELECT ngay_thue, bat_dau FROM lich_su_thue_xe WHERE id_user = ${req.user.id_user} AND ket_thuc IS NULL`
             );
@@ -50,7 +50,7 @@ userRouter.get("/", async (req, res) => {
 
 //register
 userRouter.get("/register", (req, res) => {
-    console.log("view register page");
+    // console.log("view register page");
 
     res.render("register.ejs", {user: user});
 })
@@ -59,7 +59,7 @@ userRouter.post("/register", async (req, res) => {
     let { name, email, addr, phone, lacudan, macudan, CMND, gender, password, password2} = req.body;
     // user = req.body
 
-    console.log(req.body);
+    // console.log(req.body);
 
     let errors = [];
 
@@ -165,7 +165,7 @@ userRouter.post("/register", async (req, res) => {
 });
 
 userRouter.get("/logout", (req, res) => {
-    console.log("log out");
+    // console.log("log out");
 
     req.logOut();
     req.flash('success_msg', "Bạn vừa đăng xuất.");
@@ -173,7 +173,7 @@ userRouter.get("/logout", (req, res) => {
 });
 
 userRouter.get("/login", (req, res) => {
-    console.log("view login page");
+    // console.log("view login page");
 
     res.render("login.ejs");
 })

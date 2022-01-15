@@ -5,22 +5,22 @@ const rentRouter = express.Router();
 const { pool } = require('../dbConfig');
 
 rentRouter.get("/", async (req, res)=>{
-    if(req.user == null) res.redirect('../login')
+    if(req.user == null || req.user.email == process.env.EMAIL_ADMIN) res.redirect('../login')
     else{
-        console.log("view rent page");
+        // console.log("view rent page");
         var idbai = req.query.idbai;
         // console.log(idbai);
         pool.query("select bx.id_bai_xe, bx.ten_bai, count(x.id_xe) as so_luong from bai_xe bx left join xe x on (bx.id_bai_xe = x.id_bai_xe) where x.trang_thai not in ('pending', 'active') group by bx.id_bai_xe", (err, result)=>{
-            console.log(result.rows);
+            // console.log(result.rows);
             pool.query("select one_h, two_h, three_h, disc from gia_thue_xe", (errs,results)=>{
-                console.log(results.rows)
+                // console.log(results.rows)
                 pool.query("select * from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, xe_pending)=>{
                     if(xe_pending.rows.length == 0){
                         res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: false, id_bai_pending: null, id_xe_pending: null, message: req.flash('message')});
                     }
                     
                     else if(xe_pending.rows.length > 0){
-                        console.log(xe_pending.rows);
+                        // console.log(xe_pending.rows);
                         res.render("rent.ejs", {gia: results.rows, baixe: result.rows, bai: (idbai ? idbai : ''), pending: true, id_bai_pending: xe_pending.rows[0]['id_bai_xe'], id_xe_pending: xe_pending.rows[0]['id_xe'], message: req.flash('message')});
 
                     }
@@ -50,8 +50,8 @@ rentRouter.post('/chonbai', (req, res)=>{
 })
 
 rentRouter.post("/scan", async (req, res)=>{
-    console.log(req.body);
-    console.log(req.user);
+    // console.log(req.body);
+    // console.log(req.user);
     // console.log(req.user);
     //tao 1 lichsuthuexe moi
     pool.query("insert into lich_su_thue_xe (id_user, id_xe, id_bai_xe_thue, gia_thue_du_kien) values ($1, $2, $3, $4)", [req.user.id_user, req.body.xe, req.body.bai, req.body.gio]);
@@ -60,13 +60,13 @@ rentRouter.post("/scan", async (req, res)=>{
             // user đã thuê xe hoặc đã chọn xe rồi nhưng chưa quét, không cho thuê nữa
             if(result.rows[0]['trang_thai'] == 'pending'){
                 // thông báo yêu cầu đợi hết pending hoặc thuê luôn xe đó
-                console.log('có xe đang pending');
+                // console.log('có xe đang pending');
                 res.redirect('/rent')
 
             }
             if(result.rows[0]['trang_thai'] == 'active'){
                 // thông báo yêu cầu trả xe để thuê xe mới
-                console.log('user đã có xe đang thuê');
+                // console.log('user đã có xe đang thuê');
                 req.flash('message', 'Bạn đã có xe đang thuê, vui lòng trả xe trước khi thuê xe mới!')
                 res.redirect('/')
 
@@ -82,14 +82,14 @@ rentRouter.post("/scan", async (req, res)=>{
                     else{
                         pool.query(`update public.xe set trang_thai = 'pending', id_user = ${req.user.id_user} where id_xe = ${req.body.xe};`, async (err, result)=>{
                             if(err) {
-                                console.error(err)
+                                // console.error(err)
                                 res.send('loi roi')
                             }
                             else {
                                 pool.query(`select ten_bai from bai_xe where id_bai_xe = ${req.body.bai}`, async (err, data)=>{
-                                    console.log(data.rows);
+                                    // console.log(data.rows);
                                     res.render('scan.ejs', {ten_bai: data.rows[0]['ten_bai'], id_bai: req.body.bai});
-                                    console.log('bat dau doi 5 phut');
+                                    // console.log('bat dau doi 5 phut');
                                     // doi 5 phut
                                     await timeout(300000)
                                     console.log('het 5 phut')
@@ -106,7 +106,7 @@ rentRouter.post("/scan", async (req, res)=>{
                                             }
                                             //
                                             if(result.rows[0]['trang_thai'] == 'active' && result.rows[0]['id_user'] == req.user.id_user){
-                                                console.log('xe da duoc thue');
+                                                // console.log('xe da duoc thue');
                                             }
                                             // neu trang thai khac pending tuc la nguoi dung da quet ma thanh cong, xe dang duoc su dung
                                         }
@@ -162,8 +162,8 @@ rentRouter.get('/cancel/:id_xe', (req, res)=>{
 })
 
 rentRouter.post('/xacnhan', (req, res)=>{
-    console.log(req.body);
-    console.log(req.user.id_user);
+    // console.log(req.body);
+    // console.log(req.user.id_user);
     // so sanh ma qr, thong bao khi sai, dung
     pool.query("select id_xe from xe where id_user = $1 and trang_thai = 'pending'", [req.user.id_user], (err, result) => {
         // err thi thong bao xe khong con trong trang thai pending
@@ -184,7 +184,7 @@ rentRouter.post('/xacnhan', (req, res)=>{
                         }
                         else {
                             // cap nhat csdl khi quet dung
-                            console.log("thue xe thanh cong");
+                            // console.log("thue xe thanh cong");
                             // set trang thai xe
                             pool.query("update xe set trang_thai = 'active' where id_user = $1 and id_bai_xe = $2 and trang_thai = 'pending'", [req.user.id_user, req.body.idbai]);
                             // console.log("set trang thai xe thanh cong");
