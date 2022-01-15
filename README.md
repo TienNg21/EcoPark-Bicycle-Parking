@@ -28,27 +28,63 @@ Bước 4: Chạy project local
 Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-parking.herokuapp.com)
 
 ### User
-1. Đăng ký
-2. Đăng nhập
-3. Đăng xuất
-4. Thay đổi thông tin
-5. Thay đổi mật khẩu
-6. Xem bản đồ
-7. Thuê xe
-8. Trả xe
-9. Xem lịch sử thuê xe
+1. Đăng ký, đăng nhập, đăng xuất
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dangky.png?raw=true'>    <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dangnhap.png?raw=true'>    <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dangxuat.png?raw=true'>
+
+
+7. Thay đổi thông tin, mật khẩu
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoithongtin.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoimatkhau.png?raw=true'>
+
+11. Xem bản đồ
+12. Thuê xe
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe2.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe3.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe4.png?raw=true'>
+
+14. Trả xe
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe2.png?raw=true'>
+
+15. Xem lịch sử thuê xe
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_xemlichsuthuexe.png?raw=true'>
 
 ### Admin
-1. Đăng nhập
-3. Đăng xuất
+1. Đăng nhập, đăng xuất
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_dangnhap.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_dangxuat.png?raw=true'>
+
 4. Điều hướng và xem thông tin
-8. Thêm xe
-9. Thay đổi thông tin xe
-10. Xóa xe
-11. Thêm bãi
-12. Thay đổi thông tin bãi
-13. Xóa bãi
-14. Thay đổi giá thuê xe
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_dieuhuong.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_overview.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_xemdoanhso.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_xemlichsuthue.png?raw=true'>
+
+8. Quản lý xe
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_themxe.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_thaydoixe.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_xoaxe.png?raw=true'>
+
+12. Quản lý bãi xe
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_thembaixe.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_thaydoibaixe.png?raw=true'>
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_xoabaixe.png?raw=true'>
+
+15. Thay đổi giá thuê xe
+
+<img width="1000px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/admin/admin_thaydoigiathue.png?raw=true'>
 
 🔥*Một sản phẩm của Nhóm 12*🔥
  - [Lã Thị Hà](https://github.com/20194266-halt)
