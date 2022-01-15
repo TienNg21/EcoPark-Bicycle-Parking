@@ -8,9 +8,7 @@
 [Hướng dẫn sử dụng](#huongdansudung)
 
 [1. Cài đặt](#1)
-
   - [1.1. Cài đặt từ Github](#11)
- 
   - [1.2. Trải nghiệm ngay](#12)
 
 [2. Hướng dẫn sử dụng user](#2)
@@ -107,7 +105,7 @@ Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-pa
 
 **2.2. Thay đổi thông tin, mật khẩu**
 
-<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoithongtin.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoimatkhau.png?raw=true'>
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dashboard.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoithongtin.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thaydoimatkhau.png?raw=true'>
 
 - Sau khi đăng nhập, bạn có thể vào phần tài khoản để thay đổi thông tin và mật khẩu của mình. Các thông tin phải đúng định dạng, mật khẩu cũ phải khớp và mật khẩu mới phải có nhiều hơn 6 ký tự.
  
@@ -115,7 +113,7 @@ Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-pa
 
 **2.3. Xem bản đồ**
 
-<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_bando.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_bando2.png?raw=true'>
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dashboard.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_bando.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_bando2.png?raw=true'>
 
 - Bạn có thể ấn vào nút bản đồ ở màn hình chính để xem vị trí của mình, đồng thời xác định vị trí các bãi xe trong khu vực EcoPark.
 - Ngoài ra bạn có thể ấn vào từng bãi xe ở trên bản đồ để chuyển đến trang thuê xe của bãi đó.
@@ -124,7 +122,7 @@ Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-pa
  
 **2.4. Thuê xe**
 
-<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe2.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe3.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe4.png?raw=true'>
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dashboard.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe5.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe2.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe3.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_thuexe4.png?raw=true'>
   
 - Ngoài cách truy cập trang thuê xe từ bản đồ, bạn có thể ấn vào nút thuê xe ở màn hình chính để thuê xe. Sau khi chọn bãi, chọn xe, chọn thời gian thuê (có giá tiền tương ứng) hãy ấn nút thuê xe để tiếp tục.
 - Lưu ý, khi thuê quá thời gian đã chọn, bạn phải trả thêm tiền mỗi 30 phút.
@@ -138,7 +136,7 @@ Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-pa
 
 **2.5. Trả xe**
 
-<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe2.png?raw=true'>
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dashboard.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_traxe2.png?raw=true'>
 
 - Tương tự khi thuê xe, để trả xe bạn cũng cần quét mã QR. Vào trang đã nêu trên để lấy mã. Sau khi thực hiện quét mã thành công, bạn đã trả xe thành công. Bây giờ hóa đơn cho việc thuê xe sẽ xuất hiện, hiển thị thông tin và số tiền bạn phải trả.
 - Nhấn xác nhận để hoàn tất.
@@ -147,7 +145,8 @@ Truy cập đường dẫn [EcoPark Bicycle Parking ](https://ecopark-bicycle-pa
 
 **2.6. Xem lịch sử thuê xe**
 
-<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_xemlichsuthuexe.png?raw=true'>
+
+<img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_dashboard.png?raw=true'>     <img width="200px" src='https://github.com/TienNg21/EcoPark-Bicycle-Parking/blob/main/document/demo/user/user_xemlichsuthuexe.png?raw=true'>
 
 - Sau khi thực hiện thuê xe thành công, bạn có thể nhấn nút Lịch sử thuê xe để xem lại lịch sử những lần thuê xe của mình.
  
