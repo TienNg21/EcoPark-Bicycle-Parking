@@ -86,5 +86,5 @@ app.use('/history', history);
 app.use('/admin',admin);
 
 app.listen((process.env.PORT || 3000), (req, res) => {
-    // console.log("Run in port 3000");
+    console.log("Run in port 3000");
 });
